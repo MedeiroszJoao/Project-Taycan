@@ -1,0 +1,431 @@
+{
+  "source": "User-supplied Borealis Dataverse original data package",
+  "doi": "10.5683/SP3/7JP3NM",
+  "license": "CC BY 4.0 per both original README files and Borealis dataset page",
+  "zip_name": "doi-10.5683-sp3-7jp3nm.zip",
+  "zip_size_bytes": 157829116,
+  "zip_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "notice": "Names, sizes, CRC and metadata only, copied from prior audit; NO additional LG E66 numerical series opened in this revision.",
+  "subarchives": [
+    {
+      "path": "4-Module Data.zip",
+      "size_bytes": 5501501,
+      "sha256": "a5628a9d56d2e097158620346c3f69b5ff5c6269bb2770f643e91f397abcac7e",
+      "crc32_hex": "76a5908d",
+      "members": [
+        {
+          "path": "Module Data/20240207_1.5C_CP_Loss.mat",
+          "size_bytes": 363604,
+          "crc32_hex": "18a1af67"
+        },
+        {
+          "path": "Module Data/20240209_0.7C_CP_Loss.mat",
+          "size_bytes": 259393,
+          "crc32_hex": "f3cace81"
+        },
+        {
+          "path": "Module Data/20240209_1C_CP_Loss.mat",
+          "size_bytes": 303706,
+          "crc32_hex": "37974ca3"
+        },
+        {
+          "path": "Module Data/20240313_1.5C_Test (MCCC).mat",
+          "size_bytes": 698373,
+          "crc32_hex": "399b56a8"
+        },
+        {
+          "path": "Module Data/20240314_1C_Test (MCCC).mat",
+          "size_bytes": 828686,
+          "crc32_hex": "cd270fbc"
+        },
+        {
+          "path": "Module Data/20240315_0.5C_Test (MCCC) Part1.mat",
+          "size_bytes": 91700,
+          "crc32_hex": "5bd525c9"
+        },
+        {
+          "path": "Module Data/20240315_0.5C_Test (MCCC) Part2.mat",
+          "size_bytes": 749549,
+          "crc32_hex": "801811a5"
+        },
+        {
+          "path": "Module Data/20240318_2C_Test (MCCC) Part 1.mat",
+          "size_bytes": 815630,
+          "crc32_hex": "ffd96717"
+        },
+        {
+          "path": "Module Data/20240318_2C_Test (MCCC) Part 2.mat",
+          "size_bytes": 146466,
+          "crc32_hex": "8b537b5c"
+        },
+        {
+          "path": "Module Data/20240322_TopUp&DC_for_FC.mat",
+          "size_bytes": 775267,
+          "crc32_hex": "b44a43ae"
+        },
+        {
+          "path": "Module Data/20240323_1.2C_CP_Loss.mat",
+          "size_bytes": 772557,
+          "crc32_hex": "1cba1c54"
+        },
+        {
+          "path": "Module Data/20240323_Fast_Charge.mat",
+          "size_bytes": 249715,
+          "crc32_hex": "e8a32bc8"
+        }
+      ]
+    },
+    {
+      "path": "3-Taycan Module Instrumentation.pdf",
+      "size_bytes": 236837,
+      "sha256": "c7a21d62ba0330b2a741b53a327d809696605ce71cceda8acc886631716da146",
+      "crc32_hex": "5a30615a"
+    },
+    {
+      "path": "0-Readme - Cell.txt",
+      "size_bytes": 9192,
+      "sha256": "2b700b53b45d531b5077fc08c2b22fdede20ed2e3fa5f83ea442335cec5a31f1",
+      "crc32_hex": "17a91f4e"
+    },
+    {
+      "path": "2-Readme - Module.txt",
+      "size_bytes": 7416,
+      "sha256": "bbeb81ea8033e0379c24e81f6708bbfbc0f8e0ee8eefd0102c9348fae39c359c",
+      "crc32_hex": "fc5a38a9"
+    },
+    {
+      "path": "1-Cell Data.zip",
+      "size_bytes": 152124241,
+      "sha256": "fc65efb69fe196952b430443b0e3c8df0ff789076f91ecebe3f8e10d86937e65",
+      "crc32_hex": "9b5cb66b",
+      "members": [
+        {
+          "path": "Cell Data/Characterization/-10degC/03-25-24_13.50 32268_mastchg.mat",
+          "size_bytes": 2713394,
+          "crc32_hex": "ba9f2a09"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/03-25-24_13.50 32268_TS002052.mat",
+          "size_bytes": 432,
+          "crc32_hex": "67cc15d6"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/03-25-24_18.04 32268_C20Dis.mat",
+          "size_bytes": 152257,
+          "crc32_hex": "483058c8"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/03-27-24_00.17 32268_Cap_C_3.mat",
+          "size_bytes": 218251,
+          "crc32_hex": "002c6775"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/03-27-24_11.19 32268_HPPC.mat",
+          "size_bytes": 3309018,
+          "crc32_hex": "0f28a82f"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/03-29-24_12.27 32268_GITT.mat",
+          "size_bytes": 2082456,
+          "crc32_hex": "159b5c54"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/04-01-24_03.21 32268_C20DisCh.mat",
+          "size_bytes": 71892,
+          "crc32_hex": "b699f40a"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/04-03-24_00.23 32268_Dis_0p5C.mat",
+          "size_bytes": 148034,
+          "crc32_hex": "481bf7c8"
+        },
+        {
+          "path": "Cell Data/Characterization/-10degC/04-03-24_10.09 32268_Dis_1C.mat",
+          "size_bytes": 57612,
+          "crc32_hex": "787246d9"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-05-24_14.29 32339_mastchg.mat",
+          "size_bytes": 2776176,
+          "crc32_hex": "30b23189"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-05-24_14.29 32339_TS002121.mat",
+          "size_bytes": 430,
+          "crc32_hex": "74a8a6f6"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-05-24_18.51 32339_C20Dis.mat",
+          "size_bytes": 184533,
+          "crc32_hex": "ad165403"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-07-24_02.22 32339_Cap_C_3.mat",
+          "size_bytes": 204829,
+          "crc32_hex": "9edf6fbc"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-07-24_14.05 32339_HPPC.mat",
+          "size_bytes": 3350270,
+          "crc32_hex": "c5e66104"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-09-24_15.38 32339_GITT.mat",
+          "size_bytes": 2001168,
+          "crc32_hex": "f7bb26a6"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-12-24_04.17 32339_C20DisCh.mat",
+          "size_bytes": 70838,
+          "crc32_hex": "9a769ab0"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-14-24_00.27 32339_Dis_0p5C.mat",
+          "size_bytes": 130375,
+          "crc32_hex": "ded29f48"
+        },
+        {
+          "path": "Cell Data/Characterization/-20degC/05-14-24_09.59 32339_Dis_1C.mat",
+          "size_bytes": 35661,
+          "crc32_hex": "93a24930"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-02-23_00.24 32020_mastchg.mat",
+          "size_bytes": 2880075,
+          "crc32_hex": "b3ff2356"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-02-23_03.37 32020_C20Dis.mat",
+          "size_bytes": 128743,
+          "crc32_hex": "d9873f3a"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-03-23_07.29 32020_Cap_C_3.mat",
+          "size_bytes": 456310,
+          "crc32_hex": "6ddf84b9"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-03-23_18.12 32020_HPPC.mat",
+          "size_bytes": 3287940,
+          "crc32_hex": "c14bc5ed"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-06-23_05.45 32020_GITT.mat",
+          "size_bytes": 2177486,
+          "crc32_hex": "d3a1facd"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-08-23_23.35 32020_C20DisCh.mat",
+          "size_bytes": 71858,
+          "crc32_hex": "c4e30f85"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-10-23_19.10 32020_Dis_0p5C.mat",
+          "size_bytes": 158873,
+          "crc32_hex": "6cbcf436"
+        },
+        {
+          "path": "Cell Data/Characterization/0degC/10-11-23_04.50 32020_Dis_1C.mat",
+          "size_bytes": 78372,
+          "crc32_hex": "9b2a453a"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/08-25-23_14.25 32005_mastchg.mat",
+          "size_bytes": 2493957,
+          "crc32_hex": "340e4234"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/08-25-23_18.43 32005_C20Dis.mat",
+          "size_bytes": 117033,
+          "crc32_hex": "80e91b98"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/08-26-23_21.53 32005_Cap_C_3.mat",
+          "size_bytes": 469150,
+          "crc32_hex": "f7f4869d"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/08-27-23_07.58 32005_HPPC.mat",
+          "size_bytes": 3286156,
+          "crc32_hex": "aa3a0876"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/08-29-23_17.25 32005_GITT.mat",
+          "size_bytes": 2171742,
+          "crc32_hex": "fe2b6e13"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/09-01-23_09.10 32005_C20DisCh.mat",
+          "size_bytes": 66087,
+          "crc32_hex": "767ef698"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/09-03-23_00.41 32005_Dis_0p5C.mat",
+          "size_bytes": 161359,
+          "crc32_hex": "10197ca6"
+        },
+        {
+          "path": "Cell Data/Characterization/10degC/09-03-23_09.00 32005_Dis_1C.mat",
+          "size_bytes": 82490,
+          "crc32_hex": "c91c4c7f"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_18.07 31974_mastchg.mat",
+          "size_bytes": 1562259,
+          "crc32_hex": "cf403c15"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_18.07 31974_TS001772.mat",
+          "size_bytes": 432,
+          "crc32_hex": "87f5f72b"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat",
+          "size_bytes": 50571,
+          "crc32_hex": "bf61826f"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat",
+          "size_bytes": 472075,
+          "crc32_hex": "83fb8c0c"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-28-23_02.06 31974_HPPC.mat",
+          "size_bytes": 3297348,
+          "crc32_hex": "757ee4f3"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-30-23_06.21 31974_GITT.mat",
+          "size_bytes": 2235355,
+          "crc32_hex": "518e162f"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-01-23_20.59 31974_C20DisCh.mat",
+          "size_bytes": 65580,
+          "crc32_hex": "a2861ee0"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+          "size_bytes": 164003,
+          "crc32_hex": "b83ce039"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+          "size_bytes": 83722,
+          "crc32_hex": "fcd3c56c"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 2 (C_20Dis redone at 40degC)/08-06-23_14.45 31976_mastchg.mat",
+          "size_bytes": 270160,
+          "crc32_hex": "201b77ee"
+        },
+        {
+          "path": "Cell Data/Characterization/25degC/Part 2 (C_20Dis redone at 40degC)/08-06-23_15.10 31976_C20Dis.mat",
+          "size_bytes": 99657,
+          "crc32_hex": "a8e2157a"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 1 (Up to HPPC)/07-03-23_13.14 31964_TS001762.mat",
+          "size_bytes": 306588,
+          "crc32_hex": "3f43ae42"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 1 (Up to HPPC)/07-03-23_18.18 31964_C20Dis.mat",
+          "size_bytes": 50470,
+          "crc32_hex": "11f9e708"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 1 (Up to HPPC)/07-04-23_14.59 31964_Charge1.mat",
+          "size_bytes": 304227,
+          "crc32_hex": "83044aab"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 1 (Up to HPPC)/07-04-23_19.59 31964_Cap_C_3.mat",
+          "size_bytes": 550046,
+          "crc32_hex": "87ab22af"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 1 (Up to HPPC)/07-05-23_04.12 31964_HPPC.mat",
+          "size_bytes": 3592900,
+          "crc32_hex": "7c436f2b"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-07-23_17.54 31966_TS001764.mat",
+          "size_bytes": 110625,
+          "crc32_hex": "40538314"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-07-23_20.27 31966_Cap_C_3.mat",
+          "size_bytes": 552357,
+          "crc32_hex": "f7cc2493"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-08-23_04.43 31966_GITT.mat",
+          "size_bytes": 2353398,
+          "crc32_hex": "afde62fb"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-10-23_20.47 31966_C20DisCh.mat",
+          "size_bytes": 66343,
+          "crc32_hex": "fce445aa"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-12-23_12.59 31966_Dis_0p5C.mat",
+          "size_bytes": 469287,
+          "crc32_hex": "921cb55e"
+        },
+        {
+          "path": "Cell Data/Characterization/40degC/Part 2 (GITT to End)/07-12-23_19.50 31966_Dis_1C.mat",
+          "size_bytes": 388964,
+          "crc32_hex": "0c904353"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/-10degC/32318_DriveCyc_neg10degC.mat",
+          "size_bytes": 21966921,
+          "crc32_hex": "5e052cc8"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/-20degC/32344_DriveCyc_neg20degC.mat",
+          "size_bytes": 20869958,
+          "crc32_hex": "031c36b7"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/0degC/32039_DriveCyc_0degC.mat",
+          "size_bytes": 33004169,
+          "crc32_hex": "2421efa9"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/0degC/Rrd5 and RrdUS06/32097_DriveCyc_0degC.mat",
+          "size_bytes": 3245369,
+          "crc32_hex": "5aa81663"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/10degC/32016_DriveCyc_10degC.mat",
+          "size_bytes": 22502870,
+          "crc32_hex": "f0a008f9"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/25degC/31979_DriveCyc_25degC.mat",
+          "size_bytes": 20932982,
+          "crc32_hex": "ff3d5e82"
+        },
+        {
+          "path": "Cell Data/Drive Cycles/40degC/31970_DriveCyc_40degC.mat",
+          "size_bytes": 22150317,
+          "crc32_hex": "73e842c4"
+        },
+        {
+          "path": "Cell Data/HPPC Explanation.docx",
+          "size_bytes": 39661,
+          "crc32_hex": "fd8b30e1"
+        }
+      ]
+    },
+    {
+      "path": "MANIFEST.TXT",
+      "size_bytes": 267,
+      "sha256": "2176bc72a00ab4253116ab6f73445cf13428c2bd26c09d344368aaeabc724840",
+      "crc32_hex": "2cfc2e59"
+    }
+  ]
+}
