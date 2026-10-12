@@ -99,7 +99,20 @@
         4000
       ]
     },
-    "validation_usage": "Validation only for model/baseline selection and threshold settings; test locked until selected design frozen."
+    "validation_usage": "Validation only for model/baseline selection and threshold settings; test locked until selected design frozen.",
+    "distribution_shift_pre_registered": {
+      "id": "SHIFT_REGEN_COLD",
+      "reference": "Train H00 nominal profile at assumed 25C ambient, if existing frozen Stage3 interface supports it.",
+      "scenario": "Whole-episode six-hour shifted driving profile with more regeneration and lower traction torque; nominal ambient 10C if existing interface supports it. Use same fixed training-derived charging boundary for matched hypotheses; no per-test tuning.",
+      "allocation": "ALL three test episodes per hypothesis; development train and validation at nominal conditions. Mark cold shift unexecutable, not silently simulated, if unsupported by existing Stage3 interface.",
+      "assumed_factors": {
+        "nominal_ambient_C": 25,
+        "shift_ambient_C": 10,
+        "regeneration_torque_scale": 1.5,
+        "traction_torque_scale": 0.85
+      },
+      "pre_specified": true
+    }
   },
   "energy_balanced_long_horizon": {
     "duration_hours": 6,
