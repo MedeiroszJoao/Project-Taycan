@@ -1,0 +1,26 @@
+# Project Taycan — generated and local-only files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.ipynb_checkpoints/
+*.log.tmp
+# Unreviewed source material and raw external datasets: do not publish automatically
+data/raw/
+data/external/
+external_data/
+references/originals/
+references/unreviewed/
+results/tmp/
+artifacts/unreviewed/
+personal_data/
+# OS/editor files
+Thumbs.db
+.DS_Store
+.vscode/
