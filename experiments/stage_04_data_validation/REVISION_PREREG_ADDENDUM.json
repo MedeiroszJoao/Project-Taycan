@@ -1,0 +1,278 @@
+{
+  "schema": "taycan-stage4-revision-preregistration-addendum-2026-10-12",
+  "status": "REGISTERED_BEFORE_ANY_NEW_STAGE4_REVISION_MODEL_FITTING; simulation execution pending local-runner recovery",
+  "date": "2026-10-12",
+  "parent_stage4_freeze": "freeze.json; preserve original unchanged; addendum is append-only; local freeze SHA not independently available",
+  "frozen_stage3_model_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
+  "safety_and_source_limits": {
+    "stage3_model_unchanged": true,
+    "stage1_stage2_unchanged": true,
+    "do_not_start_stage5": true,
+    "holdout_quarantine_github_tree_absent_verified": true,
+    "service_bulletin_reference_policy": "Do not add bulletin/reproduction unless public official source verified; any workshop thresholds are context only, never numerical BMS diagnostic thresholds."
+  },
+  "split_policy": {
+    "hypotheses": [
+      "H00",
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "M01",
+      "I01"
+    ],
+    "fault_severity_grid": [
+      0.25,
+      0.5,
+      1
+    ],
+    "per_fault_hypothesis": {
+      "train_per_severity": 2,
+      "validation_per_severity": 1,
+      "test_per_severity": 1,
+      "total": 12
+    },
+    "healthy_H00": {
+      "train": 6,
+      "validation": 3,
+      "test": 3,
+      "total": 12
+    },
+    "aggregate": {
+      "train": 72,
+      "validation": 36,
+      "test": 36,
+      "total": 144
+    },
+    "existing_seeded_TR01_TR02_TE01_TE02": "Retain historical IDs and seeds; no retroactive renaming, repeated measurements of previous comparisons excluded from new post-freeze scoring.",
+    "new_seed_generation": "SHA-256 of literal 'TAYCAN4R|hypothesis|split|severity|replicate|physics-or-observer-or-aux-or-nuisance', first 8 hex digits as unsigned big endian integer; no inspection-based seed selection",
+    "nuisance_draw_policy": "Draw once per episode for persistent biases, independently per channel; draw per time step for innovations, common random numbers across matched M01/I01 experiments. Distributions assumed, not fitted.",
+    "parameters_assumed": {
+      "rpm_white_sigma_range_rpm": [
+        2,
+        35
+      ],
+      "rpm_bias_halfwidth_range_rpm": [
+        0,
+        25
+      ],
+      "torque_white_sigma_range_Nm": [
+        0.2,
+        8
+      ],
+      "torque_bias_halfwidth_range_Nm": [
+        0,
+        5
+      ],
+      "soc_group_bias_sd_range_pp": [
+        0,
+        3
+      ],
+      "soc_innovation_range_pp_sqrt_s": [
+        0.005,
+        0.25
+      ],
+      "soc_phi_grid_per_second": [
+        0.6,
+        0.9,
+        0.97,
+        0.99,
+        0.995,
+        0.9995,
+        0.9999
+      ],
+      "aux_phi_range_per_second": [
+        0.7,
+        0.999
+      ],
+      "aux_white_range_W_sqrt_s": [
+        5,
+        150
+      ],
+      "aux_cap_range_W": [
+        100,
+        4000
+      ]
+    },
+    "validation_usage": "Validation only for model/baseline selection and threshold settings; test locked until selected design frozen."
+  },
+  "energy_balanced_long_horizon": {
+    "duration_hours": 6,
+    "repeat_cycle_minutes": 60,
+    "block_minutes": {
+      "cruise": 12,
+      "acceleration": 12,
+      "regeneration": 12,
+      "rest": 12,
+      "charge": 12
+    },
+    "SOC_initial_percent_assumed": 60,
+    "SOC_window_percent": [
+      30,
+      80
+    ],
+    "nominal_usable_energy_kWh_assumed": 70,
+    "nominal_usable_energy_range_kWh": [
+      65,
+      75
+    ],
+    "charging_boundary": "Negative battery-side DC power injected before electrical balance; no charger/OBC subsystem simulated",
+    "charge_power_design": "One healthy H00 calibration run using training-only reference profile to compute electrical energy before charge. Determine single reference negative battery-side power for final 12 minutes via fixed bisection bracket 0..120 kW, 5 iterations maximum, target final SOC within 0.5 pp of initial and 30..80% at all points. Freeze fixed power and reuse across fault hypotheses/severities/test seeds; no per-fault or test tuning.",
+    "stress_abort_rule": "If resulting battery model SOC crosses 30..80%, mark boundary violation and report with attempted energy and cause; do not clip or silently exclude.",
+    "QC_outputs": [
+      "SOC_true_percent_for_audit_only",
+      "SOC_observed_percent",
+      "battery_terminal_V",
+      "battery_current_A",
+      "integrated_Pdc_kWh",
+      "charge_energy_kWh",
+      "SOC_min_max",
+      "charge_power_fixed_kW",
+      "numerical_balance_error"
+    ],
+    "previous_results_6h": "SUPERSEDED; do not use old B01 B02 B04 metrics"
+  },
+  "matched_M01_I01": {
+    "objective": "For each M01 candidate severity, choose I01 severity minimizing absolute difference in average extra dissipated W over same fixed full profile versus H00, using train-only physical truth/diagnostic loss channels; compute joule-integral; DIFF mapping affects observations, not physical losses.",
+    "severity_mapping": "Calibrate I01 severity by train-only monotone root search / interpolation; tolerance <=1% relative dissipation, otherwise report unmatched. Do not use holdout truth to match.",
+    "diff_modes": [
+      "winding_proxy",
+      "uninformative"
+    ],
+    "residual_R33": "V_pack_observed * I_pack_observed - sum_j (torque_observed_j * 2*pi*rpm_observed_j/60)",
+    "statistics": [
+      "mean_residual_W",
+      "sd_residual_W",
+      "difference_of_M01_I01_means_W",
+      "effect_size_with_95percent_bootstrap_CI_blocked_by_episode",
+      "within_episode_sd",
+      "across_episode_mean_variation"
+    ],
+    "bias_ablations": [
+      "persistent_sensor_bias_retained",
+      "persistent_bias_removed_oracle_only",
+      "persistent_bias_estimated_from_training_only_if_method_preregistered"
+    ],
+    "separability": "Report distributions/overlap and paired effect-size; DO NOT invent classifier/AUC without Stage5; do not use truth channel to derive R33."
+  },
+  "external_validation_protocol": {
+    "model_class": "one-RC Thevenin ECM at individual cell scale only",
+    "parameters_to_fit": [
+      "OCV(SOC)",
+      "R0_ohm",
+      "R1_ohm",
+      "C1_F"
+    ],
+    "ocv_models": [
+      "linear voltage vs SOC as frozen model.py functional form",
+      "degree-3 polynomial in SOC, constrained/evaluated on 0..1 domain"
+    ],
+    "fit_only": "LG E66 cell HPPC, GITT, C20 and C/3 files at -20,-10,10,25 degC; files enumerated from original archive manifest before new numerical fitting; no module or whole-pack fitting",
+    "validate": "LG E66 0.5C at development temperatures + 1C at development temperatures; blind temperature holdouts 0C and 40C all test types",
+    "predictions": "terminal V(t) under measured current profile using known initial SOC from development protocol (no fitted test SOC) and frozen input temperature treatment",
+    "metrics": "RMSE voltage V by full independent session, also MAE and temporal residual diagnostics; report per temperature/type and macro by independent sessions",
+    "primary_threshold_assumed": "cell voltage holdout RMSE <=0.100 V, no retuning; compare cubic vs linear and report both regardless of who wins",
+    "scope": "Tests transfer of ECM structure under cell-scale experimental regimes. Does not validate the 2022 Taycan 4S pack simulator or certified HV diagnosis."
+  },
+  "LG_E66_split": {
+    "source_original": "https://doi.org/10.5683/SP3/7JP3NM",
+    "zip_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+    "metadata_manifest_previously_generated": "LG_E66_MANIFEST.json; complete archive member paths/CRC/size originally catalogued",
+    "cell_temps_dev_C": [
+      -20,
+      -10,
+      10,
+      25
+    ],
+    "cell_temps_blind_holdout_C": [
+      0,
+      40
+    ],
+    "cell_test_types_fit": [
+      "C20Dis",
+      "Cap_C_3",
+      "HPPC",
+      "GITT",
+      "C20DisCh"
+    ],
+    "cell_test_types_validation": [
+      "Dis_0p5C"
+    ],
+    "cell_test_types_blind_holdout": [
+      "Dis_1C",
+      "Drive Cycles except pre-exposed 25degC recording"
+    ],
+    "previously_exposed_numeric_series": [
+      "25degC C20Dis",
+      "25degC HPPC",
+      "25degC Drive Cycle"
+    ],
+    "previously_exposed_policy": "25degC Drive Cycle not considered a virgin blind holdout; descriptive QC only; original numerical inspection is explicitly disclosed.",
+    "README_nominal_capacity_Ah": 65,
+    "nominal_capacity_conflict": "Another group page reportedly lists 60Ah; preserve 65Ah as README stated value and treat disagreement as UNRESOLVED pending identity/revision check. Do not silently normalize currents based on 60 or 65.",
+    "license": "CC BY 4.0 confirmed in both original README files",
+    "no_new_LG_numeric_series_opened_during_freeze": true
+  },
+  "Oxford_split": {
+    "development_train": [
+      "Cell1",
+      "Cell2",
+      "Cell3",
+      "Cell4"
+    ],
+    "development_validation": [
+      "Cell5",
+      "Cell6"
+    ],
+    "blind_holdout": [
+      "Cell7",
+      "Cell8"
+    ],
+    "quality_flags": [
+      "TEMP_MEAN_OUTSIDE_35_45C",
+      "OCV_DURATION_GT_100000S"
+    ],
+    "policy_pre_registered": "Flag all rows, preserve all metadata. Exclude flagged trajectories from primary OCV/ECM fitting and primary holdout metrics, retain in raw QC and report secondary sensitivity with flags. Do not open or alter blind Cell7/8 before model freeze.",
+    "outlier_counts_user_reported": {
+      "temp_mean": 22,
+      "ocv_duration": 4
+    },
+    "inferred_q_units": "Likely mAh because |q| up to ~745 for published nominal 740 mAh; INFERENCE not proved by manufacturer metadata."
+  },
+  "NASA_holdout": {
+    "development": [
+      "B0005",
+      "B0006",
+      "B0007"
+    ],
+    "previous_holdout_B0018": "CONTAMINATED_NO_BLIND_TEST",
+    "B0018_do_not_use_for_blind_performance": true
+  },
+  "metrics_and_baselines": {
+    "multiclass_accuracy": true,
+    "multiclass_Brier": "mean_i sum_classes (p_ic-1[y_i=c])^2; all 12 classes; report uncertainty by episodes",
+    "ECE": "10 fixed-width confidence bins over [0,1], top-class confidence ECE; also reliability table",
+    "expected_cost": "per-episode sum over class posterior times assumed loss of chosen action",
+    "assumed_loss_matrix": "correct=0; false-positive on H00=1; missed non-H00 fault as H00=10; incorrect non-H00 fault subtype=4",
+    "baselines": [
+      "train-class-prior constant posterior",
+      "physics-rule residual thresholds fit on train and chosen on validation",
+      "regularized multinomial logistic regression on identical observed features, train-only standardization, validation-only tuning"
+    ],
+    "evaluation_design": "Holdout by whole episode / whole cell. Macro by episode, paired bootstrap by episode, do not split correlated timestamps across train and test."
+  },
+  "execution_state": {
+    "registered": true,
+    "new_6h_runs": false,
+    "new_B03_B05_B09_runs": false,
+    "new_matched_energy_runs": false,
+    "Oxford_flagged_full_csv": false,
+    "model_fit": false,
+    "reason": "Container runtime unavailable; Wolfram analytic checks only"
+  }
+}
