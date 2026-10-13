@@ -2,7 +2,7 @@
   "schema": "taycan-stage4-revision-preregistration-addendum-2026-10-12",
   "status": "AMENDED_FOR_REVIEW_2026-10-12; UNAPPROVED; NO REVISED SIMULATIONS EXECUTED",
   "date": "2026-10-12",
-  "parent_stage4_freeze": "freeze.json; preserve original unchanged; addendum is append-only; local freeze SHA not independently available",
+  "parent_stage4_freeze": "freeze.json; preserve original unchanged; SHA-256 supplied and externally recalculated by project reviewer; byte identity on runner to be verified before episode execution",
   "frozen_stage3_model_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
   "safety_and_source_limits": {
     "stage3_model_unchanged": true,
@@ -51,7 +51,7 @@
     },
     "existing_seeded_TR01_TR02_TE01_TE02": "Retain historical IDs and seeds; no retroactive renaming, repeated measurements of previous comparisons excluded from new post-freeze scoring.",
     "new_seed_generation": "Per episode use SHA-256 of exact UTF-8 string 'TAYCAN4R|<hypothesis>|<split>|<severity>|<replicate>|<physics|observer|aux|nuisance>', take first 8 hexadecimal digits as unsigned 32-bit integer; stable ordering and episode manifest written before running. Existing TR/TE historical seeds unchanged; revised episodes get new keys.",
-    "nuisance_draw_policy": "Outer episode draw each nuisance scale from uniform range in parameters_assumed; draw persistent channel biases independently from symmetric Uniform(-halfwidth,+halfwidth) once per episode, short-term innovations at time step. Freeze parameters/seeds in episode manifest without selecting by outputs. Matched M01/I01 reuse exogenous profile and same random numbers, including same nuisance and sensor noise.",
+    "nuisance_draw_policy": "Randomize continuous nuisance scales uniformly in registered ranges using precommitted nuisance seed; persistent bias uniform within sampled half-width per sensor per episode, white innovations at each step. Assign structural factors acquisition_mode, counter_source and diff_motor_t_mapping by balanced deterministic 8-combo strata and SOC phi by 7-level deterministic round robin (see structural_nuisance_design); no parameter selected by outcomes. For paired faults use same environmental nuisance realization and stratification.",
     "parameters_assumed": {
       "rpm_white_sigma_range_rpm": [
         2,
@@ -115,7 +115,9 @@
       "total_test_distribution": {
         "nominal": 324,
         "shifted": 288
-      }
+      },
+      "duration_h": 6,
+      "same_duration_as_nominal": true
     },
     "statistical_precision_pre_registered": {
       "primary_unit": "independent episode, not timestamp",
@@ -125,6 +127,37 @@
       "n_test_total": 612,
       "approx_95pct_normal_halfwidth_overall_pp": 3.1691,
       "warning": "These are approximate binomial calculations assuming independent same-distribution episodes. Report Wilson confidence intervals, use clustered bootstrap where repeats share drivers/seeds; worst-case p=0.5 gives larger widths; shift-stratified intervals wider."
+    },
+    "structural_nuisance_design": {
+      "method": "Balanced, fixed stratification instead of stochastic discovery; all combinations treated as methodological alternatives, not true Porsche design.",
+      "acquisition_mode": [
+        "independent",
+        "shared"
+      ],
+      "counter_source_primary": [
+        "BMS_I",
+        "HVBAT_CURRENT"
+      ],
+      "counter_source_truth": "EXCLUDED from main evaluation; optional explicitly labeled truth ablation only (not observable)",
+      "diff_motor_t_mapping": [
+        "winding_proxy",
+        "uninformative"
+      ],
+      "assignment": "Eight combos (2x2x2) sorted lexicographically. Within each class/split/severity enumerate replicate=0..N-1; deterministically rotate the 8-combo list by SHA256 'TAYCAN4R|struct|hypothesis|split|severity' first byte %8; map replicate mod8. Balance differences across combos <=1 within each split/severity; record combo and seed per episode BEFORE execution. Report class-by-mode metrics with sample sizes; DIFF-mode is not a real sensor calibration.",
+      "soc_phi_assignment": {
+        "grid": [
+          0.6,
+          0.9,
+          0.97,
+          0.99,
+          0.995,
+          0.9995,
+          0.9999
+        ],
+        "method": "Deterministic 7-level round robin over ordered independent episode indices within each hypothesis and split; rotation SHA256 of 'TAYCAN4R|phi|hypothesis|split' first byte %7, then assign grid[(replicate_global+offset)%7]. Applied to observer only; never retune by performance; make φ≥0.9995 sensitivity runs mandatory in both nominal and shifted subsets.",
+        "sensitivity": "Per φ report measured bias/drift, error SD, diagnostic metric stratification, and exact-dt AR1 innovations; if φ leads clipping, record clipping frequency. The test may use high φ out-of-original-assumption-range 0.995; explicitly declared hypothetical extension."
+      },
+      "nuisance_draw_scope": "Per-episode continuous ranges from existing parameters_assumed (uniform sampling fixed seeds), while structural factors and φ follow the fixed assignment schedule."
     }
   },
   "energy_balanced_long_horizon": {
@@ -148,7 +181,7 @@
       75
     ],
     "charging_boundary": "Negative battery-side DC power injected before electrical balance; no charger/OBC subsystem simulated",
-    "charge_power_design": "One healthy H00 calibration run using training-only reference profile to compute electrical energy before charge. Determine single reference negative battery-side power for final 12 minutes via fixed bisection bracket 0..120 kW, 5 iterations maximum, target final SOC within 0.5 pp of initial and 30..80% at all points. Freeze fixed power and reuse across fault hypotheses/severities/test seeds; no per-fault or test tuning.",
+    "charge_power_design": "For EACH prespecified driving profile (nominal and shifted), simulate independent training-only H00 reference 6h with fixed initial SOC; bisect battery-side charging power within [0,120] kW for at least 8 iterations and up to 12, testing final |SOC(6h)-SOC(0)|<=0.5 percentage point and full trajectory 30..80% at each iteration. Freeze ONE power per profile, reused for all fault classes, severities, structural modes, validation and test within that profile. Do not optimize on validation/test outcomes. Declare convergence failure (BLOCK) instead of silently adjusting.",
     "stress_abort_rule": "If resulting battery model SOC crosses 30..80%, mark boundary violation and report with attempted energy and cause; do not clip or silently exclude.",
     "QC_outputs": [
       "SOC_true_percent_for_audit_only",
@@ -161,11 +194,36 @@
       "charge_power_fixed_kW",
       "numerical_balance_error"
     ],
-    "previous_results_6h": "SUPERSEDED; do not use old B01 B02 B04 metrics"
+    "previous_results_6h": "SUPERSEDED; do not use old B01 B02 B04 metrics",
+    "charge_power_bisection": {
+      "power_bracket_kW": [
+        0,
+        120
+      ],
+      "min_iterations": 8,
+      "max_iterations": 12,
+      "termination": "both after >=8 iterations and |SOC_final - SOC_initial| <=0.5 percentage point, AND min/max SOC within [30,80]%; otherwise up to 12 iterations. If not met, record nonconvergence and DO NOT run dependent episodes.",
+      "linearized_sanity": "With 6 x 12min charge blocks and ASSUMED 70 kWh usable capacity, ∂SOC_final/∂P≈(1.2 h /70kWh)*100 =1.7142857 pp/kW. Bracket width at iteration 8:120/2^8=0.46875 kW; half-width 0.234375 kW implies approx 0.4018 pp worst midpoint quantization. Nonlinear dynamics still require explicit simulator residual.",
+      "profiles": [
+        "NOMINAL_6H",
+        "SHIFT_REGEN_COLD_6H"
+      ],
+      "emitted_evidence": [
+        "bisection_trace_by_iteration_and_profile",
+        "fixed_charge_power_by_profile_kW",
+        "final_soc_residual_pp",
+        "min_soc_pct",
+        "max_soc_pct",
+        "energy_closure_kWh"
+      ]
+    },
+    "duration_nominal_hours": 6,
+    "duration_shifted_hours": 6,
+    "confounding_guard": "Same duration (6 h), numerical dt, SOC initial state and segment lengths in nominal and shifted. Only prespecified duty cycle and optionally supported ambient parameter differ; do not conflate duration and shift."
   },
   "matched_M01_I01": {
-    "objective": "For each M01 candidate severity, choose I01 severity minimizing absolute difference in average extra dissipated W over same fixed full profile versus H00, using train-only physical truth/diagnostic loss channels; compute joule-integral; DIFF mapping affects observations, not physical losses.",
-    "severity_mapping": "Calibrate I01 severity by train-only monotone root search / interpolation; tolerance <=1% relative dissipation, otherwise report unmatched. Do not use holdout truth to match.",
+    "objective": "For EACH prespecified profile NOMINAL_6H / SHIFT_REGEN_COLD_6H, compare mean extra joules vs profile-specific H00 reference: compute ΔE_motor and ΔE_inverter using only distinct calibration episodes and frozen Stage3 truth diagnostics; match integrated positive dissipative loss (J) within <=1% tolerance and document failures. Keep reference seeds separate from validation/test; avoid use of final held-out outcomes.",
+    "severity_mapping": "Calibrate motor→inverter map SEPARATELY for nominal and shifted full 6h driving profiles using independent, declared calibration/reference seeds (not any validation or test episode outcomes); freeze mapping before test generation. M01 ~ torque^2, so do not reuse a nominal map on the shifted profile. Report actual ΔE in J, ΔPmean in W, mismatch %, and cases outside feasible I01 severity.",
     "diff_modes": [
       "winding_proxy",
       "uninformative"
@@ -184,10 +242,28 @@
       "persistent_bias_removed_oracle_only",
       "persistent_bias_estimated_from_training_only_if_method_preregistered"
     ],
-    "separability": "Report distributions/overlap and paired effect-size; DO NOT invent classifier/AUC without Stage5; do not use truth channel to derive R33."
+    "separability": "Report distributions/overlap and paired effect-size; DO NOT invent classifier/AUC without Stage5; do not use truth channel to derive R33.",
+    "performance_stratification": {
+      "by_severity": [
+        0.25,
+        0.5,
+        1
+      ],
+      "noise_terciles_definition": "Before any classification, use observed *assigned* sensor-noise scales only (no labels/results): score sqrt((sigma_torque_Nm/8)^2+(sigma_rpm/35)^2) using per-episode draws; train split alone fixes 1/3 and 2/3 score quantile edges for low/medium/high; freeze and apply same boundaries to val/test. Persistent bias is stratified separately, not folded into white noise score.",
+      "report": [
+        "R33 regression versus (intercept, sum tau_j^2, sum omega_j) using only measured signals",
+        "mean_and_SD_of_R33",
+        "regression_coefficients_SE_CI_clustered_by_episode",
+        "fault_classification_accuracy_by_fault_by_severity_by_noise_tercile",
+        "results_by_acquisition_counter_diff_mode",
+        "bias_retained_vs_oracle_bias_removed",
+        "note low-severity detection limitations and limited per-stratum precision"
+      ],
+      "regression_caveat": "Persistent torque bias produces terms proportional to omega and changes intercept; inverter constant loss overlaps intercept/auxiliary loads. Do not claim identifiability just because regression coefficient for tau^2 differs on synthetic data."
+    }
   },
   "external_validation_protocol": {
-    "model_class": "one-RC Thevenin ECM at individual cell scale only",
+    "model_class": "One-RC Thevenin ECM primary; independent two-RC Thevenin ECM reference benchmark fitted/evaluated on identical cell-level partitions. Frozen Stage3 Taycan model.py remains unchanged.",
     "parameters_to_fit": [
       "OCV(SOC)",
       "R0_ohm",
@@ -199,11 +275,46 @@
       "degree-3 polynomial in SOC, constrained/evaluated on 0..1 domain"
     ],
     "fit_only": "LG E66 cell HPPC, GITT, C20 and C/3 files at -20,-10,10,25 degC; files enumerated from original archive manifest before new numerical fitting; no module or whole-pack fitting",
-    "validate": "LG E66 0.5C at development temperatures + 1C at development temperatures; blind temperature holdouts 0C and 40C all test types",
+    "validate": "LG E66 development temperatures (-20,-10,10,25°C): ONLY Dis_0p5C is validation. Dis_1C is reserved as BLIND_TYPE for all development temperatures. At temperature holdouts 0 and 40°C, EVERY test type is BLIND_TEMPERATURE. 25°C Drive Cycle already exposed: DEVELOPMENT_DESCRIPTIVE_ONLY, not blind.",
     "predictions": "terminal V(t) under measured current profile using known initial SOC from development protocol (no fitted test SOC) and frozen input temperature treatment",
-    "metrics": "RMSE voltage V by full independent session, also MAE and temporal residual diagnostics; report per temperature/type and macro by independent sessions",
-    "primary_threshold_assumed": "cell voltage holdout RMSE <=0.100 V, no retuning; compare cubic vs linear and report both regardless of who wins",
-    "scope": "Tests transfer of ECM structure under cell-scale experimental regimes. Does not validate the 2022 Taycan 4S pack simulator or certified HV diagnosis."
+    "metrics": "Session-level RMSE and MAE of terminal voltage in volts (and mV display), stratified by temperature and test type; compare ECM_1RC_LINEAR_OCV, ECM_1RC_CUBIC_OCV, ECM_2RC_CUBIC_OCV fitted only on development-fit; report OCV model difference and independent blind-pair results. Proposed good <=30mV, acceptable <=60mV, else fail, with source-literature benchmark held NOT VERIFIED.",
+    "primary_threshold_assumed": "Session-level blind cell-voltage RMSE <=0.030 V: GOOD; >0.030 and <=0.060 V: ACCEPTABLE; >0.060 V: FAIL. These are PRE-ASSUMED engineering categories, not Porsche or McMaster pass thresholds; report each regime/temperature, session macro and tail/worst-case regardless of category.",
+    "scope": "Tests transfer of ECM structure under cell-scale experimental regimes. Does not validate the 2022 Taycan 4S pack simulator or certified HV diagnosis.",
+    "reference_models": [
+      {
+        "id": "ECM_1RC_LINEAR_OCV",
+        "ocv": "linear",
+        "RC_branches": 1,
+        "primary": true
+      },
+      {
+        "id": "ECM_1RC_CUBIC_OCV",
+        "ocv": "degree-3 polynomial",
+        "RC_branches": 1,
+        "primary": false
+      },
+      {
+        "id": "ECM_2RC_CUBIC_OCV",
+        "ocv": "degree-3 polynomial",
+        "RC_branches": 2,
+        "primary": false,
+        "parameters": [
+          "R0",
+          "R1",
+          "C1",
+          "R2",
+          "C2"
+        ],
+        "purpose": "structural error floor comparator only, not a replacement for frozen Stage3"
+      }
+    ],
+    "literature_benchmark": {
+      "target": "Numerical terminal-voltage RMSE from original McMaster thesis for LG E66 cell using second-order ECM, if available and confirmed",
+      "status": "NÃO VERIFICADO / DO NOT SUBSTITUTE NUMBERS",
+      "search_evidence": "McMaster Uwalaka 2024 ITEC cell/module performance publication located (https://doi.org/10.1109/ITEC60657.2024.10599015), but no reproducible numerical 2RC voltage RMSE figure for identical LG E66 split found in verified source; 2026 Energy paper uses LG E66 1RC/2RC but is not McMaster thesis.",
+      "policy": "No external quantitative comparison until exact thesis citation, figure/table, voltage units, cell identity, temperature, current sequence, SOC initialization and evaluation regime are verified. Meanwhile calculate internal 2RC RMSE on identical held-out LG E66 sessions as reference; label internal, NOT literature benchmark.",
+      "source_to_verify": "Original thesis PDF/DOI or institutional repository page, not only a cited abstract."
+    }
   },
   "LG_E66_split": {
     "source_original": "https://doi.org/10.5683/SP3/7JP3NM",
@@ -230,8 +341,9 @@
       "Dis_0p5C"
     ],
     "cell_test_types_blind_holdout": [
-      "Dis_1C",
-      "Drive Cycles except pre-exposed 25degC recording"
+      "Dis_1C at development temperatures",
+      "Drive Cycles at development temperatures EXCEPT pre-exposed 25degC recording",
+      "all tests at 0degC and 40degC"
     ],
     "previously_exposed_numeric_series": [
       "25degC C20Dis",
@@ -247,7 +359,76 @@
       "25degC HPPC": "EXPOSED_DEVELOPMENT_ONLY; 403514 observations inspected pre-freeze; prohibited as blind holdout",
       "25degC C20Dis": "EXPOSED_DEVELOPMENT_ONLY; 2997 observations inspected pre-freeze",
       "25degC Drive Cycle": "EXPOSED_DESCRIPTIVE_ONLY; 858862 observations inspected pre-freeze; prohibited as virgin blind holdout"
-    }
+    },
+    "temperature_test_role_table": [
+      {
+        "temp_C": -20,
+        "C20Dis": "DEVELOPMENT_FIT",
+        "Cap_C_3": "DEVELOPMENT_FIT",
+        "HPPC": "DEVELOPMENT_FIT",
+        "GITT": "DEVELOPMENT_FIT",
+        "C20DisCh": "DEVELOPMENT_FIT",
+        "Dis_0p5C": "VALIDATION",
+        "Dis_1C": "BLIND_TYPE",
+        "Drive_Cycles": "BLIND_TYPE"
+      },
+      {
+        "temp_C": -10,
+        "C20Dis": "DEVELOPMENT_FIT",
+        "Cap_C_3": "DEVELOPMENT_FIT",
+        "HPPC": "DEVELOPMENT_FIT",
+        "GITT": "DEVELOPMENT_FIT",
+        "C20DisCh": "DEVELOPMENT_FIT",
+        "Dis_0p5C": "VALIDATION",
+        "Dis_1C": "BLIND_TYPE",
+        "Drive_Cycles": "BLIND_TYPE"
+      },
+      {
+        "temp_C": 0,
+        "C20Dis": "BLIND_TEMPERATURE",
+        "Cap_C_3": "BLIND_TEMPERATURE",
+        "HPPC": "BLIND_TEMPERATURE",
+        "GITT": "BLIND_TEMPERATURE",
+        "C20DisCh": "BLIND_TEMPERATURE",
+        "Dis_0p5C": "BLIND_TEMPERATURE",
+        "Dis_1C": "BLIND_TEMPERATURE",
+        "Drive_Cycles": "BLIND_TEMPERATURE"
+      },
+      {
+        "temp_C": 10,
+        "C20Dis": "DEVELOPMENT_FIT",
+        "Cap_C_3": "DEVELOPMENT_FIT",
+        "HPPC": "DEVELOPMENT_FIT",
+        "GITT": "DEVELOPMENT_FIT",
+        "C20DisCh": "DEVELOPMENT_FIT",
+        "Dis_0p5C": "VALIDATION",
+        "Dis_1C": "BLIND_TYPE",
+        "Drive_Cycles": "BLIND_TYPE"
+      },
+      {
+        "temp_C": 25,
+        "C20Dis": "EXPOSED_DEVELOPMENT_FIT_ONLY",
+        "Cap_C_3": "DEVELOPMENT_FIT",
+        "HPPC": "EXPOSED_DEVELOPMENT_FIT_ONLY",
+        "GITT": "DEVELOPMENT_FIT",
+        "C20DisCh": "DEVELOPMENT_FIT",
+        "Dis_0p5C": "VALIDATION",
+        "Dis_1C": "BLIND_TYPE",
+        "Drive_Cycles": "EXPOSED_DEVELOPMENT_DESCRIPTIVE_ONLY"
+      },
+      {
+        "temp_C": 40,
+        "C20Dis": "BLIND_TEMPERATURE",
+        "Cap_C_3": "BLIND_TEMPERATURE",
+        "HPPC": "BLIND_TEMPERATURE",
+        "GITT": "BLIND_TEMPERATURE",
+        "C20DisCh": "BLIND_TEMPERATURE",
+        "Dis_0p5C": "BLIND_TEMPERATURE",
+        "Dis_1C": "BLIND_TEMPERATURE",
+        "Drive_Cycles": "BLIND_TEMPERATURE"
+      }
+    ],
+    "single_source_of_truth_for_split": "temperature_test_role_table overrides earlier per-type shorthand, includes explicit pre-exposed 25C HPPC and C20Dis; no fit from any blind cell time series"
   },
   "Oxford_split": {
     "development_train": [
@@ -296,7 +477,167 @@
       "regularized multinomial logistic regression on identical observed features, train-only standardization, validation-only tuning"
     ],
     "evaluation_design": "Holdout by whole episode / whole cell. Macro by episode, paired bootstrap by episode, do not split correlated timestamps across train and test.",
-    "baseline_guard": "No classifier, network or fitting during unapproved Stage 4, except preregistration. Stage 5+ performance metrics specified but not executed; do not label pre-registration as passed acceptance."
+    "baseline_guard": "No classifier, network or fitting during unapproved Stage 4, except preregistration. Stage 5+ performance metrics specified but not executed; do not label pre-registration as passed acceptance.",
+    "observation_unit_and_features": {
+      "observation_unit": "ONE 6-hour independently seeded episode (not individual sample, not vehicle); observations at each 5- or 10-second numerical step. Full episode is assigned to exactly one train/validation/test split. With paired scenarios cluster uncertainties by independent seed/profile group.",
+      "per_step_raw_channels": "Only the following preapproved OBDb IDs and 28x6 group-voltage / 28x3 module-temperature families: TAYCAN_HVBAT_VOLT, TAYCAN_BMS_I, TAYCAN_HVBAT_CURRENT, TAYCAN_BMS_SOC, TAYCAN_HVBAT_SOC_DISP, TAYCAN_EM_TORQ_1/2, TAYCAN_EM_RPM_1/2, TAYCAN_DIFF_MOTOR_T, TAYCAN_HV_ISO_POS_SYS, TAYCAN_HV_ISO_NEG_SYS, TAYCAN_HVBAT_ISO_POS, TAYCAN_HVBAT_ISO_NEG, TAYCAN_HVBAT_MOD{1..28}_C{1..6}_V, TAYCAN_HVBAT_MOD{1..28}_T{1..3}. No truth, labels, injected severities, fault power, parameters or seeds as features.",
+      "temporal_aggregation": "Use only finite measured observations. At each sampled step compute derived signals as specified. Per episode aggregate exactly listed features below. std=sample SD (ddof1); slope via unweighted OLS time (hours); quantile via linear interpolation; regression via OLS intercept and measured tau2/omega terms with train-only fixed ridge=1e-9 purely numerical; mark nonestimable if rank deficient; missing numerical values imputed from TRAIN median with missingness masks fixed train-only. No label-dependent feature selection.",
+      "definition": [
+        [
+          "F01",
+          "mean_R33_W",
+          "time_mean(V*I - sum_j tau_j*2*pi*rpm_j/60)",
+          "W"
+        ],
+        [
+          "F02",
+          "sd_R33_W",
+          "time_sample_sd(R33)",
+          "W"
+        ],
+        [
+          "F03",
+          "beta_tau2",
+          "OLS_R33_on_intercept_sumTau2_sumOmega_coefficient_sumTau2",
+          "W/(Nm^2)"
+        ],
+        [
+          "F04",
+          "beta_omega",
+          "OLS_R33_on_intercept_sumTau2_sumOmega_coefficient_sumOmega",
+          "W/(rad/s)"
+        ],
+        [
+          "F05",
+          "sd_regressed_R33_W",
+          "OLS_time_residual_sample_sd",
+          "W"
+        ],
+        [
+          "F06",
+          "mean_current_diff_A",
+          "time_mean(BMS_I-HVBAT_CURRENT)",
+          "A"
+        ],
+        [
+          "F07",
+          "sd_current_diff_A",
+          "time_sample_sd(BMS_I-HVBAT_CURRENT)",
+          "A"
+        ],
+        [
+          "F08",
+          "mean_module_pair_voltage_spread_V",
+          "time_mean(max_168_groupV - min_168_groupV)",
+          "V"
+        ],
+        [
+          "F09",
+          "p95_module_pair_voltage_spread_V",
+          "time_p95(max_168_groupV - min_168_groupV)",
+          "V"
+        ],
+        [
+          "F10",
+          "mean_pack_group_voltage_consistency_V",
+          "time_mean(HVBAT_VOLT-sum_168_groupV)",
+          "V"
+        ],
+        [
+          "F11",
+          "sd_pack_group_voltage_consistency_V",
+          "time_sample_sd(HVBAT_VOLT-sum_168_groupV)",
+          "V"
+        ],
+        [
+          "F12",
+          "mean_BMS_SOC_pct",
+          "time_mean(BMS_SOC)",
+          "%"
+        ],
+        [
+          "F13",
+          "SOC_slope_pct_per_hour",
+          "OLS_slope(BMS_SOC,time_h)",
+          "%/h"
+        ],
+        [
+          "F14",
+          "mean_SOC_display_difference_pct",
+          "time_mean(BMS_SOC-HVBAT_SOC_DISP)",
+          "%"
+        ],
+        [
+          "F15",
+          "mean_thermal_spread_C",
+          "time_mean(max_module_avgT-min_module_avgT), module_avgT=mean(T1,T2,T3)",
+          "degC"
+        ],
+        [
+          "F16",
+          "p95_thermal_spread_C",
+          "time_p95(max_module_avgT-min_module_avgT)",
+          "degC"
+        ],
+        [
+          "F17",
+          "max_internal_module_T_spread_C",
+          "time_max(max_of_28_modules[max(T1,T2,T3)-min(T1,T2,T3)])",
+          "degC"
+        ],
+        [
+          "F18",
+          "mean_DIFF_MOTOR_T_C",
+          "time_mean(DIFF_MOTOR_T)",
+          "degC"
+        ],
+        [
+          "F19",
+          "slope_DIFF_MOTOR_T_C_per_hour",
+          "OLS_slope(DIFF_MOTOR_T,time_h)",
+          "degC/h"
+        ],
+        [
+          "F20",
+          "integrated_observed_HV_kWh",
+          "trapezoidal_integral(V*I,dt_seconds)/3600000",
+          "kWh"
+        ],
+        [
+          "F21",
+          "negative_DC_power_fraction",
+          "fraction_valid_samples(V*I < 0)",
+          "fraction"
+        ],
+        [
+          "F22",
+          "mean_min_isolation_kohm",
+          "time_mean(min_of_4_isolation_channels)",
+          "kOhm"
+        ],
+        [
+          "F23",
+          "min_isolation_kohm",
+          "time_min(min_of_4_isolation_channels)",
+          "kOhm"
+        ],
+        [
+          "F24",
+          "time_mean_sum_torque_squared",
+          "time_mean(sum_j tau_j^2)",
+          "(Nm)^2"
+        ],
+        [
+          "F25",
+          "time_mean_sum_abs_angular_speed",
+          "time_mean(sum_j abs(2*pi*rpm_j/60))",
+          "rad/s"
+        ]
+      ],
+      "canonical_missingness": "If a required channel is genuinely not emitted under a structural mode, numeric feature becomes NA, recorded with fixed 0/1 mask. Median training-only imputation and mask appended, so classifiers see the identical numeric+mask vector. Never replace missing sensors with simulated true states or silently zero.",
+      "shared_inputs_rule": "All baselines and subsequent supervised comparators consume same 25 feature values plus 25 masks; any Bayesian network using per-step emission may ALSO be evaluated against fixed episode-level summary interface without oracle covariates, and any expanded inputs would need new explicit approval.",
+      "label_and_meta_policy": "Hypothesis label used only as outcome, never feature. Severity, structural mode, nuisance scales, φ, profile ID, seeds, initial SOC, injected faults and latent truth are metadata for splits/stratified reporting only, NOT predictor features. No using access to held-out outcomes for feature selection."
+    }
   },
   "execution_state": {
     "registered": true,
@@ -308,5 +649,6 @@
     "reason": "Container runtime unavailable; Wolfram analytic checks only",
     "github_history_audit": "GitHub API: sole listed branch main, 15 commits enumerated and each committed tree recursively inspected; no path bearing holdout_quarantine, B0018 or raw MAT/ZIP. No claim about unreachable/orphaned Git objects, private forks, or other repositories.",
     "review_gate": "NOT APPROVED; mathematical checks alone do not fulfill simulation or Oxford flagged QC acceptance criteria."
-  }
+  },
+  "parent_stage4_freeze_sha256": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8"
 }
