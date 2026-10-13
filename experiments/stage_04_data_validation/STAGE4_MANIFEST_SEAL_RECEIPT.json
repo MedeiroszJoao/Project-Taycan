@@ -1,0 +1,71 @@
+{
+  "schema": "project-taycan-stage4-append-only-manifest-receipt-2026-10-13",
+  "state": "MANIFEST_SEALED; ORIGINAL_PREREG_AND_STAGE3_UNCHANGED; STAGE4_NOT_APPROVED; ZERO_EPISODES_EXECUTED",
+  "parent_sealed": {
+    "path": "experiments/stage_04_data_validation/REVISION_PREREG_ADDENDUM.json",
+    "sha256": "1c3c50149e50bceb3f14b8a334b248c225cdc8478128cf88952051ea0bce1b21",
+    "git_blob_sha1": "acbf92a36fadb4f7e0a5c9e2d30e80186d4ce19c",
+    "commit": "8776ede60adb25ec08815253b6177620eb4a6a8b"
+  },
+  "append_only_amendment": {
+    "path": "experiments/stage_04_data_validation/STAGE4_APPEND_ONLY_AMENDMENT.json",
+    "sha256": "18c5c8f104f2909a1f23a594eafd8e26a77a1ea4f80e285e0e1396b5a1da29ba",
+    "git_blob_sha1": "07124a8d0c854a66de77dbe6f0991e9014df991f",
+    "commit": "f1bf9bf62ac5680f0bc729e7a596e8859598b245"
+  },
+  "generator": {
+    "path": "scripts/generate_stage4_episode_manifest.mjs",
+    "git_blob_sha1": "1be1087b9e9e490f66542e66b36ba2c69ac5c7d2",
+    "commit": "c3391ab5d451c51d4bc6c5015dc0ea287307bf97",
+    "reproduction": "node scripts/generate_stage4_episode_manifest.mjs --verify",
+    "source_only": "JavaScript ES module, Node.js builtins; no pip/npm third-party packages; deterministic SHA-256 and xorshift32"
+  },
+  "manifest": {
+    "path": "experiments/stage_04_data_validation/STAGE4_EPISODE_MANIFEST.csv",
+    "commit": "2aa85b3b713014850bfc1e9fa8953263e88d9bc8",
+    "sha256": "1894681c771335e5ecb06f8fa421c11aaf8806c5f5ebab3182035e44d28b86f0",
+    "git_blob_sha1": "af91c16f2b234e1f3f964ae73d6ea27c72f1aad4",
+    "utf8_byte_length": 574859,
+    "lines_including_header": 2233,
+    "columns": 27,
+    "episodes": 2232,
+    "episodes_per_split": {
+      "train": 720,
+      "validation": 360,
+      "test": 1152
+    },
+    "episodes_per_profile": {
+      "NOMINAL_6H": 1656,
+      "SHIFT_REGEN_COLD_6H": 576
+    },
+    "test_per_profile": {
+      "NOMINAL_6H": 576,
+      "SHIFT_REGEN_COLD_6H": 576
+    },
+    "unique_episode_ids": 2232,
+    "seed_streams_per_episode": 4,
+    "unique_32bit_seeds_global": 8928,
+    "seed_collisions": 0,
+    "duplicate_episode_ids": 0,
+    "cross_split_seed_overlaps": 0,
+    "unique_test_block_profile_structural_combos": 1152,
+    "soc_phi_values": [
+      0.6,
+      0.9,
+      0.97,
+      0.99,
+      0.995,
+      0.9995,
+      0.9999
+    ],
+    "manifest_check": "Re-read committed CSV via GitHub, reconstructed counts/IDs/seeds/split overlaps and 1152 exact block-profile-combo keys. SHA256 computed by repository-generator function (passed SHA256('abc') standard test vector) matched generated content."
+  },
+  "next_gate": "NO simulation until executable approved Stage3 source is restored, model.py and freeze.json locally rehashed, and training-only H00 battery-side charge calibration for NOMINAL_6H and SHIFT_REGEN_COLD_6H converges to tolerance <=0.5 pp with 8-12 bisection iterations. Then episodic generation only, in manifest order.",
+  "execution_status": {
+    "charge_calibration": "NOT EXECUTED: local Python/container failed twice (ClientError/runtime reset)",
+    "physical_episodes": "0 of 2232",
+    "r33_observed_statistics": "NOT EXECUTED",
+    "Oxford_QC": "NOT REGENERATED",
+    "originals_modified": false
+  }
+}
