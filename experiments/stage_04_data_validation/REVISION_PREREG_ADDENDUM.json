@@ -1,6 +1,6 @@
 {
   "schema": "taycan-stage4-revision-preregistration-addendum-2026-10-12",
-  "status": "AMENDED_FOR_REVIEW_2026-10-12; UNAPPROVED; NO REVISED SIMULATIONS EXECUTED",
+  "status": "SEALED_PREREGISTRATION_ONLY; STAGE4_UNAPPROVED; NO_NEW_EPISODES_EXECUTED",
   "date": "2026-10-12",
   "parent_stage4_freeze": "freeze.json; preserve original unchanged; SHA-256 supplied and externally recalculated by project reviewer; byte identity on runner to be verified before episode execution",
   "frozen_stage3_model_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
@@ -34,20 +34,20 @@
     "per_fault_hypothesis": {
       "train_per_severity": 20,
       "validation_per_severity": 10,
-      "test_per_severity": 17,
-      "total": 141
+      "test_per_severity": 32,
+      "total": 186
     },
     "healthy_H00": {
       "train": 60,
       "validation": 30,
-      "test": 51,
-      "total": 141
+      "test": 96,
+      "total": 186
     },
     "aggregate": {
       "train": 720,
       "validation": 360,
-      "test": 612,
-      "total": 1692
+      "test": 1152,
+      "total": 2232
     },
     "existing_seeded_TR01_TR02_TE01_TE02": "Retain historical IDs and seeds; no retroactive renaming, repeated measurements of previous comparisons excluded from new post-freeze scoring.",
     "new_seed_generation": "Per episode use SHA-256 of exact UTF-8 string 'TAYCAN4R|<hypothesis>|<split>|<severity>|<replicate>|<physics|observer|aux|nuisance>', take first 8 hexadecimal digits as unsigned 32-bit integer; stable ordering and episode manifest written before running. Existing TR/TE historical seeds unchanged; revised episodes get new keys.",
@@ -104,7 +104,7 @@
       "id": "SHIFT_REGEN_COLD",
       "reference": "Train H00 nominal profile at assumed 25C ambient, if existing frozen Stage3 interface supports it.",
       "scenario": "Whole-episode six-hour shifted driving profile with more regeneration and lower traction torque; nominal ambient 10C if existing interface supports it. Use same fixed training-derived charging boundary for matched hypotheses; no per-test tuning.",
-      "allocation": "Within each of three fault severities per hypothesis: 9 nominal and 8 shifted independent test episodes; H00 27 nominal and 24 shifted. Report performance by nominal/shift subgroup and pooled. Train and validation nominal; disjoint episode seeds for split. If ambient change unsupported, run shifted duty-cycle only with explicit ambient_shift_not_modeled flag.",
+      "allocation": "Each hypothesis including H00 has three quota/severity strata; in each stratum run TWO independent 16-episode test blocks. In EACH block: 8 NOMINAL + 8 SHIFTED, exactly one per acquisition_mode×counter_source×diff_motor_t_mapping combination for each profile. Therefore 16 nominal+16 shifted per stratum, 48+48 per hypothesis, 576+576 overall. For H00 strata are quota labels only. Training/validation remain nominal and use the block/remainder assignment rule.",
       "assumed_factors": {
         "nominal_ambient_C": 25,
         "shift_ambient_C": 10,
@@ -113,20 +113,22 @@
       },
       "pre_specified": true,
       "total_test_distribution": {
-        "nominal": 324,
-        "shifted": 288
+        "nominal": 576,
+        "shifted": 576
       },
       "duration_h": 6,
       "same_duration_as_nominal": true
     },
     "statistical_precision_pre_registered": {
-      "primary_unit": "independent episode, not timestamp",
+      "primary_unit": "episode with disjoint seeds; paired observations must be clustered appropriately",
       "nominal_assumed_accuracy": 0.8,
-      "per_hypothesis_n_test": 51,
-      "approx_95pct_normal_halfwidth_per_class_pp": 10.9782,
-      "n_test_total": 612,
-      "approx_95pct_normal_halfwidth_overall_pp": 3.1691,
-      "warning": "These are approximate binomial calculations assuming independent same-distribution episodes. Report Wilson confidence intervals, use clustered bootstrap where repeats share drivers/seeds; worst-case p=0.5 gives larger widths; shift-stratified intervals wider."
+      "per_hypothesis_n_test": 96,
+      "per_hypothesis_acquisition_mode_n_test": 48,
+      "n_test_total": 1152,
+      "approx_95pct_normal_halfwidth_per_class_pp": 8.0017,
+      "approx_95pct_normal_halfwidth_acquisition_mode_pp": 11.3161,
+      "approx_95pct_normal_halfwidth_overall_pp": 2.31,
+      "warning": "Approximate Wald/binomial widths only, not achieved measured coverage, and assume independent successes; primary report acquisition_mode with n≈48 per class each; secondary counter_source/DIFF pooled over strata, severity and profile, with n and intervals; Wilson CIs and clustered episode bootstrap preferred. Train n20 and validation n10 strata are approximately balanced, not exact eight-way balanced."
     },
     "structural_nuisance_design": {
       "method": "Balanced, fixed stratification instead of stochastic discovery; all combinations treated as methodological alternatives, not true Porsche design.",
@@ -143,7 +145,7 @@
         "winding_proxy",
         "uninformative"
       ],
-      "assignment": "Eight combos (2x2x2) sorted lexicographically. Within each class/split/severity enumerate replicate=0..N-1; deterministically rotate the 8-combo list by SHA256 'TAYCAN4R|struct|hypothesis|split|severity' first byte %8; map replicate mod8. Balance differences across combos <=1 within each split/severity; record combo and seed per episode BEFORE execution. Report class-by-mode metrics with sample sizes; DIFF-mode is not a real sensor calibration.",
+      "assignment": "Eight lexicographically ordered combinations of acquisition_mode (independent/shared) × counter_source (BMS_I/HVBAT_CURRENT) × diff_motor_t_mapping (winding_proxy/uninformative). For EACH hypothesis×severity×split, use deterministic SHA256-derived cyclic rotation to order combinations. TRAIN n20=2 full blocks of eight + first four of rotated third block (residue four); VALIDATION n10=1 full block + first two of rotated next block (residue two). Fixed nuisance seeds are unique per episode; report per-factor counts; repeated residues distributed by deterministic class/split/severity rotation, not tuned by outcomes. TEST n32 per severity = TWO preregistered independent replicate blocks, each with exactly 8 NOMINAL + 8 SHIFTED, one episode per structural combination per profile. H00 uses three pseudo-severity planning strata only, without injecting severity and without treating it as a predictor. The 16-episode blocks satisfy the user's exact 8+8 structure, and the second independent replication preserves the earlier >=50 blind-test-episodes-per-hypothesis requirement.",
       "soc_phi_assignment": {
         "grid": [
           0.6,
@@ -157,7 +159,34 @@
         "method": "Deterministic 7-level round robin over ordered independent episode indices within each hypothesis and split; rotation SHA256 of 'TAYCAN4R|phi|hypothesis|split' first byte %7, then assign grid[(replicate_global+offset)%7]. Applied to observer only; never retune by performance; make φ≥0.9995 sensitivity runs mandatory in both nominal and shifted subsets.",
         "sensitivity": "Per φ report measured bias/drift, error SD, diagnostic metric stratification, and exact-dt AR1 innovations; if φ leads clipping, record clipping frequency. The test may use high φ out-of-original-assumption-range 0.995; explicitly declared hypothetical extension."
       },
-      "nuisance_draw_scope": "Per-episode continuous ranges from existing parameters_assumed (uniform sampling fixed seeds), while structural factors and φ follow the fixed assignment schedule."
+      "nuisance_draw_scope": "Per-episode continuous ranges from existing parameters_assumed (uniform sampling fixed seeds), while structural factors and φ follow the fixed assignment schedule.",
+      "train_validation_block_remainder": {
+        "train": {
+          "full_blocks_of_8": 2,
+          "remaining": 4,
+          "rotation": "SHA256(TAYCAN4R|struct|hypothesis|split|severity) first byte mod 8"
+        },
+        "validation": {
+          "full_blocks_of_8": 1,
+          "remaining": 2,
+          "rotation": "same independent split-specific SHA256 rotation"
+        },
+        "test": {
+          "blocks_per_severity": 2,
+          "nominal_per_block": 8,
+          "shifted_per_block": 8,
+          "each_of_8_structural_strata_per_profile_per_block": 1,
+          "total_per_severity": 32
+        },
+        "healthy_planning": {
+          "pseudo_severities": [
+            "H00_A",
+            "H00_B",
+            "H00_C"
+          ],
+          "purpose": "quota balance only, NOT input/label/severity"
+        }
+      }
     }
   },
   "energy_balanced_long_horizon": {
@@ -251,15 +280,34 @@
       ],
       "noise_terciles_definition": "Before any classification, use observed *assigned* sensor-noise scales only (no labels/results): score sqrt((sigma_torque_Nm/8)^2+(sigma_rpm/35)^2) using per-episode draws; train split alone fixes 1/3 and 2/3 score quantile edges for low/medium/high; freeze and apply same boundaries to val/test. Persistent bias is stratified separately, not folded into white noise score.",
       "report": [
-        "R33 regression versus (intercept, sum tau_j^2, sum omega_j) using only measured signals",
-        "mean_and_SD_of_R33",
-        "regression_coefficients_SE_CI_clustered_by_episode",
-        "fault_classification_accuracy_by_fault_by_severity_by_noise_tercile",
-        "results_by_acquisition_counter_diff_mode",
-        "bias_retained_vs_oracle_bias_removed",
-        "note low-severity detection limitations and limited per-stratum precision"
+        "R33 regression on [1, sum torque_j, sum torque_j_squared, sum omega_j, sum torque_j*omega_j] using OBSERVED torque/RPM only",
+        "mean and SD of observed R33 by fault, severity, profile, noise tercile and acquisition_mode",
+        "coefficients SE and 95% interval clustered by episode",
+        "primary diagnostic accuracy by acquisition_mode, class, severity, noise tercile and nominal/shift profiles, always with counts and intervals",
+        "counter_source and diff_motor_t_mapping as POOLED secondary nuisance strata, with no class-wise eight-way headline claim",
+        "bias retained versus oracle-only bias removed",
+        "rank/collinearity diagnostics and low-severity unidentifiability caveat"
       ],
-      "regression_caveat": "Persistent torque bias produces terms proportional to omega and changes intercept; inverter constant loss overlaps intercept/auxiliary loads. Do not claim identifiability just because regression coefficient for tau^2 differs on synthetic data."
+      "regression_caveat": "Persistent torque bias enters approximately as a term proportional to omega; RPM bias enters approximately as a term proportional to torque; copper excess follows torque²; efficiency and mechanical conversion follow torque·omega. With only aggregated sums, arbitrary sensor-specific biases are not fully identifiable; power-residual intercept confounds I01 and auxiliaries. Rank diagnostics and conditional interpretation are obligatory.",
+      "regression_basis": {
+        "ordered_terms": [
+          "1",
+          "Σ_j τ_j",
+          "Σ_j τ_j²",
+          "Σ_j ω_j",
+          "Σ_j(τ_j·ω_j)"
+        ],
+        "coefficients_interpretation": {
+          "1": "constant extra losses, auxiliary load and persistent baseline offset; cannot identify inverter in isolation",
+          "Σ_j τ_j": "RPM measurement bias contributes to inferred P_mechanical approximately -k Σ_j τ_j δRPM_j; mode-dependent nuisance",
+          "Σ_j τ_j²": "motor copper/resistive loss model M01 proportional to torque squared",
+          "Σ_j ω_j": "torque measurement bias contributes approximately -Σ_j ω_j δτ_j",
+          "Σ_j(τ_j·ω_j)": "efficiency-scaled mechanical power losses and torque×angular-speed coupling; potentially collinear with observed R33 under restricted profiles"
+        },
+        "omega_units": "radian/second = 2π RPM/60",
+        "fitting_guard": "Compute R33(t) from observed voltage, current, torques and angular speeds only. Estimate five coefficients by fixed OLS, using the existing fixed 1e-9 numerical regularizer only when required by the preexisting feature pipeline; report design rank and condition number; never silently interpret singular coefficients. Fit quality assessed by whole episode, not by shuffled seconds; numeric stability flags not hidden.",
+        "accuracy_reporting": "Primary by acquisition_mode within each hypothesis and severity; secondary counter_source and diff_motor_t_mapping pooled, report profile and noise tercile with denominators; no statistical significance presumed in sparse cells."
+      }
     }
   },
   "external_validation_protocol": {
@@ -314,6 +362,27 @@
       "search_evidence": "McMaster Uwalaka 2024 ITEC cell/module performance publication located (https://doi.org/10.1109/ITEC60657.2024.10599015), but no reproducible numerical 2RC voltage RMSE figure for identical LG E66 split found in verified source; 2026 Energy paper uses LG E66 1RC/2RC but is not McMaster thesis.",
       "policy": "No external quantitative comparison until exact thesis citation, figure/table, voltage units, cell identity, temperature, current sequence, SOC initialization and evaluation regime are verified. Meanwhile calculate internal 2RC RMSE on identical held-out LG E66 sessions as reference; label internal, NOT literature benchmark.",
       "source_to_verify": "Original thesis PDF/DOI or institutional repository page, not only a cited abstract."
+    },
+    "temperature_transfer_protocol": {
+      "status": "PRE-SEALED; no new LG E66 numerical time series opened",
+      "temperature_train_C": [
+        -20,
+        -10,
+        10,
+        25
+      ],
+      "temperature_blind_C": [
+        0,
+        40
+      ],
+      "kelvin": "T_K=T_C+273.15; T_ref=298.15 K (25 C)",
+      "resistance_arrhenius": "For i=0,1, and i=2 only in 2RC: ln R_i(T)=alpha_Ri + beta_Ri * (1/T_K - 1/T_ref). Fit alpha and beta ONLY on temperature development-fit sessions. Enforces R_i>0; is a phenomenological Arrhenius-like law, not claim of actual chemistry mechanism.",
+      "capacitance_temperature": "For i=1 (and i=2 in 2RC): ln C_i(T)=alpha_Ci + beta_Ci * (1/T_K - 1/T_ref). Fit on development-fit only; C_i>0. Every parameter inferred at blinded temperature solely from these frozen formulas.",
+      "OCV_temperature": "For linear or cubic OCV in SOC s, OCV(s,T)=SUM_{k=0}^p [a_k+b_k*(T_K-T_ref)]*s^k, p=1 or p=3. Fit all coefficients on development-fit temperatures only, no tuning on blind temperatures. Enforce monotonic OCV for 0<=s<=1 if feasible under development constraints; failure must be flagged, not secretly fixed after holdout.",
+      "capacity_25C": "Estimate Q25_Ah from the already EXPOSED 25C C20Dis using elapsed time and negative-discharge current convention Q=integral(|I_discharge| dt)/3600 in ampere-hours; compare independently with absolute delta Ah counter. Only label 'capacity' if record starts fully charged, ends at documented cut-off and no discontinuous time/status; otherwise label observed discharged throughput and mark Q25 non-identifiable. No fixed 60/65/64.6 nominal imposed.",
+      "capacity_transfer": "If a complete usable Q25 estimate exists, set ln Q(T)=ln Q25 + beta_Q*(1/T_K-1/T_ref), with beta_Q fitted exclusively to complete development C20 discharges at -20,-10,10 C and Q25 anchor, positive Q. If development data cannot identify beta_Q, fix beta_Q=0 and explicitly flag this as an ASSUMED constant-capacity fallback predeclared here; do not choose based on any blind holdout.",
+      "interpretation": "At 0 C formula evaluates inside development temperature range but still model-based interpolation; at 40 C extrapolates beyond 25 C and must report extrapolation flag and predictive uncertainty. Independent cells tested at different temperatures can confound temperature effect with cell variability; report limitation and no Taycan pack claims.",
+      "two_RC": "For 2RC fit R0/R1/C1/R2/C2 with same formulas; impose tau1=R1*C1 <= tau2=R2*C2 in all development temperatures to avoid branch label switching, and report failures or poor identifiability without using blind data."
     }
   },
   "LG_E66_split": {
@@ -352,7 +421,7 @@
     ],
     "previously_exposed_policy": "Any pre-inspected LG E66 numerical series, specifically 25C HPPC, C20Dis and Drive Cycle, must never contribute to blind test claims. 25C HPPC/C20Dis may be used for development; 25C drive cycle descriptive only unless explicit prospective development fit protocol; 0C/40C uninspected numerical holdouts preserved.",
     "README_nominal_capacity_Ah": 65,
-    "nominal_capacity_conflict": "Another group page reportedly lists 60Ah; preserve 65Ah as README stated value and treat disagreement as UNRESOLVED pending identity/revision check. Do not silently normalize currents based on 60 or 65.",
+    "nominal_capacity_conflict": "README says 65 Ah; McMaster catalog labels dataset 60 Ah; BatteryDesign secondary lists nominal 64.6 Ah (minimum 63.5 Ah) for E66a. Do not silently choose any; predefine development-only C20Dis 25C integration and its completeness QC as experimental estimate.",
     "license": "CC BY 4.0 confirmed in both original README files",
     "no_new_LG_numeric_series_opened_during_freeze": true,
     "previous_numeric_exposure": {
@@ -428,7 +497,21 @@
         "Drive_Cycles": "BLIND_TEMPERATURE"
       }
     ],
-    "single_source_of_truth_for_split": "temperature_test_role_table overrides earlier per-type shorthand, includes explicit pre-exposed 25C HPPC and C20Dis; no fit from any blind cell time series"
+    "single_source_of_truth_for_split": "temperature_test_role_table overrides earlier per-type shorthand, includes explicit pre-exposed 25C HPPC and C20Dis; no fit from any blind cell time series",
+    "capacity_source_discrepancy": {
+      "McMaster_catalog_Ah": 60,
+      "original_dataset_README_nominal_Ah": 65,
+      "BatteryDesign_LG_E66a_nominal_Ah": 64.6,
+      "BatteryDesign_minimum_Ah": 63.5,
+      "source_urls": [
+        "https://battery.mcmaster.ca/research/datasets-and-algorithms/",
+        "https://doi.org/10.5683/SP3/7JP3NM",
+        "https://www.batterydesign.net/lg-e66a/"
+      ],
+      "resolution": "Do not declare one nominal correct from sources alone. Estimate measured available discharged Ah from EXPOSED 25degC C20Dis only under full-cycle completeness tests; report estimated value, integration convention, first/last timestamp, cutoffs, uncertainties, and difference from all three source claims. No use of 0/40C holdouts for selection.",
+      "previous_exposure": "25degC C20Dis, 25degC HPPC, and 25degC Drive Cycle were numerically inspected before this split. The first two are development-only; Drive Cycle is descriptive-only."
+    },
+    "capacity_calibration_stage": "RULE SEALED; numerical capacity estimate NOT EXECUTED in this revision."
   },
   "Oxford_split": {
     "development_train": [
@@ -481,7 +564,7 @@
     "observation_unit_and_features": {
       "observation_unit": "ONE 6-hour independently seeded episode (not individual sample, not vehicle); observations at each 5- or 10-second numerical step. Full episode is assigned to exactly one train/validation/test split. With paired scenarios cluster uncertainties by independent seed/profile group.",
       "per_step_raw_channels": "Only the following preapproved OBDb IDs and 28x6 group-voltage / 28x3 module-temperature families: TAYCAN_HVBAT_VOLT, TAYCAN_BMS_I, TAYCAN_HVBAT_CURRENT, TAYCAN_BMS_SOC, TAYCAN_HVBAT_SOC_DISP, TAYCAN_EM_TORQ_1/2, TAYCAN_EM_RPM_1/2, TAYCAN_DIFF_MOTOR_T, TAYCAN_HV_ISO_POS_SYS, TAYCAN_HV_ISO_NEG_SYS, TAYCAN_HVBAT_ISO_POS, TAYCAN_HVBAT_ISO_NEG, TAYCAN_HVBAT_MOD{1..28}_C{1..6}_V, TAYCAN_HVBAT_MOD{1..28}_T{1..3}. No truth, labels, injected severities, fault power, parameters or seeds as features.",
-      "temporal_aggregation": "Use only finite measured observations. At each sampled step compute derived signals as specified. Per episode aggregate exactly listed features below. std=sample SD (ddof1); slope via unweighted OLS time (hours); quantile via linear interpolation; regression via OLS intercept and measured tau2/omega terms with train-only fixed ridge=1e-9 purely numerical; mark nonestimable if rank deficient; missing numerical values imputed from TRAIN median with missingness masks fixed train-only. No label-dependent feature selection.",
+      "temporal_aggregation": "Use only finite observed channels; build derived signals at each step. For R33 regress on fixed [1, Στ, Στ², Σω, Στω]. Aggregate exactly 27 predeclared features; sample SD ddof=1, unweighted OLS slopes on hours, linear-interpolated quantiles, and fixed regression numeric regularizer 1e-9 when applicable; report rank-deficient fits NA + masks. Any missing data impute using TRAIN-only medians with fixed masks; no feature selection using labels/test.",
       "definition": [
         [
           "F01",
@@ -498,19 +581,19 @@
         [
           "F03",
           "beta_tau2",
-          "OLS_R33_on_intercept_sumTau2_sumOmega_coefficient_sumTau2",
+          "OLS_R33_on_[1,sumTau,sumTau2,sumOmega,sumTauOmega]_coefficient_sumTau2",
           "W/(Nm^2)"
         ],
         [
           "F04",
           "beta_omega",
-          "OLS_R33_on_intercept_sumTau2_sumOmega_coefficient_sumOmega",
+          "OLS_R33_on_[1,sumTau,sumTau2,sumOmega,sumTauOmega]_coefficient_sumOmega",
           "W/(rad/s)"
         ],
         [
           "F05",
           "sd_regressed_R33_W",
-          "OLS_time_residual_sample_sd",
+          "residual_sample_SD_of_full_five_term_R33_regression",
           "W"
         ],
         [
@@ -632,11 +715,24 @@
           "time_mean_sum_abs_angular_speed",
           "time_mean(sum_j abs(2*pi*rpm_j/60))",
           "rad/s"
+        ],
+        [
+          "F26",
+          "beta_tau",
+          "OLS_R33_on_[1,sumTau,sumTau2,sumOmega,sumTauOmega]_coefficient_sumTau",
+          "W/(Nm)"
+        ],
+        [
+          "F27",
+          "beta_tauomega",
+          "OLS_R33_on_[1,sumTau,sumTau2,sumOmega,sumTauOmega]_coefficient_sumTauOmega",
+          "dimensionless"
         ]
       ],
       "canonical_missingness": "If a required channel is genuinely not emitted under a structural mode, numeric feature becomes NA, recorded with fixed 0/1 mask. Median training-only imputation and mask appended, so classifiers see the identical numeric+mask vector. Never replace missing sensors with simulated true states or silently zero.",
-      "shared_inputs_rule": "All baselines and subsequent supervised comparators consume same 25 feature values plus 25 masks; any Bayesian network using per-step emission may ALSO be evaluated against fixed episode-level summary interface without oracle covariates, and any expanded inputs would need new explicit approval.",
-      "label_and_meta_policy": "Hypothesis label used only as outcome, never feature. Severity, structural mode, nuisance scales, φ, profile ID, seeds, initial SOC, injected faults and latent truth are metadata for splits/stratified reporting only, NOT predictor features. No using access to held-out outcomes for feature selection."
+      "shared_inputs_rule": "All Stage 5+ episode-level baselines and supervised comparators consume the SAME 27 numeric feature values plus 27 missingness masks, with training-only imputation/scaling; the DBN can additionally operate on the fixed preapproved per-step observables only, and comparisons must state their interface explicitly. Any expansion requires approval.",
+      "label_and_meta_policy": "Hypothesis label used only as outcome, never feature. Severity, structural mode, nuisance scales, φ, profile ID, seeds, initial SOC, injected faults and latent truth are metadata for splits/stratified reporting only, NOT predictor features. No using access to held-out outcomes for feature selection.",
+      "feature_count": 27
     }
   },
   "execution_state": {
@@ -648,7 +744,12 @@
     "model_fit": false,
     "reason": "Container runtime unavailable; Wolfram analytic checks only",
     "github_history_audit": "GitHub API: sole listed branch main, 15 commits enumerated and each committed tree recursively inspected; no path bearing holdout_quarantine, B0018 or raw MAT/ZIP. No claim about unreachable/orphaned Git objects, private forks, or other repositories.",
-    "review_gate": "NOT APPROVED; mathematical checks alone do not fulfill simulation or Oxford flagged QC acceptance criteria."
+    "review_gate": "NOT APPROVED; mathematical checks alone do not fulfill simulation or Oxford flagged QC acceptance criteria.",
+    "prereg_only_sealed": true,
+    "simulations_still_not_executed": true,
+    "external_lg_fit_not_executed": true,
+    "qc_oxford_not_regenerated": true
   },
-  "parent_stage4_freeze_sha256": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8"
+  "parent_stage4_freeze_sha256": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8",
+  "seal_policy": "Freeze this JSON at the first commit with status SEALED_PREREGISTRATION_ONLY. An independent seal receipt will contain SHA-256(file UTF-8 bytes), Git blob SHA, and commit SHA; do not put a self-referential file hash or current commit ID inside this file. Any future change requires a new version and explicit review before execution."
 }
