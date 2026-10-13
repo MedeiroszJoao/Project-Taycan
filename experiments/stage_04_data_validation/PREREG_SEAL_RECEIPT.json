@@ -1,0 +1,38 @@
+{
+  "seal_schema": "stage4-prereg-seal-receipt-v1",
+  "status": "SEALED_PREREGISTRATION_ONLY; STAGE4_NOT_APPROVED; NO_NEW_SIMULATIONS_EXECUTED",
+  "repository": "MedeiroszJoao/Project-Taycan",
+  "prereg_file": "experiments/stage_04_data_validation/REVISION_PREREG_ADDENDUM.json",
+  "prereg_utf8_bytes": 39560,
+  "prereg_sha256": "1c3c50149e50bceb3f14b8a334b248c225cdc8478128cf88952051ea0bce1b21",
+  "prereg_git_blob_sha1": "acbf92a36fadb4f7e0a5c9e2d30e80186d4ce19c",
+  "commit_containing_sealed_prereg": "8776ede60adb25ec08815253b6177620eb4a6a8b",
+  "parent_original_freeze_sha256": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8",
+  "approved_stage3_model_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
+  "split_total": {
+    "train": 720,
+    "validation": 360,
+    "test": 1152,
+    "total": 2232
+  },
+  "test_block_rule": "2 blocks x (8 nominal+8 shifted) per hypothesis x each of 3 severity/quota strata; 96 tests/class, 1152 total",
+  "metrics_features": 27,
+  "LG_E66_holdout": [
+    0,
+    40
+  ],
+  "LG_E66_exposed": [
+    "25degC HPPC",
+    "25degC C20Dis",
+    "25degC Drive Cycle"
+  ],
+  "SHA256_verification": "Pure deterministic JS SHA-256 of exact UTF8 fetched file bytes, implementation passed the standard abc SHA-256 test vector.",
+  "sealing_model": "Receipt stored in a separate subsequent commit; original JSON content/hash/commit remain immutable. Seal receipt does not recursively include its own hash.",
+  "limitations": [
+    "No local simulation run",
+    "No new LG E66 series opened",
+    "No Oxford QC regenerated",
+    "2RC McMaster literature RMSE still not verified",
+    "The user's original freeze SHA-256 recorded, local execution has not rehashed original file."
+  ]
+}
