@@ -1,0 +1,157 @@
+{
+  "schema": "stage4-append-only-amendment-2026-10-13",
+  "status": "SEALED_AMENDMENT_PENDING_RECEIPT; STAGE4_UNAPPROVED; 0_NEW_EPISODES",
+  "parent": {
+    "sha256": "1c3c50149e50bceb3f14b8a334b248c225cdc8478128cf88952051ea0bce1b21",
+    "git_blob": "acbf92a36fadb4f7e0a5c9e2d30e80186d4ce19c",
+    "seal_commit": "8776ede60adb25ec08815253b6177620eb4a6a8b",
+    "freeze_sha256": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8",
+    "model_py_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e"
+  },
+  "features": {
+    "override_F14": {
+      "name": "net_Ah_counter_minus_BMS_integral",
+      "required_ids": [
+        "TAYCAN_HVBAT_TOT_AH_DCHRG",
+        "TAYCAN_HVBAT_TOT_AH_CHRG",
+        "TAYCAN_BMS_I"
+      ],
+      "formula": "[DCHRG_Ah(end)-DCHRG_Ah(t0)]-[CHRG_Ah(end)-CHRG_Ah(t0)]-sum_k(BMS_I_k*dt_k/3600)",
+      "units": "Ah",
+      "integration": "Same signed discharge-positive forward-Euler updates and sampling as frozen Stage3 counters; differencing removes lifetime offsets; verify Stage3 exact temporal indexing before use; no truth.",
+      "validity": "Reset, nonfinite, unavailable or inconsistent timing: NA and missingness flag. With counter_source=BMS_I the residual may be identically near 0 by construction (negative control), not necessarily B06 indicator."
+    },
+    "add_F28": {
+      "name": "net_kWh_counter_minus_BMS_DC_integral",
+      "required_ids": [
+        "TAYCAN_HVBAT_TOT_KWH_DCHRG",
+        "TAYCAN_HVBAT_TOT_KWH_CHRG",
+        "TAYCAN_HVBAT_VOLT",
+        "TAYCAN_BMS_I"
+      ],
+      "formula": "[DCHRG_kWh(end)-DCHRG_kWh(t0)]-[CHRG_kWh(end)-CHRG_kWh(t0)]-sum_k(V_HV_obs_k*BMS_I_obs_k*dt_k/3600000)",
+      "units": "kWh",
+      "integration": "Same Stage3 forward-Euler update sampling. If unaligned/unavailable: NA + missingness flag; never synthesize from truth."
+    },
+    "numeric_features_after_override": 28,
+    "missingness_masks": 28,
+    "others": "F01–F13 and F15–F27 unchanged",
+    "counter_source": "RETAIN; BMS_I/HVBAT_CURRENT; truth ablation forbidden as predictor"
+  },
+  "R33_theory": {
+    "fixed_basis": [
+      "1",
+      "sum_tau",
+      "sum_tau_sq",
+      "sum_omega",
+      "sum_tau_omega"
+    ],
+    "white_variance": "sigma_y(t)^2 = V_true^2*sigma_I^2 + I_true^2*sigma_V^2 + sigma_V^2*sigma_I^2 + sum_j(omega_true_j^2*sigma_tau_j^2 + tau_true_j^2*sigma_omega_j^2 + sigma_tau_j^2*sigma_omega_j^2), independent white errors assumption",
+    "oracle_coefficients_SE": "For X_true (n x 5): cov(beta_hat|X_true)=(X'X)^(-1) X' diag(sigma_y(t)^2) X (X'X)^(-1); sqrt diagonal = idealized coefficient SE. If rank deficient record NOT_IDENTIFIABLE. X_true computed only from training/reference physical profiles after manifest seal; cannot claim observed-X SE equals oracle.",
+    "illustrative_sigma_white_W": 715.1201345072374,
+    "illustrative_6h_5s_N": 4320,
+    "illustrative_white_mean_SE_W": 10.8812,
+    "sensor_persistent_bias": "Delta R33(t)= -sum_j(delta_tau_j*omega_true_j + tau_true_j*delta_omega_j + delta_tau_j*delta_omega_j). Episode-level biases do NOT shrink as 1/sqrt(n). Compare bias-on/off; no assertion of low severity identifiability.",
+    "auxiliary_AR1": "For AR(1) sampled with rho=phi_aux_per_second^dt_s, add covariance Sigma_aux_ij=sigma_a^2*rho^abs(i-j) to measured residual: cov(beta)=(X'X)^-1 X'(Sigma_white+Sigma_aux)X(X'X)^-1. Var(mean_aux)=sigma_a^2/n^2*(n+2sum_h(n-h)*rho^h); n_eff asymptotically n(1-rho)/(1+rho), not n.",
+    "interpretation": "Oracle regressor+white-only SE optimistic: observed regressors have errors-in-variables and persistent bias; serial auxiliary nuisance reduces effective information. M01/I01 low-severity may be indistinguishable. Report required effect size |Delta beta| / theoretical SE, rank/collinearity and confidence intervals by episode, with/without bias.",
+    "numeric_coeff_SE_status": "NOT AVAILABLE before physical reference trajectory and design matrix; no episodes/coefficients yet run."
+  },
+  "manifest": {
+    "episodes": 2232,
+    "splits": {
+      "train": 720,
+      "validation": 360,
+      "test": 1152
+    },
+    "hypotheses": [
+      "H00",
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "M01",
+      "I01"
+    ],
+    "severity_tokens": [
+      "0.25",
+      "0.5",
+      "1.0"
+    ],
+    "H00_quota": [
+      "H00_A",
+      "H00_B",
+      "H00_C"
+    ],
+    "n_per_stratum": {
+      "train": 20,
+      "validation": 10,
+      "test": 32
+    },
+    "profiles": [
+      "NOMINAL_6H",
+      "SHIFT_REGEN_COLD_6H"
+    ],
+    "structural_mode_rule": "Lexicographically sorted 2*2*2 combos. For each class/split/severity quota, rotate by first byte of SHA256('TAYCAN4R|struct|hypothesis|split|severity') mod 8. Train 2*8+4 nominal, validation 8+2 nominal. Test 2 blocks each containing 8 nominal and 8 shifted, every combo exactly once per profile per block.",
+    "phi_rule": "For each hypothesis and split, global within-hypothesis index=(stratum index)*n_per_stratum+replicate; offset first byte SHA256('TAYCAN4R|phi|hypothesis|split') mod 7; phi=grid[(global_index+offset)%7].",
+    "seed_rule": "uint32(first 8 hex of SHA256('TAYCAN4R|hypothesis|split|severity_or_H00_quota|replicate_decimal|stream')), where streams physics,observer,aux,nuisance and replicate zero-based decimal unpadded; collision across ANY splits/streams => FAIL-STOP, no silent retry.",
+    "nuisance_rule": "Derive continuous draws using xorshift32 stream from seed_nuisance; fixed 9-value order rpm noise, rpm persistent bias range, torque noise, torque persistent bias range, SOC group bias SD, SOC innovation, auxiliary phi, auxiliary innovation, auxiliary cap; use sealed parameter ranges, serialize 8 decimals. Continuous biases per channel drawn later from the same frozen stream.",
+    "episode_duration_s": 21600,
+    "step_seconds_assumed": 5,
+    "required_manifest_columns": [
+      "episode_id",
+      "hypothesis",
+      "split",
+      "severity",
+      "severity_quota",
+      "replicate",
+      "block",
+      "profile",
+      "duration_s",
+      "dt_s",
+      "acquisition_mode",
+      "counter_source",
+      "diff_motor_t_mapping",
+      "soc_phi_per_s",
+      "rpm_white_sigma",
+      "rpm_bias_halfwidth",
+      "torque_white_sigma",
+      "torque_bias_halfwidth",
+      "soc_group_bias_sd",
+      "soc_innovation",
+      "aux_phi",
+      "aux_white_sigma",
+      "aux_cap",
+      "seed_physics",
+      "seed_observer",
+      "seed_aux",
+      "seed_nuisance"
+    ],
+    "QC": [
+      "2232 data rows",
+      "all episode IDs distinct",
+      "all 8928 seed values distinct globally",
+      "no train/validation/test overlap",
+      "per hypothesis and severity test has 2 blocks each with 8 nominal+8 shifted and 8 structural modes",
+      "phi covers >=0.9995",
+      "no episode run before hash+receipt"
+    ],
+    "generator": "scripts/generate_stage4_episode_manifest.mjs",
+    "csv": "experiments/stage_04_data_validation/STAGE4_EPISODE_MANIFEST.csv"
+  },
+  "execution_order": [
+    "Check sealed parent SHA, amended SHA, stage3 model hash",
+    "Create deterministic manifest and independent receipt; FAIL on QC failure",
+    "Calibrate H00 battery-side charge power separately for each profile using frozen 8-12-iteration bisector; report SOC convergence",
+    "Only then generate fault and H00 episodes. No retroactive parameter retuning."
+  ],
+  "unverified": [
+    "Stage3 exact counter timing awaits executable source verification",
+    "No physical simulation run",
+    "No real Oxford QC regenerated"
+  ]
+}
