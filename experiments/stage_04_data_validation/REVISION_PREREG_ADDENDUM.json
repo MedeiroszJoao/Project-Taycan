@@ -1,6 +1,6 @@
 {
   "schema": "taycan-stage4-revision-preregistration-addendum-2026-10-12",
-  "status": "REGISTERED_BEFORE_ANY_NEW_STAGE4_REVISION_MODEL_FITTING; simulation execution pending local-runner recovery",
+  "status": "AMENDED_FOR_REVIEW_2026-10-12; UNAPPROVED; NO REVISED SIMULATIONS EXECUTED",
   "date": "2026-10-12",
   "parent_stage4_freeze": "freeze.json; preserve original unchanged; addendum is append-only; local freeze SHA not independently available",
   "frozen_stage3_model_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
@@ -32,26 +32,26 @@
       1
     ],
     "per_fault_hypothesis": {
-      "train_per_severity": 2,
-      "validation_per_severity": 1,
-      "test_per_severity": 1,
-      "total": 12
+      "train_per_severity": 20,
+      "validation_per_severity": 10,
+      "test_per_severity": 17,
+      "total": 141
     },
     "healthy_H00": {
-      "train": 6,
-      "validation": 3,
-      "test": 3,
-      "total": 12
+      "train": 60,
+      "validation": 30,
+      "test": 51,
+      "total": 141
     },
     "aggregate": {
-      "train": 72,
-      "validation": 36,
-      "test": 36,
-      "total": 144
+      "train": 720,
+      "validation": 360,
+      "test": 612,
+      "total": 1692
     },
     "existing_seeded_TR01_TR02_TE01_TE02": "Retain historical IDs and seeds; no retroactive renaming, repeated measurements of previous comparisons excluded from new post-freeze scoring.",
-    "new_seed_generation": "SHA-256 of literal 'TAYCAN4R|hypothesis|split|severity|replicate|physics-or-observer-or-aux-or-nuisance', first 8 hex digits as unsigned big endian integer; no inspection-based seed selection",
-    "nuisance_draw_policy": "Draw once per episode for persistent biases, independently per channel; draw per time step for innovations, common random numbers across matched M01/I01 experiments. Distributions assumed, not fitted.",
+    "new_seed_generation": "Per episode use SHA-256 of exact UTF-8 string 'TAYCAN4R|<hypothesis>|<split>|<severity>|<replicate>|<physics|observer|aux|nuisance>', take first 8 hexadecimal digits as unsigned 32-bit integer; stable ordering and episode manifest written before running. Existing TR/TE historical seeds unchanged; revised episodes get new keys.",
+    "nuisance_draw_policy": "Outer episode draw each nuisance scale from uniform range in parameters_assumed; draw persistent channel biases independently from symmetric Uniform(-halfwidth,+halfwidth) once per episode, short-term innovations at time step. Freeze parameters/seeds in episode manifest without selecting by outputs. Matched M01/I01 reuse exogenous profile and same random numbers, including same nuisance and sensor noise.",
     "parameters_assumed": {
       "rpm_white_sigma_range_rpm": [
         2,
@@ -104,14 +104,27 @@
       "id": "SHIFT_REGEN_COLD",
       "reference": "Train H00 nominal profile at assumed 25C ambient, if existing frozen Stage3 interface supports it.",
       "scenario": "Whole-episode six-hour shifted driving profile with more regeneration and lower traction torque; nominal ambient 10C if existing interface supports it. Use same fixed training-derived charging boundary for matched hypotheses; no per-test tuning.",
-      "allocation": "ALL three test episodes per hypothesis; development train and validation at nominal conditions. Mark cold shift unexecutable, not silently simulated, if unsupported by existing Stage3 interface.",
+      "allocation": "Within each of three fault severities per hypothesis: 9 nominal and 8 shifted independent test episodes; H00 27 nominal and 24 shifted. Report performance by nominal/shift subgroup and pooled. Train and validation nominal; disjoint episode seeds for split. If ambient change unsupported, run shifted duty-cycle only with explicit ambient_shift_not_modeled flag.",
       "assumed_factors": {
         "nominal_ambient_C": 25,
         "shift_ambient_C": 10,
         "regeneration_torque_scale": 1.5,
         "traction_torque_scale": 0.85
       },
-      "pre_specified": true
+      "pre_specified": true,
+      "total_test_distribution": {
+        "nominal": 324,
+        "shifted": 288
+      }
+    },
+    "statistical_precision_pre_registered": {
+      "primary_unit": "independent episode, not timestamp",
+      "nominal_assumed_accuracy": 0.8,
+      "per_hypothesis_n_test": 51,
+      "approx_95pct_normal_halfwidth_per_class_pp": 10.9782,
+      "n_test_total": 612,
+      "approx_95pct_normal_halfwidth_overall_pp": 3.1691,
+      "warning": "These are approximate binomial calculations assuming independent same-distribution episodes. Report Wilson confidence intervals, use clustered bootstrap where repeats share drivers/seeds; worst-case p=0.5 gives larger widths; shift-stratified intervals wider."
     }
   },
   "energy_balanced_long_horizon": {
@@ -225,11 +238,16 @@
       "25degC HPPC",
       "25degC Drive Cycle"
     ],
-    "previously_exposed_policy": "25degC Drive Cycle not considered a virgin blind holdout; descriptive QC only; original numerical inspection is explicitly disclosed.",
+    "previously_exposed_policy": "Any pre-inspected LG E66 numerical series, specifically 25C HPPC, C20Dis and Drive Cycle, must never contribute to blind test claims. 25C HPPC/C20Dis may be used for development; 25C drive cycle descriptive only unless explicit prospective development fit protocol; 0C/40C uninspected numerical holdouts preserved.",
     "README_nominal_capacity_Ah": 65,
     "nominal_capacity_conflict": "Another group page reportedly lists 60Ah; preserve 65Ah as README stated value and treat disagreement as UNRESOLVED pending identity/revision check. Do not silently normalize currents based on 60 or 65.",
     "license": "CC BY 4.0 confirmed in both original README files",
-    "no_new_LG_numeric_series_opened_during_freeze": true
+    "no_new_LG_numeric_series_opened_during_freeze": true,
+    "previous_numeric_exposure": {
+      "25degC HPPC": "EXPOSED_DEVELOPMENT_ONLY; 403514 observations inspected pre-freeze; prohibited as blind holdout",
+      "25degC C20Dis": "EXPOSED_DEVELOPMENT_ONLY; 2997 observations inspected pre-freeze",
+      "25degC Drive Cycle": "EXPOSED_DESCRIPTIVE_ONLY; 858862 observations inspected pre-freeze; prohibited as virgin blind holdout"
+    }
   },
   "Oxford_split": {
     "development_train": [
@@ -277,7 +295,8 @@
       "physics-rule residual thresholds fit on train and chosen on validation",
       "regularized multinomial logistic regression on identical observed features, train-only standardization, validation-only tuning"
     ],
-    "evaluation_design": "Holdout by whole episode / whole cell. Macro by episode, paired bootstrap by episode, do not split correlated timestamps across train and test."
+    "evaluation_design": "Holdout by whole episode / whole cell. Macro by episode, paired bootstrap by episode, do not split correlated timestamps across train and test.",
+    "baseline_guard": "No classifier, network or fitting during unapproved Stage 4, except preregistration. Stage 5+ performance metrics specified but not executed; do not label pre-registration as passed acceptance."
   },
   "execution_state": {
     "registered": true,
@@ -286,6 +305,8 @@
     "new_matched_energy_runs": false,
     "Oxford_flagged_full_csv": false,
     "model_fit": false,
-    "reason": "Container runtime unavailable; Wolfram analytic checks only"
+    "reason": "Container runtime unavailable; Wolfram analytic checks only",
+    "github_history_audit": "GitHub API: sole listed branch main, 15 commits enumerated and each committed tree recursively inspected; no path bearing holdout_quarantine, B0018 or raw MAT/ZIP. No claim about unreachable/orphaned Git objects, private forks, or other repositories.",
+    "review_gate": "NOT APPROVED; mathematical checks alone do not fulfill simulation or Oxford flagged QC acceptance criteria."
   }
 }
