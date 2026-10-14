@@ -814,14 +814,18 @@ def soc_summary(audit: dict[str, Any]) -> dict[str, Any]:
     valid = [float(x) for x in soc if x is not None]
     if not valid or len(valid) != len(soc):
         raise GateError("Backend não retornou uma trajetória SOC verdadeira completa e finita.")
-    if abs(valid[0] - SOC_INITIAL) > 1e-6:
-        raise GateError(f"SOC inicial do backend diverge do pré-registro: {valid[0]} != {SOC_INITIAL}")
+    initial = finite_number(audit.get("soc_initial_percent"))
+    if initial is None or abs(initial - SOC_INITIAL) > 1e-6:
+        raise GateError(f"SOC inicial configurado diverge do pré-registro: {initial} != {SOC_INITIAL}")
+    times = audit.get("soc_time_s")
+    if not isinstance(times, list) or len(times) != len(soc) or any(finite_number(t) is None for t in times):
+        raise GateError("Backend deve retornar soc_time_s finito e alinhado com soc_true_percent.")
     return {
         "soc_true_min_pct": min(valid),
         "soc_true_max_pct": max(valid),
         "soc_true_final_pct": valid[-1],
-        "soc_true_initial_pct": valid[0],
-        "soc_true_final_residual_pp": valid[-1] - valid[0],
+        "soc_true_initial_pct": initial,
+        "soc_true_final_residual_pp": valid[-1] - initial,
         "soc_true_window_violation": min(valid) < SOC_WINDOW[0] or max(valid) > SOC_WINDOW[1],
         "soc_true_samples": len(valid),
     }
@@ -895,8 +899,11 @@ def run_worker(context_path: Path) -> int:
                 with io.TextIOWrapper(zipped, encoding="utf-8", newline="") as text_handle:
                     writer = csv.writer(text_handle, lineterminator="\n")
                     writer.writerow(["time_s", "SOC_true_percent_for_audit_only"])
-                    for i, value in enumerate(truth):
-                        writer.writerow([format(i * float(context["profile"]["dt_s"]), ".8f"),
+                    soc_times = [finite_number(x) for x in audit.get("soc_time_s", [])]
+                    if len(soc_times) != len(truth) or any(x is None for x in soc_times):
+                        raise GateError("Trajetória de calibração sem soc_time_s finito/alinhado.")
+                    for time_value, value in zip(soc_times, truth):
+                        writer.writerow([format(float(time_value), ".8f"),
                                          "" if value is None else format(value, ".8f")])
         os.replace(temp, trajectory_path)
         atomic_json(worker_result_path, {**common, **summary,
