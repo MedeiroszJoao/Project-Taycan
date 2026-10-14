@@ -798,6 +798,12 @@ def load_backend_result(context: dict[str, Any]) -> dict[str, Any]:
             raise GateError(f"FAIL-STOP: falha {hypothesis} não foi confirmada como injetada.")
         if hypothesis == "H00" and audit.get("fault_injection_applied") not in (False, None):
             raise GateError("FAIL-STOP: H00 reportou injeção de falha.")
+        expected_injected = finite_number(context["episode"].get("injected_severity"))
+        if expected_injected is None:
+            expected_injected = 0.0 if hypothesis == "H00" else float(context["episode"]["severity"])
+        applied_injected = finite_number(audit.get("injected_severity_applied"))
+        if applied_injected is None or abs(applied_injected - expected_injected) > 1e-9:
+            raise GateError(f"FAIL-STOP: severidade injetada diverge: esperado={expected_injected}, obtido={applied_injected}")
         if not isinstance(result.get("observed_rows"), list) or not result["observed_rows"]:
             raise GateError("Backend não retornou série observada para o episódio.")
     return {"result": result, "runtime_s": runtime}
@@ -855,9 +861,16 @@ def run_worker(context_path: Path) -> int:
     backend_path = Path(artifacts["backend_file_path"])
     current_hashes = load_and_verify_inputs(model_path, freeze_path, backend_path)
     for key, value in artifacts.items():
-        if key.endswith("_sha256") or key.endswith("_git_blob_sha1"):
+        if key in current_hashes:
             if current_hashes.get(key) != value:
                 raise GateError(f"FAIL-STOP: hash de entrada mudou no worker: {key}")
+        elif key == "m01_i01_energy_match_receipt_sha256":
+            receipt_path = Path(context.get("energy_match_receipt_path", ""))
+            if not receipt_path.is_file() or sha256_file(receipt_path) != value:
+                raise GateError("FAIL-STOP: recibo de pareamento energético M01/I01 ausente ou alterado.")
+            current_hashes[key] = value
+        elif key.endswith("_sha256") or key.endswith("_git_blob_sha1"):
+            raise GateError(f"FAIL-STOP: hash de entrada sem verificação disponível: {key}")
     outcome = load_backend_result(context)
     result, runtime = outcome["result"], outcome["runtime_s"]
     audit = result["audit"]
@@ -1181,6 +1194,69 @@ def calibrate_profiles(rows: list[dict[str, str]], prereg: dict[str, Any], artif
     }
     atomic_json(receipt_path, receipt)
     return receipt
+
+
+def load_m01_i01_energy_receipt(output_root: Path, artifacts: dict[str, Any],
+                                   rows: list[dict[str, str]]) -> tuple[Path, dict[str, Any], dict[tuple[str, str, float], dict[str, Any]]]:
+    path = output_root / "calibration" / "M01_I01_ENERGY_MATCH_RECEIPT.json"
+    if not path.is_file():
+        raise GateError(
+            "BLOQUEIO PRÉ-TESTE: falta calibration/M01_I01_ENERGY_MATCH_RECEIPT.json. "
+            "O pré-registro exige pareamento energético M01×I01 por perfil e mapeamento "
+            "da severidade I01 antes de qualquer episódio de teste."
+        )
+    receipt = read_json(path)
+    if receipt.get("status") != "M01_I01_ENERGY_MATCH_COMPLETE":
+        raise GateError("BLOQUEIO: recibo M01/I01 não declara M01_I01_ENERGY_MATCH_COMPLETE.")
+    if receipt.get("input_hashes") != artifacts:
+        raise GateError("BLOQUEIO: recibo M01/I01 foi calculado com hashes diferentes.")
+    if receipt.get("calibration_split") != "independent_calibration_only" or        receipt.get("uses_validation_outcomes") is not False or receipt.get("uses_test_outcomes") is not False:
+        raise GateError("BLOQUEIO: calibração M01/I01 não comprova isolamento de validação/teste.")
+    manifest_seeds = {int(row[f"seed_{stream}"]) for row in rows for stream in STREAMS}
+    calibration_seeds = receipt.get("calibration_seed_values")
+    if not isinstance(calibration_seeds, list) or not calibration_seeds:
+        raise GateError("BLOQUEIO: recibo M01/I01 não lista as seeds de calibração.")
+    calibration_seeds = [int(x) for x in calibration_seeds]
+    if len(set(calibration_seeds)) != len(calibration_seeds) or set(calibration_seeds) & manifest_seeds:
+        raise GateError("BLOQUEIO: seeds de calibração M01/I01 duplicadas ou colidindo com o manifesto.")
+    entries = receipt.get("mapping")
+    if not isinstance(entries, list) or len(entries) != 12:
+        raise GateError("BLOQUEIO: mapping M01/I01 deve conter 12 combinações (2 perfis × 2 DIFF × 3 severidades).")
+    mapping: dict[tuple[str, str, float], dict[str, Any]] = {}
+    for entry in entries:
+        profile = entry.get("profile_id")
+        diff_mode = entry.get("diff_motor_t_mapping")
+        severity = finite_number(entry.get("m01_severity"))
+        i01_severity = finite_number(entry.get("i01_severity_used"))
+        mismatch = finite_number(entry.get("mismatch_pct"))
+        motor_j = finite_number(entry.get("delta_E_motor_J"))
+        inverter_j = finite_number(entry.get("delta_E_inverter_J"))
+        status = entry.get("match_status")
+        if profile not in PROFILES or diff_mode not in ("winding_proxy", "uninformative") or severity not in (0.25, 0.5, 1.0):
+            raise GateError(f"BLOQUEIO: chave de mapeamento M01/I01 inválida: {entry}")
+        if i01_severity is None or not 0.0 <= i01_severity <= 1.0 or mismatch is None or mismatch < 0:
+            raise GateError(f"BLOQUEIO: severidade I01 ou mismatch inválido: {entry}")
+        if motor_j is None or motor_j <= 0 or inverter_j is None or inverter_j < 0:
+            raise GateError(f"BLOQUEIO: energias dissipadas ausentes/não positivas: {entry}")
+        if status not in ("MATCHED", "INFEASIBLE"):
+            raise GateError(f"BLOQUEIO: match_status inválido: {status}")
+        if status == "MATCHED" and mismatch > 1.0:
+            raise GateError(f"BLOQUEIO: status MATCHED com mismatch >1%: {entry}")
+        if status == "INFEASIBLE" and mismatch <= 1.0:
+            raise GateError(f"BLOQUEIO: status INFEASIBLE apesar de mismatch <=1%: {entry}")
+        key = (profile, diff_mode, float(severity))
+        if key in mapping:
+            raise GateError(f"BLOQUEIO: chave M01/I01 duplicada: {key}")
+        mapping[key] = entry
+    expected_keys = {
+        (profile, diff_mode, severity)
+        for profile in PROFILES
+        for diff_mode in ("winding_proxy", "uninformative")
+        for severity in (0.25, 0.5, 1.0)
+    }
+    if set(mapping) != expected_keys:
+        raise GateError("BLOQUEIO: o recibo M01/I01 não cobre todas as combinações pré-registradas.")
+    return path, receipt, mapping
 
 
 def output_paths(run_dir: Path, episode_id: str) -> tuple[Path, Path, Path, Path]:
