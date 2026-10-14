@@ -1321,6 +1321,11 @@ def run_mode(args: argparse.Namespace) -> None:
             raise GateError("BLOQUEIO: matriz smoke diverge do recibo.")
         if sha256_file(smoke_dir / "tables/stage4_evaluation_metadata.csv") != smoke.get("evaluation_metadata_sha256"):
             raise GateError("BLOQUEIO: metadata smoke diverge do recibo.")
+        raise GateError(
+            "BLOQUEIO PRÉ-TESTE: o pré-registro selado exige pareamento energético M01×I01 "
+            "por perfil e mapeamento da severidade I01 antes de qualquer episódio de teste. "
+            "Essa calibração/aplicação ainda não está implementada neste runner; nenhum episódio full foi iniciado."
+        )
         full_dir = output_root / "full"
         summary = []
         for row in rows:  # Strict manifest order. Each physical episode is a subprocess.
