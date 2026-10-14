@@ -1,0 +1,12 @@
+{
+ "schema":"taycan-stage4-preregistered-splits-v1",
+ "created_before_stage4_simulations":true,
+ "stage3_model_sha256":"af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
+ "seed_policy":"Each episode has predeclared physical_seed, observer_seed, auxiliary_seed; same profile/seeds across paired fault hypotheses. No seed selected by performance.",
+ "synthetic_train":[{"episode":"TR01","physics":20261101,"observer":20261102,"aux":20261103},{"episode":"TR02","physics":20261111,"observer":20261112,"aux":20261113}],
+ "synthetic_test":[{"episode":"TE01","physics":20261201,"observer":20261202,"aux":20261203},{"episode":"TE02","physics":20261211,"observer":20261212,"aux":20261213}],
+ "real_nasa_train_batteries":["B0005","B0006","B0007"],
+ "real_nasa_holdout_batteries":["B0018"],
+ "real_oxford_holdout":"cell IDs and cycle groups must be frozen before fitting; no fit on these data in stage4",
+ "rules":["Never split rows of a single battery/time-series across train and test","No model fitting or posterior inference before stage5","Stage4 diagnostic comparisons are not classifier accuracy","Do not tune nuisance parameters on synthetic test episodes"]
+}
