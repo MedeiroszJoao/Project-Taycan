@@ -928,6 +928,12 @@ def run_worker(context_path: Path) -> int:
         "hypothesis": episode["hypothesis"],
         "split": episode["split"],
         "severity": episode["severity"],
+        "injected_severity": finite_number(episode.get("injected_severity")),
+        "energy_match_status": episode.get("energy_match_status", "NOT_APPLICABLE"),
+        "energy_match_mismatch_pct": finite_number(episode.get("energy_match_mismatch_pct")),
+        "energy_match_delta_E_motor_J": finite_number(episode.get("delta_E_motor_J")),
+        "energy_match_delta_E_inverter_J": finite_number(episode.get("delta_E_inverter_J")),
+        "energy_match_receipt_sha256": context.get("energy_match_receipt_sha256", ""),
         "severity_quota": episode["severity_quota"],
         "replicate": episode["replicate"],
         "block": episode["block"],
@@ -1284,16 +1290,39 @@ def completed_episode_valid(run_dir: Path, episode_id: str, artifacts: dict[str,
 
 
 def run_episode_row(row: dict[str, str], prereg: dict[str, Any], artifacts: dict[str, Any],
-                    charge_receipt: dict[str, Any], backend_path: Path, run_dir: Path) -> dict[str, Any]:
+                    charge_receipt: dict[str, Any], backend_path: Path, run_dir: Path,
+                    energy_mapping: dict[tuple[str, str, float], dict[str, Any]] | None = None,
+                    energy_receipt_path: Path | None = None) -> dict[str, Any]:
     episode_id = row["episode_id"]
     if completed_episode_valid(run_dir, episode_id, artifacts):
         return {"episode_id": episode_id, "status": "SKIPPED_VERIFIED", "runtime_s": 0.0}
     seeds = {stream: int(row[f"seed_{stream}"]) for stream in STREAMS}
+    episode_for_backend: dict[str, Any] = dict(row)
+    episode_for_backend["injected_severity"] = 0.0 if row["hypothesis"] == "H00" else float(row["severity"])
+    episode_for_backend["energy_match_status"] = "NOT_APPLICABLE"
+    if row["hypothesis"] == "M01":
+        episode_for_backend["energy_match_status"] = "REFERENCE_M01"
+    if row["hypothesis"] == "I01":
+        if energy_mapping is None:
+            episode_for_backend["energy_match_status"] = "UNMATCHED_SMOKE_NOT_SCORED"
+        else:
+            key = (row["profile"], row["diff_motor_t_mapping"], float(row["severity"]))
+            if key not in energy_mapping:
+                raise GateError(f"BLOQUEIO: sem mapeamento energético para {episode_id}: {key}")
+            match = energy_mapping[key]
+            episode_for_backend["injected_severity"] = float(match["i01_severity_used"])
+            episode_for_backend["energy_match_status"] = match["match_status"]
+            episode_for_backend["energy_match_mismatch_pct"] = float(match["mismatch_pct"])
+            episode_for_backend["delta_E_motor_J"] = float(match["delta_E_motor_J"])
+            episode_for_backend["delta_E_inverter_J"] = float(match["delta_E_inverter_J"])
     context = base_context(row, "episode", row["profile"],
                            charge_receipt["profiles"][row["profile"]]["charge_power_fixed_kW"],
                            artifacts, prereg, seeds, run_dir)
     context["job_id"] = episode_id
-    context["episode"] = dict(row)
+    context["episode"] = episode_for_backend
+    if energy_receipt_path is not None:
+        context["energy_match_receipt_path"] = str(energy_receipt_path)
+        context["energy_match_receipt_sha256"] = sha256_file(energy_receipt_path)
     context["persistent_biases_note"] = "Biases uniformes por canal/episódio são explicitamente passados em observation_config."
     result = run_subprocess_job(context, run_dir)
     if result.get("status") != "EPISODE_COMPLETE" or result.get("episode_id") != episode_id:
@@ -1318,7 +1347,9 @@ def rebuild_aggregate_tables(rows: list[dict[str, str]], run_dir: Path, artifact
     atomic_csv(run_dir / "tables" / "stage4_feature_matrix.csv",
                ["episode_id", *FEATURE_NAMES, *MASK_NAMES], features)
     metadata_columns = [
-        "episode_id", "hypothesis", "split", "severity", "severity_quota", "replicate", "block", "profile",
+        "episode_id", "hypothesis", "split", "severity", "injected_severity", "energy_match_status",
+        "energy_match_mismatch_pct", "energy_match_delta_E_motor_J", "energy_match_delta_E_inverter_J",
+        "energy_match_receipt_sha256", "severity_quota", "replicate", "block", "profile",
         "duration_s", "dt_s", "acquisition_mode", "counter_source", "diff_motor_t_mapping", "soc_phi_per_s",
         "rpm_white_sigma", "rpm_bias_halfwidth", "torque_white_sigma", "torque_bias_halfwidth",
         "soc_group_bias_sd", "soc_innovation", "aux_phi", "aux_white_sigma", "aux_cap",
@@ -1397,25 +1428,25 @@ def run_mode(args: argparse.Namespace) -> None:
             raise GateError("BLOQUEIO: matriz smoke diverge do recibo.")
         if sha256_file(smoke_dir / "tables/stage4_evaluation_metadata.csv") != smoke.get("evaluation_metadata_sha256"):
             raise GateError("BLOQUEIO: metadata smoke diverge do recibo.")
-        raise GateError(
-            "BLOQUEIO PRÉ-TESTE: o pré-registro selado exige pareamento energético M01×I01 "
-            "por perfil e mapeamento da severidade I01 antes de qualquer episódio de teste. "
-            "Essa calibração/aplicação ainda não está implementada neste runner; nenhum episódio full foi iniciado."
-        )
+        energy_receipt_path, energy_receipt, energy_mapping = load_m01_i01_energy_receipt(output_root, artifacts, rows)
+        energy_receipt_hash = sha256_file(energy_receipt_path)
+        full_artifacts = {**artifacts, "m01_i01_energy_match_receipt_sha256": energy_receipt_hash}
         full_dir = output_root / "full"
         summary = []
         for row in rows:  # Strict manifest order. Each physical episode is a subprocess.
-            summary.append(run_episode_row(row, prereg, artifacts, charge_receipt, backend_path, full_dir))
-        rebuild_aggregate_tables(rows, full_dir, artifacts)
-        complete = sum(completed_episode_valid(full_dir, row["episode_id"], artifacts) for row in rows)
+            summary.append(run_episode_row(row, prereg, full_artifacts, charge_receipt, backend_path, full_dir,
+                                           energy_mapping=energy_mapping, energy_receipt_path=energy_receipt_path))
+        rebuild_aggregate_tables(rows, full_dir, full_artifacts)
+        complete = sum(completed_episode_valid(full_dir, row["episode_id"], full_artifacts) for row in rows)
         if complete != 2232:
             raise GateError(f"Execução completa incompleta: {complete}/2232 episódios.")
         full_receipt = {
             "status": "ALL_2232_EPISODES_COMPLETE",
             "n_episodes": complete,
-            "input_hashes": artifacts,
+            "input_hashes": full_artifacts,
             "charge_calibration_receipt_sha256": sha256_file(calibration_path),
             "smoke_receipt_sha256": sha256_file(smoke_receipt_path),
+            "m01_i01_energy_match_receipt_sha256": energy_receipt_hash,
             "feature_matrix_sha256": sha256_file(full_dir / "tables/stage4_feature_matrix.csv"),
             "evaluation_metadata_sha256": sha256_file(full_dir / "tables/stage4_evaluation_metadata.csv"),
             "runtime_records": summary,
