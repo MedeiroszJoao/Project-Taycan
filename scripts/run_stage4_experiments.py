@@ -100,7 +100,7 @@ AH_COUNTERS = ("TAYCAN_HVBAT_TOT_AH_DCHRG", "TAYCAN_HVBAT_TOT_AH_CHRG")
 KWH_COUNTERS = ("TAYCAN_HVBAT_TOT_KWH_DCHRG", "TAYCAN_HVBAT_TOT_KWH_CHRG")
 BASE_OBSERVED_CHANNELS = {
     "TAYCAN_HVBAT_VOLT", "TAYCAN_BMS_I", "TAYCAN_HVBAT_CURRENT",
-    "TAYCAN_BMS_SOC", "TAYCAN_HVBAT_SOC_DISP", "TAYCAN_DIFF_MOTOR_T",
+    "TAYCAN_BMS_SOC", "TAYCAN_DIFF_MOTOR_T",
     *FEATURE_RPM_CHANNELS, *TORQUE_CHANNELS, *ISOLATION_CHANNELS, *AH_COUNTERS, *KWH_COUNTERS,
 }
 GROUP_VOLTAGE_CHANNELS = tuple(
@@ -669,7 +669,8 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
         if delta_dis < -1e-8 or delta_chg < -1e-8:
             ah_invalid = True
         else:
-            integral_ah = sum(float(bms_i[i]) * (finite_number(rows[i].get("dt_s")) or dt_s) / 3600.0 for i in range(len(rows)))
+            # Stage 3 counters start accumulating at sample 1; sample 0 is the baseline.
+            integral_ah = sum(float(bms_i[i]) * (finite_number(rows[i].get("dt_s")) or dt_s) / 3600.0 for i in range(1, len(rows)))
             ah_value = delta_dis - delta_chg - integral_ah
     put("F14", "net_Ah_counter_minus_BMS_integral_Ah", ah_value, ah_invalid)
 
@@ -746,8 +747,9 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
         if delta_dis < -1e-8 or delta_chg < -1e-8:
             kwh_invalid = True
         else:
+            # Use the same sample indices as the cumulative kWh counter delta.
             integral_kwh = sum(float(v[i]) * float(bms_i[i]) * (finite_number(rows[i].get("dt_s")) or dt_s) / 3600000.0
-                               for i in range(len(rows)))
+                               for i in range(1, len(rows)))
             kwh_value = delta_dis - delta_chg - integral_kwh
     put("F28", "net_kWh_counter_minus_BMS_DC_integral_kWh", kwh_value, kwh_invalid)
 
