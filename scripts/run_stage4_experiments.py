@@ -86,7 +86,8 @@ FEATURES = [
 FEATURE_NAMES = [f"{code}_{name}" for code, name in FEATURES]
 MASK_NAMES = [f"mask_{code}" for code, _ in FEATURES]
 
-RPM_CHANNELS = ("TAYCAN_EM_RPM_1", "TAYCAN_EM_RPM_2", "TAYCAN_ENG_MOTOR_RPM")
+RPM_BIAS_CHANNELS = ("TAYCAN_EM_RPM_1", "TAYCAN_EM_RPM_2", "TAYCAN_ENG_MOTOR_RPM")
+FEATURE_RPM_CHANNELS = ("TAYCAN_EM_RPM_1", "TAYCAN_EM_RPM_2")
 TORQUE_CHANNELS = ("TAYCAN_EM_TORQ_1", "TAYCAN_EM_TORQ_2")
 ISOLATION_CHANNELS = (
     "TAYCAN_HV_ISO_POS_SYS", "TAYCAN_HV_ISO_NEG_SYS",
@@ -97,7 +98,7 @@ KWH_COUNTERS = ("TAYCAN_HVBAT_TOT_KWH_DCHRG", "TAYCAN_HVBAT_TOT_KWH_CHRG")
 BASE_OBSERVED_CHANNELS = {
     "TAYCAN_HVBAT_VOLT", "TAYCAN_BMS_I", "TAYCAN_HVBAT_CURRENT",
     "TAYCAN_BMS_SOC", "TAYCAN_HVBAT_SOC_DISP", "TAYCAN_DIFF_MOTOR_T",
-    *RPM_CHANNELS, *TORQUE_CHANNELS, *ISOLATION_CHANNELS, *AH_COUNTERS, *KWH_COUNTERS,
+    *FEATURE_RPM_CHANNELS, *TORQUE_CHANNELS, *ISOLATION_CHANNELS, *AH_COUNTERS, *KWH_COUNTERS,
 }
 GROUP_VOLTAGE_CHANNELS = tuple(
     f"TAYCAN_HVBAT_MOD{module}_C{group}_V"
@@ -347,7 +348,7 @@ def make_observation_config(row: dict[str, str], prereg: dict[str, Any], seeds: 
 
     rpm_half = float(row["rpm_bias_halfwidth"])
     torque_half = float(row["torque_bias_halfwidth"])
-    rpm_biases = {channel: (2.0 * rng.uniform() - 1.0) * rpm_half for channel in RPM_CHANNELS}
+    rpm_biases = {channel: (2.0 * rng.uniform() - 1.0) * rpm_half for channel in RPM_BIAS_CHANNELS}
     torque_biases = {channel: (2.0 * rng.uniform() - 1.0) * torque_half for channel in TORQUE_CHANNELS}
     soc_bias_seed = rng.state
     return {
@@ -575,26 +576,32 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
     x_design: list[list[float]] = []
     r33_y: list[float] = []
     r33_incomplete = False
+    torque_incomplete = False
     sum_tau_sq_series: list[float] = []
     sum_abs_omega_series: list[float] = []
     for i in range(len(rows)):
-        vals = [v[i], bms_i[i], torques[0][0][i], torques[1][0][i], rpms[0][0][i], rpms[1][0][i]]
-        if any(value is None for value in vals):
+        torque_rpm = [torques[0][0][i], torques[1][0][i], rpms[0][0][i], rpms[1][0][i]]
+        if any(value is None for value in torque_rpm):
+            torque_incomplete = True
+            sum_tau = sum_tau_sq = sum_omega = sum_tau_omega = None
+        else:
+            tau1, tau2, rpm1, rpm2 = [float(x) for x in torque_rpm]
+            omega1, omega2 = 2 * math.pi * rpm1 / 60.0, 2 * math.pi * rpm2 / 60.0
+            sum_tau = tau1 + tau2
+            sum_omega = omega1 + omega2
+            sum_tau_sq = tau1 * tau1 + tau2 * tau2
+            sum_tau_omega = tau1 * omega1 + tau2 * omega2
+            sum_tau_sq_series.append(sum_tau_sq)
+            sum_abs_omega_series.append(abs(omega1) + abs(omega2))
+        if v[i] is None or bms_i[i] is None or any(value is None for value in torque_rpm):
             r33.append(None)
             r33_incomplete = True
             continue
-        voltage, current, tau1, tau2, rpm1, rpm2 = [float(x) for x in vals]
-        omega1, omega2 = 2 * math.pi * rpm1 / 60.0, 2 * math.pi * rpm2 / 60.0
-        sum_tau = tau1 + tau2
-        sum_omega = omega1 + omega2
-        sum_tau_sq = tau1 * tau1 + tau2 * tau2
-        sum_tau_omega = tau1 * omega1 + tau2 * omega2
+        voltage, current = float(v[i]), float(bms_i[i])
         residual = voltage * current - sum_tau_omega
         r33.append(residual)
         r33_y.append(residual)
         x_design.append([1.0, sum_tau, sum_tau_sq, sum_omega, sum_tau_omega])
-        sum_tau_sq_series.append(sum_tau_sq)
-        sum_abs_omega_series.append(abs(omega1) + abs(omega2))
     r33_valid = [x for x in r33 if x is not None]
     put("F01", "mean_R33_W", mean(r33_valid), r33_incomplete)
     put("F02", "sd_R33_W", sample_sd(r33_valid), r33_incomplete)
@@ -708,8 +715,8 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
         isolation_min.append(min(float(x) for x in vals))
     put("F22", "mean_min_isolation_kohm", mean(isolation_min), isolation_incomplete)
     put("F23", "min_isolation_kohm", min(isolation_min) if isolation_min else None, isolation_incomplete)
-    put("F24", "time_mean_sum_torque_squared", mean(sum_tau_sq_series), r33_incomplete)
-    put("F25", "time_mean_sum_abs_angular_speed", mean(sum_abs_omega_series), r33_incomplete)
+    put("F24", "time_mean_sum_torque_squared", mean(sum_tau_sq_series), torque_incomplete)
+    put("F25", "time_mean_sum_abs_angular_speed", mean(sum_abs_omega_series), torque_incomplete)
 
     kwh_dis, miss_kwh_dis = observed_series(rows, KWH_COUNTERS[0])
     kwh_chg, miss_kwh_chg = observed_series(rows, KWH_COUNTERS[1])
@@ -746,18 +753,26 @@ def load_backend_result(context: dict[str, Any]) -> dict[str, Any]:
         raise GateError("FAIL-STOP: backend aplicou perfil diferente do solicitado.")
     if abs(float(audit.get("dt_s", -1)) - float(context["profile"]["dt_s"])) > 1e-12:
         raise GateError("FAIL-STOP: dt aplicado diverge do manifesto.")
-    if abs(float(audit.get("charge_power_kw_applied", math.nan)) - float(context["charge_power_kw"])) > 1e-8:
-        raise GateError("FAIL-STOP: potência de carga aplicada diverge da calibração congelada.")
+    applied_charge = finite_number(audit.get("charge_power_kw_applied"))
+    if applied_charge is None or abs(applied_charge - float(context["charge_power_kw"])) > 1e-8:
+        raise GateError("FAIL-STOP: potência de carga ausente ou divergente da calibração congelada.")
     if audit.get("seeds_applied") != context["seeds"]:
         raise GateError("FAIL-STOP: seeds aplicadas pelo backend divergem do contexto.")
     profile_id = context["profile"]["id"]
     expected_traction = 0.85 if profile_id == "SHIFT_REGEN_COLD_6H" else 1.0
     expected_regen = 1.5 if profile_id == "SHIFT_REGEN_COLD_6H" else 1.0
-    if abs(float(audit.get("traction_torque_scale_applied", math.nan)) - expected_traction) > 1e-12:
-        raise GateError("FAIL-STOP: escala de torque de tração não foi aplicada como pré-registrada.")
-    if abs(float(audit.get("regeneration_torque_scale_applied", math.nan)) - expected_regen) > 1e-12:
-        raise GateError("FAIL-STOP: escala de regeneração não foi aplicada como pré-registrada.")
+    applied_traction = finite_number(audit.get("traction_torque_scale_applied"))
+    applied_regen = finite_number(audit.get("regeneration_torque_scale_applied"))
+    if applied_traction is None or abs(applied_traction - expected_traction) > 1e-12:
+        raise GateError("FAIL-STOP: escala de torque de tração ausente ou divergente.")
+    if applied_regen is None or abs(applied_regen - expected_regen) > 1e-12:
+        raise GateError("FAIL-STOP: escala de regeneração ausente ou divergente.")
     if context["phase"] == "episode":
+        for key, expected in (("acquisition_mode_applied", context["observation_config"]["acquisition_mode"]),
+                              ("counter_source_applied", context["observation_config"]["counter_source"]),
+                              ("diff_motor_t_mapping_applied", context["observation_config"]["diff_motor_t_mapping"])):
+            if audit.get(key) != expected:
+                raise GateError(f"FAIL-STOP: {key} ausente/divergente: esperado={expected!r}, obtido={audit.get(key)!r}")
         hypothesis = context["episode"]["hypothesis"]
         if hypothesis != "H00" and audit.get("fault_injection_applied") is not True:
             raise GateError(f"FAIL-STOP: falha {hypothesis} não foi confirmada como injetada.")
@@ -773,12 +788,14 @@ def soc_summary(audit: dict[str, Any]) -> dict[str, Any]:
     valid = [float(x) for x in soc if x is not None]
     if not valid:
         raise GateError("Backend não retornou soc_true_percent para auditoria física.")
+    if abs(valid[0] - SOC_INITIAL) > 1e-6:
+        raise GateError(f"SOC inicial do backend diverge do pré-registro: {valid[0]} != {SOC_INITIAL}")
     return {
         "soc_true_min_pct": min(valid),
         "soc_true_max_pct": max(valid),
         "soc_true_final_pct": valid[-1],
         "soc_true_initial_pct": valid[0],
-        "soc_true_final_residual_pp": valid[-1] - SOC_INITIAL,
+        "soc_true_final_residual_pp": valid[-1] - valid[0],
         "soc_true_window_violation": min(valid) < SOC_WINDOW[0] or max(valid) > SOC_WINDOW[1],
         "soc_true_samples": len(valid),
     }
@@ -906,9 +923,19 @@ def run_worker(context_path: Path) -> int:
     feature_path = run_dir / "episode_features" / f"{episode['episode_id']}.csv"
     metadata_path = run_dir / "episode_metadata" / f"{episode['episode_id']}.json"
     trajectory_path = run_dir / "soc_trajectories" / f"{episode['episode_id']}.csv.gz"
+    log_path = run_dir / "logs" / f"{episode['episode_id']}.json"
     atomic_single_row_csv(feature_path, features, ["episode_id", *FEATURE_NAMES, *MASK_NAMES])
     atomic_json(metadata_path, metadata)
     write_soc_trajectory(trajectory_path, projected, audit, float(episode["dt_s"]))
+    run_log = {
+        "status": "EPISODE_COMPLETE", "episode_id": episode["episode_id"],
+        "input_hashes": current_hashes, "runtime_s": runtime,
+        "feature_csv_sha256": sha256_file(feature_path),
+        "metadata_json_sha256": sha256_file(metadata_path),
+        "soc_trajectory_gz_sha256": sha256_file(trajectory_path),
+        "audit_flags": {k: v for k, v in audit.items() if k != "soc_true_percent"},
+    }
+    atomic_json(log_path, run_log)
     done = {
         "status": "EPISODE_COMPLETE",
         "episode_id": episode["episode_id"],
@@ -916,6 +943,7 @@ def run_worker(context_path: Path) -> int:
         "feature_csv_sha256": sha256_file(feature_path),
         "metadata_json_sha256": sha256_file(metadata_path),
         "soc_trajectory_gz_sha256": sha256_file(trajectory_path),
+        "run_log_sha256": sha256_file(log_path),
         "runtime_s": runtime,
     }
     done_path = run_dir / "done" / f"{episode['episode_id']}.json"
@@ -1017,8 +1045,12 @@ def calibrate_profiles(rows: list[dict[str, str]], prereg: dict[str, Any], artif
     manifest_seeds = {int(row[f"seed_{stream}"]) for row in rows for stream in STREAMS}
     trace_all = {}
     fixed = {}
+    used_calibration_seeds: set[int] = set()
     for profile_id in PROFILES:
         seeds = calibration_seeds(profile_id, manifest_seeds)
+        if used_calibration_seeds.intersection(seeds.values()):
+            raise GateError("FAIL-STOP: colisão de seed entre perfis de calibração.")
+        used_calibration_seeds.update(seeds.values())
         profile_trace = []
         cache_dir = output_root / "calibration" / "runs"
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -1088,6 +1120,9 @@ def calibrate_profiles(rows: list[dict[str, str]], prereg: dict[str, Any], artif
             "soc_true_min_pct": float(converged["soc_true_min_pct"]),
             "soc_true_max_pct": float(converged["soc_true_max_pct"]),
             "iterations": int(converged["iteration"]),
+            "integrated_Pdc_kWh": converged.get("audit", {}).get("integrated_Pdc_kWh"),
+            "charge_energy_kWh": converged.get("audit", {}).get("charge_energy_kWh"),
+            "numerical_balance_error": converged.get("audit", {}).get("numerical_balance_error"),
             "calibration_seed_streams": seeds,
             "reference_episode_id": train_h00["episode_id"],
             "profile_id": profile_id,
@@ -1120,8 +1155,9 @@ def completed_episode_valid(run_dir: Path, episode_id: str, artifacts: dict[str,
     done = read_json(done_path)
     if done.get("status") != "EPISODE_COMPLETE" or done.get("input_hashes") != artifacts:
         raise GateError(f"BLOQUEIO: recibo de episódio incompatível: {done_path}")
+    log_path = run_dir / "logs" / f"{episode_id}.json"
     for path, key in ((feature_path, "feature_csv_sha256"), (metadata_path, "metadata_json_sha256"),
-                      (trajectory_path, "soc_trajectory_gz_sha256")):
+                      (trajectory_path, "soc_trajectory_gz_sha256"), (log_path, "run_log_sha256")):
         if not path.is_file() or sha256_file(path) != done.get(key):
             raise GateError(f"BLOQUEIO: artefato de episódio corrompido/incompleto: {path}")
     return True
@@ -1168,7 +1204,7 @@ def rebuild_aggregate_tables(rows: list[dict[str, str]], run_dir: Path, artifact
         "soc_group_bias_sd", "soc_innovation", "aux_phi", "aux_white_sigma", "aux_cap",
         *(f"seed_{stream}" for stream in STREAMS), "charge_power_fixed_kW", "runtime_s", "n_steps",
         "soc_true_min_pct", "soc_true_max_pct", "soc_true_final_pct", "soc_true_initial_pct",
-        "soc_true_final_residual_pp", "soc_true_window_violation", "soc_observed_min_pct", "soc_observed_max_pct",
+        "soc_true_final_residual_pp", "soc_true_window_violation", "soc_true_samples", "soc_observed_min_pct", "soc_observed_max_pct",
         "soc_observed_window_violation", "ambient_shift_not_modeled", "ambient_shift_applied",
         "counter_timing_verified", "r33_regression_rank", "r33_condition_number_inf_estimate_scaled_design",
         "r33_regression_n", "feature_diagnostics_json", "input_hashes_json", "audit_flags_json",
@@ -1236,8 +1272,6 @@ def run_mode(args: argparse.Namespace) -> None:
         summary = []
         for row in rows:  # Strict manifest order. Each physical episode is a subprocess.
             summary.append(run_episode_row(row, prereg, artifacts, charge_receipt, backend_path, full_dir))
-            if len(summary) % 12 == 0:
-                rebuild_aggregate_tables(rows, full_dir, artifacts)
         rebuild_aggregate_tables(rows, full_dir, artifacts)
         complete = sum(completed_episode_valid(full_dir, row["episode_id"], artifacts) for row in rows)
         if complete != 2232:
