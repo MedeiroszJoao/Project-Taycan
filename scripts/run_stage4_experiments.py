@@ -886,7 +886,7 @@ def run_worker(context_path: Path) -> int:
         "charge_power_kw": context["charge_power_kw"],
         "runtime_s": runtime,
         "input_hashes": current_hashes,
-        "audit": {k: v for k, v in audit.items() if k != "soc_true_percent"},
+        "audit": {k: v for k, v in audit.items() if k not in ("soc_true_percent", "soc_time_s")},
     }
     if context["phase"] == "charge_calibration":
         summary = soc_summary(audit)
@@ -978,7 +978,7 @@ def run_worker(context_path: Path) -> int:
         "r33_regression_n": diagnostics["r33_regression_n"],
         "feature_diagnostics_json": json.dumps(diagnostics, sort_keys=True),
         "input_hashes_json": json.dumps(current_hashes, sort_keys=True),
-        "audit_flags_json": json.dumps({k: v for k, v in audit.items() if k != "soc_true_percent"}, sort_keys=True),
+        "audit_flags_json": json.dumps({k: v for k, v in audit.items() if k not in ("soc_true_percent", "soc_time_s")}, sort_keys=True),
     }
     run_dir = Path(context["run_dir"])
     feature_path = run_dir / "episode_features" / f"{episode['episode_id']}.csv"
@@ -994,7 +994,7 @@ def run_worker(context_path: Path) -> int:
         "feature_csv_sha256": sha256_file(feature_path),
         "metadata_json_sha256": sha256_file(metadata_path),
         "soc_trajectory_gz_sha256": sha256_file(trajectory_path),
-        "audit_flags": {k: v for k, v in audit.items() if k != "soc_true_percent"},
+        "audit_flags": {k: v for k, v in audit.items() if k not in ("soc_true_percent", "soc_time_s")},
     }
     atomic_json(log_path, run_log)
     done = {
