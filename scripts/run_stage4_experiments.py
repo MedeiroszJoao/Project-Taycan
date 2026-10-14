@@ -662,7 +662,8 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
     ah_dis, miss_ah_dis = observed_series(rows, AH_COUNTERS[0])
     ah_chg, miss_ah_chg = observed_series(rows, AH_COUNTERS[1])
     ah_value = None
-    ah_invalid = miss_ah_dis or miss_ah_chg or miss_bms_i or not counter_timing_verified
+    ah_reset = any(b < a - 1e-8 for series in (ah_dis, ah_chg) for a, b in zip(series, series[1:]) if a is not None and b is not None)
+    ah_invalid = miss_ah_dis or miss_ah_chg or miss_bms_i or not counter_timing_verified or ah_reset
     if not ah_invalid and len(rows) >= 2:
         delta_dis, delta_chg = ah_dis[-1] - ah_dis[0], ah_chg[-1] - ah_chg[0]
         if delta_dis < -1e-8 or delta_chg < -1e-8:
@@ -738,7 +739,8 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
     kwh_dis, miss_kwh_dis = observed_series(rows, KWH_COUNTERS[0])
     kwh_chg, miss_kwh_chg = observed_series(rows, KWH_COUNTERS[1])
     kwh_value = None
-    kwh_invalid = miss_kwh_dis or miss_kwh_chg or miss_v or miss_bms_i or not counter_timing_verified
+    kwh_reset = any(b < a - 1e-8 for series in (kwh_dis, kwh_chg) for a, b in zip(series, series[1:]) if a is not None and b is not None)
+    kwh_invalid = miss_kwh_dis or miss_kwh_chg or miss_v or miss_bms_i or not counter_timing_verified or kwh_reset
     if not kwh_invalid and len(rows) >= 2:
         delta_dis, delta_chg = kwh_dis[-1] - kwh_dis[0], kwh_chg[-1] - kwh_chg[0]
         if delta_dis < -1e-8 or delta_chg < -1e-8:
