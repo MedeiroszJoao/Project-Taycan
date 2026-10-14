@@ -923,6 +923,16 @@ def run_worker(context_path: Path) -> int:
             if timing_key in row:
                 out[timing_key] = row[timing_key]
         projected.append(out)
+    audit_times = [finite_number(x) for x in audit.get("soc_time_s", [])]
+    if len(audit_times) != len(projected) or any(x is None for x in audit_times):
+        raise GateError("FAIL-STOP: grade temporal SOC não está alinhada à série observada.")
+    for i, projected_row in enumerate(projected):
+        observed_time = finite_number(projected_row.get("time_s"))
+        if observed_time is not None and abs(observed_time - float(audit_times[i])) > 1e-6:
+            raise GateError(f"FAIL-STOP: time_s observado diverge da grade física no índice {i}.")
+        projected_row["time_s"] = float(audit_times[i])
+        if finite_number(projected_row.get("dt_s")) is None:
+            projected_row["dt_s"] = float(episode["dt_s"])
     features, diagnostics = feature_matrix(episode["episode_id"], projected, float(episode["dt_s"]),
                                            counter_timing_verified=True)
     soc = soc_summary(audit)
