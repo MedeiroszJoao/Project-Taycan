@@ -1251,6 +1251,9 @@ def load_m01_i01_energy_receipt(output_root: Path, artifacts: dict[str, Any],
             raise GateError(f"BLOQUEIO: severidade I01 ou mismatch inválido: {entry}")
         if motor_j is None or motor_j <= 0 or inverter_j is None or inverter_j < 0:
             raise GateError(f"BLOQUEIO: energias dissipadas ausentes/não positivas: {entry}")
+        computed_mismatch = abs(inverter_j - motor_j) / motor_j * 100.0
+        if abs(computed_mismatch - mismatch) > 0.05:
+            raise GateError(f"BLOQUEIO: mismatch_pct não confere com as energias registradas: {entry}")
         if status not in ("MATCHED", "INFEASIBLE"):
             raise GateError(f"BLOQUEIO: match_status inválido: {status}")
         if status == "MATCHED" and mismatch > 1.0:
