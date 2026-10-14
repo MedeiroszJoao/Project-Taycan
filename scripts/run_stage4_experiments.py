@@ -21,6 +21,9 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -306,9 +309,9 @@ def load_manifest() -> tuple[list[dict[str, str]], dict[str, Any], dict[str, Any
                 raise GateError(f"FAIL-STOP: colisão de seed: {seed}")
             all_seeds.add(seed)
             split_seeds[row["split"]].add(seed)
-    for left in SPLITS:
-        for right in SPLITS:
-            if left < right and split_seeds[left] & split_seeds[right]:
+    for i, left in enumerate(SPLITS):
+        for right in SPLITS[i + 1:]:
+            if split_seeds[left] & split_seeds[right]:
                 raise GateError(f"FAIL-STOP: seeds compartilhadas entre {left} e {right}")
     test_profile_counts = {
         profile: sum(r["split"] == "test" and r["profile"] == profile for r in rows)
@@ -577,12 +580,24 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
     r33_y: list[float] = []
     r33_incomplete = False
     torque_incomplete = False
+    rpm_incomplete = False
     sum_tau_sq_series: list[float] = []
     sum_abs_omega_series: list[float] = []
     for i in range(len(rows)):
-        torque_rpm = [torques[0][0][i], torques[1][0][i], rpms[0][0][i], rpms[1][0][i]]
-        if any(value is None for value in torque_rpm):
+        tau_values = [torques[0][0][i], torques[1][0][i]]
+        rpm_values = [rpms[0][0][i], rpms[1][0][i]]
+        if any(value is None for value in tau_values):
             torque_incomplete = True
+        else:
+            tau1, tau2 = [float(x) for x in tau_values]
+            sum_tau_sq_series.append(tau1 * tau1 + tau2 * tau2)
+        if any(value is None for value in rpm_values):
+            rpm_incomplete = True
+        else:
+            rpm1, rpm2 = [float(x) for x in rpm_values]
+            sum_abs_omega_series.append(abs(2 * math.pi * rpm1 / 60.0) + abs(2 * math.pi * rpm2 / 60.0))
+        torque_rpm = [*tau_values, *rpm_values]
+        if any(value is None for value in torque_rpm):
             sum_tau = sum_tau_sq = sum_omega = sum_tau_omega = None
         else:
             tau1, tau2, rpm1, rpm2 = [float(x) for x in torque_rpm]
@@ -591,8 +606,6 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
             sum_omega = omega1 + omega2
             sum_tau_sq = tau1 * tau1 + tau2 * tau2
             sum_tau_omega = tau1 * omega1 + tau2 * omega2
-            sum_tau_sq_series.append(sum_tau_sq)
-            sum_abs_omega_series.append(abs(omega1) + abs(omega2))
         if v[i] is None or bms_i[i] is None or any(value is None for value in torque_rpm):
             r33.append(None)
             r33_incomplete = True
@@ -680,7 +693,10 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
             temp_incomplete = True
     put("F15", "mean_thermal_spread_C", mean(module_thermal_spreads), temp_incomplete)
     put("F16", "p95_thermal_spread_C", quantile_linear(module_thermal_spreads, 0.95), temp_incomplete)
-    put("F17", "max_internal_module_T_spread_C", max(within_module_spreads) if within_module_spreads else None, temp_incomplete)
+    temp_structural_missing = any(all(finite_number(row.get(channel)) is None for row in rows)
+                                  for channel in MODULE_TEMP_CHANNELS)
+    f17_value = max(within_module_spreads) if within_module_spreads and not temp_structural_missing else None
+    put("F17", "max_internal_module_T_spread_C", f17_value, temp_incomplete)
     put("F18", "mean_DIFF_MOTOR_T_C", mean([x for x in diff_temp if x is not None]), miss_diff_temp)
     diff_pairs = [(times_h[i], x) for i, x in enumerate(diff_temp) if x is not None]
     put("F19", "slope_DIFF_MOTOR_T_C_per_hour", slope_ols([x for x, _ in diff_pairs], [y for _, y in diff_pairs]), miss_diff_temp)
@@ -716,7 +732,7 @@ def feature_matrix(episode_id: str, rows: list[dict[str, Any]], dt_s: float,
     put("F22", "mean_min_isolation_kohm", mean(isolation_min), isolation_incomplete)
     put("F23", "min_isolation_kohm", min(isolation_min) if isolation_min else None, isolation_incomplete)
     put("F24", "time_mean_sum_torque_squared", mean(sum_tau_sq_series), torque_incomplete)
-    put("F25", "time_mean_sum_abs_angular_speed", mean(sum_abs_omega_series), torque_incomplete)
+    put("F25", "time_mean_sum_abs_angular_speed", mean(sum_abs_omega_series), rpm_incomplete)
 
     kwh_dis, miss_kwh_dis = observed_series(rows, KWH_COUNTERS[0])
     kwh_chg, miss_kwh_chg = observed_series(rows, KWH_COUNTERS[1])
@@ -751,8 +767,9 @@ def load_backend_result(context: dict[str, Any]) -> dict[str, Any]:
         raise GateError("FAIL-STOP: timing dos contadores Ah/kWh não foi verificado pelo backend.")
     if audit.get("profile_id") != context["profile"]["id"]:
         raise GateError("FAIL-STOP: backend aplicou perfil diferente do solicitado.")
-    if abs(float(audit.get("dt_s", -1)) - float(context["profile"]["dt_s"])) > 1e-12:
-        raise GateError("FAIL-STOP: dt aplicado diverge do manifesto.")
+    applied_dt = finite_number(audit.get("dt_s"))
+    if applied_dt is None or abs(applied_dt - float(context["profile"]["dt_s"])) > 1e-12:
+        raise GateError("FAIL-STOP: dt ausente ou divergente do manifesto.")
     applied_charge = finite_number(audit.get("charge_power_kw_applied"))
     if applied_charge is None or abs(applied_charge - float(context["charge_power_kw"])) > 1e-8:
         raise GateError("FAIL-STOP: potência de carga ausente ou divergente da calibração congelada.")
@@ -853,7 +870,22 @@ def run_worker(context_path: Path) -> int:
     }
     if context["phase"] == "charge_calibration":
         summary = soc_summary(audit)
-        atomic_json(worker_result_path, {**common, **summary})
+        trajectory_path = Path(context["run_dir"]) / "soc_trajectories" / f"{context['job_id']}.csv.gz"
+        trajectory_path.parent.mkdir(parents=True, exist_ok=True)
+        temp = trajectory_path.with_suffix(trajectory_path.suffix + ".tmp")
+        truth = [finite_number(x) for x in audit.get("soc_true_percent", [])]
+        with temp.open("wb") as raw:
+            with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:
+                with io.TextIOWrapper(zipped, encoding="utf-8", newline="") as text_handle:
+                    writer = csv.writer(text_handle, lineterminator="\n")
+                    writer.writerow(["time_s", "SOC_true_percent_for_audit_only"])
+                    for i, value in enumerate(truth):
+                        writer.writerow([format(i * float(context["profile"]["dt_s"]), ".8f"),
+                                         "" if value is None else format(value, ".8f")])
+        os.replace(temp, trajectory_path)
+        atomic_json(worker_result_path, {**common, **summary,
+                                         "soc_trajectory_gz": str(trajectory_path),
+                                         "soc_trajectory_gz_sha256": sha256_file(trajectory_path)})
         return 0
 
     episode = context["episode"]
