@@ -415,6 +415,7 @@ def load_backend(path: Path):
     if spec is None or spec.loader is None:
         raise GateError(f"Não foi possível carregar backend adapter: {path}")
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     if not callable(getattr(module, "run_episode", None)):
         raise GateError("Backend deve exportar run_episode(context: dict) -> dict.")
@@ -765,6 +766,8 @@ def load_backend_result(context: dict[str, Any]) -> dict[str, Any]:
         raise GateError("FAIL-STOP: backend executou modelo cujo hash não é o congelado.")
     if audit.get("counter_timing_verified") is not True:
         raise GateError("FAIL-STOP: timing dos contadores Ah/kWh não foi verificado pelo backend.")
+    if not isinstance(audit.get("ambient_shift_applied"), bool):
+        raise GateError("FAIL-STOP: backend deve declarar ambient_shift_applied como Boolean.")
     if audit.get("profile_id") != context["profile"]["id"]:
         raise GateError("FAIL-STOP: backend aplicou perfil diferente do solicitado.")
     applied_dt = finite_number(audit.get("dt_s"))
@@ -803,8 +806,8 @@ def load_backend_result(context: dict[str, Any]) -> dict[str, Any]:
 def soc_summary(audit: dict[str, Any]) -> dict[str, Any]:
     soc = [finite_number(x) for x in audit.get("soc_true_percent", [])]
     valid = [float(x) for x in soc if x is not None]
-    if not valid:
-        raise GateError("Backend não retornou soc_true_percent para auditoria física.")
+    if not valid or len(valid) != len(soc):
+        raise GateError("Backend não retornou uma trajetória SOC verdadeira completa e finita.")
     if abs(valid[0] - SOC_INITIAL) > 1e-6:
         raise GateError(f"SOC inicial do backend diverge do pré-registro: {valid[0]} != {SOC_INITIAL}")
     return {
@@ -1061,6 +1064,15 @@ def load_cached_calibration(path: Path, artifacts: dict[str, Any]) -> dict[str, 
     receipt = read_json(path)
     if receipt.get("input_hashes") != artifacts or receipt.get("status") != "CHARGE_CALIBRATION_CONVERGED":
         raise GateError("BLOQUEIO: recibo de calibração existente não corresponde aos hashes atuais; não sobrescrever.")
+    profiles = receipt.get("profiles", {})
+    if set(profiles) != set(PROFILES):
+        raise GateError("BLOQUEIO: recibo de calibração não contém exatamente os dois perfis.")
+    for profile_id, values in profiles.items():
+        residual = finite_number(values.get("final_soc_residual_pp"))
+        soc_min = finite_number(values.get("soc_true_min_pct"))
+        soc_max = finite_number(values.get("soc_true_max_pct"))
+        if residual is None or abs(residual) > SOC_FINAL_TOLERANCE_PP or soc_min is None or soc_max is None or soc_min < SOC_WINDOW[0] or soc_max > SOC_WINDOW[1]:
+            raise GateError(f"BLOQUEIO: recibo de calibração não satisfaz o critério em {profile_id}.")
     return receipt
 
 
@@ -1300,6 +1312,15 @@ def run_mode(args: argparse.Namespace) -> None:
             raise GateError("BLOQUEIO: recibo smoke ausente, inválido ou feito com hashes diferentes.")
         if smoke.get("charge_calibration_receipt_sha256") != sha256_file(calibration_path):
             raise GateError("BLOQUEIO: calibração mudou depois do smoke.")
+        smoke_rows = [next(r for r in rows if r["hypothesis"] == h and r["split"] == "train") for h in HYPOTHESES]
+        smoke_dir = output_root / "smoke"
+        for smoke_row in smoke_rows:
+            if not completed_episode_valid(smoke_dir, smoke_row["episode_id"], artifacts):
+                raise GateError(f"BLOQUEIO: artefato smoke ausente/inválido: {smoke_row['episode_id']}")
+        if sha256_file(smoke_dir / "tables/stage4_feature_matrix.csv") != smoke.get("feature_matrix_sha256"):
+            raise GateError("BLOQUEIO: matriz smoke diverge do recibo.")
+        if sha256_file(smoke_dir / "tables/stage4_evaluation_metadata.csv") != smoke.get("evaluation_metadata_sha256"):
+            raise GateError("BLOQUEIO: metadata smoke diverge do recibo.")
         full_dir = output_root / "full"
         summary = []
         for row in rows:  # Strict manifest order. Each physical episode is a subprocess.
