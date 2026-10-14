@@ -820,6 +820,11 @@ def soc_summary(audit: dict[str, Any]) -> dict[str, Any]:
     times = audit.get("soc_time_s")
     if not isinstance(times, list) or len(times) != len(soc) or any(finite_number(t) is None for t in times):
         raise GateError("Backend deve retornar soc_time_s finito e alinhado com soc_true_percent.")
+    numeric_times = [float(t) for t in times]
+    if any(b <= a for a, b in zip(numeric_times, numeric_times[1:])):
+        raise GateError("soc_time_s deve ser estritamente crescente.")
+    if numeric_times[0] < -1e-9 or numeric_times[-1] < DURATION_S - 2 * DT_S or numeric_times[-1] > DURATION_S + 1e-6:
+        raise GateError("soc_time_s não cobre a duração pré-registrada de seis horas.")
     return {
         "soc_true_min_pct": min(valid),
         "soc_true_max_pct": max(valid),
@@ -1233,7 +1238,11 @@ def load_m01_i01_energy_receipt(output_root: Path, artifacts: dict[str, Any],
         raise GateError("BLOQUEIO: recibo M01/I01 não declara M01_I01_ENERGY_MATCH_COMPLETE.")
     if receipt.get("input_hashes") != artifacts:
         raise GateError("BLOQUEIO: recibo M01/I01 foi calculado com hashes diferentes.")
-    if receipt.get("calibration_split") != "independent_calibration_only" or        receipt.get("uses_validation_outcomes") is not False or receipt.get("uses_test_outcomes") is not False:
+    if (
+        receipt.get("calibration_split") != "independent_calibration_only"
+        or receipt.get("uses_validation_outcomes") is not False
+        or receipt.get("uses_test_outcomes") is not False
+    ):
         raise GateError("BLOQUEIO: calibração M01/I01 não comprova isolamento de validação/teste.")
     manifest_seeds = {int(row[f"seed_{stream}"]) for row in rows for stream in STREAMS}
     calibration_seeds = receipt.get("calibration_seed_values")
