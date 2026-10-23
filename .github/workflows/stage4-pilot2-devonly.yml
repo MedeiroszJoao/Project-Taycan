@@ -1,7 +1,8 @@
 name: Stage4 Pilot2 DEVONLY (new seeds, sealed test untouched)
 on:
-  pull_request:
-    branches: [main]
+  # Pilot2 already has a complete immutable successful exploratory run.
+  # Heavy 2916-case reruns require an explicit manual dispatch; PR pushes
+  # should not silently consume six compute shards on every research commit.
   workflow_dispatch:
 permissions:
   contents: read
