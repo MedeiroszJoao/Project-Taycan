@@ -75,6 +75,8 @@ def recover(stage3_zip: Path, stage4_zip: Path, freeze_path: Path, output: Path)
     stage4 = scan_archive(stage4_zip)
     all_members = stage3 + stage4
     frozen_models = [m for m in all_members if m["basename"] == "model.py"]
+    if not any(m["basename"] == "model.py" for m in stage3):
+        raise ValueError("O ZIP original da Etapa 3 não contém model.py; impossível verificar a origem.")
     if not frozen_models:
         raise ValueError("Nenhum model.py nos ZIPs; não é permitido fabricar substituto.")
     mismatched_models = [m for m in frozen_models if m["sha256"] != MODEL_SHA256]
@@ -105,7 +107,9 @@ def recover(stage3_zip: Path, stage4_zip: Path, freeze_path: Path, output: Path)
         "observation_layer_approved_hash_available": False,
         "counter_timing_verified": False,
         "stage3_zip": str(stage3_zip),
+        "stage3_zip_sha256": sha256(stage3_zip.read_bytes()),
         "stage4_zip": str(stage4_zip),
+        "stage4_zip_sha256": sha256(stage4_zip.read_bytes()),
         "freeze_json": str(freeze_path),
         "sources": [
             {"path": str(destination), "archive": item["archive"],
