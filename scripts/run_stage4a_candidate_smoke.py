@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/"src"),str(ROOT/"src/simulator")]
 from candidate_sim import model_4a_activity_gated as phys
-from observation.observation_layer_candidate import transform_observed_rows,auxiliary_trace_candidate,APPROVED_OBD_IDS
+from observation.observation_layer_4a_candidate import transform_observed_rows,auxiliary_trace_candidate,APPROVED_OBD_IDS
 from scripts.duty_cycle_candidate import build_duty_inputs
 from scripts.run_stage4_dev_separability import frozen_seed_set,dev_seeds,make_dev_row
 from scripts.run_stage4_pilot2_dev import jobs as pilot_jobs,seeds as pilot_seeds
@@ -32,7 +32,7 @@ def sources():
   "historical_manifest":"experiments/stage_04_data_validation/STAGE4_EPISODE_MANIFEST.csv",
   "historical_prereg":"experiments/stage_04_data_validation/REVISION_PREREG_ADDENDUM.json",
   "candidate_physics":"src/simulator/candidate_sim/model_4a_activity_gated.py",
-  "candidate_observer":"src/observation/observation_layer_candidate.py",
+  "candidate_observer":"src/observation/observation_layer_4a_candidate.py",
   "candidate_duty":"scripts/duty_cycle_candidate.py",
   "feature_contract":"scripts/run_stage4_experiments.py",
   "smoke_script":"scripts/run_stage4a_candidate_smoke.py"}
@@ -127,8 +127,9 @@ def run_one(h,profile,prereg):
    charge_energy_kWh=sum(x["power_charge_to_dc_bus_W"]*5/3600000 for x in sim.truth),
    feature_sha256=fingerprint,features=data,
    soc_clipped_group_samples=obs_meta["soc_clipped_group_samples"],
-   auxiliary_cap_W=config["aux_cap_W"],
+   auxiliary_residual_cap_W=config["aux_cap_W"],
    mean_auxiliary_W=sum(x["power_auxiliary_W"] for x in sim.truth)/steps,
+   auxiliary_sd_W=math.sqrt(sum((x["power_auxiliary_W"]-sum(aux)/steps)**2 for x in sim.truth)/steps),
    auxiliary_energy_kWh=sum(x["power_auxiliary_W"]*5/3600000 for x in sim.truth))
 def run_shard(shard):
  if shard not in range(6):raise ValueError("shard outside 0..5")
