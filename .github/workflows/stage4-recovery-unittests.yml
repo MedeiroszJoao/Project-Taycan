@@ -1,0 +1,21 @@
+name: Stage 4 recovery and counter tests (no physical simulation)
+
+on:
+  push:
+    branches:
+      - research/stage4-frozen-archive-recovery-2026-10-23
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python and synthetic unit fixtures only
+        run: |
+          python3 --version
+          python3 -m unittest discover -s tests/unit -p 'test_stage4_*.py' -v
