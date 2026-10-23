@@ -6,8 +6,8 @@ Scope: probabilistic fault diagnosis for the 2022 Porsche Taycan 4S with standar
 
 | Stage | Status |
 | --- | --- |
-| 1 — Observability catalog | Approved; artifacts not yet imported to this repository |
-| 2 — Fault taxonomy and signal matrix | Approved; artifacts not yet imported |
+| 1 — Observability catalog | Historically approved; complete 546-signal Markdown catalog imported; accompanying JSON still pending |
+| 2 — Fault taxonomy and signal matrix | Historically approved; original Markdown taxonomy/report imported; 6,552-row expanded JSON/XLSX matrix still pending |
 | 3 — Physical simulator and tests | Approved; original `model.py`, required package files, and 28 original unit tests now imported unchanged |
 | 4 — Synthetic and external battery datasets | Delivered for audit; formal approval pending |
 | 5–8 | Not authorized to start |
