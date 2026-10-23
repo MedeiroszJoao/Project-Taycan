@@ -1,5 +1,5 @@
 # Stage4A candidate charge / I01 activity matching — prospective development addendum
-Date: 2026-10-23. This method is fixed by the code commit **before** the dedicated calibration CI evaluation.
+Date: 2026-10-23. The successful 1900 W reference-load method is fixed in the source commit **before its successful CI evaluation**, but was revised after an earlier failed 700 W development attempt. This is iterative, unsealed research, not a blind preregistration.
 
 **This is a second, unsealed development calibration**, explicitly distinct from the historical sealed [0,120] kW search and from the earlier post-pilot charging search. It does not retroactively repair or re-label the historical preregistration. It is *not* a license to score the 2,232 official episodes or train Stage5.
 
