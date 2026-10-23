@@ -8,7 +8,7 @@ permissions:
 jobs:
   unit-and-inventory:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,3 +26,14 @@ jobs:
         env:
           PYTHONPATH: 'src/simulator:src:.'
         run: python scripts/audit_stage4_m01_i01_modes.py
+      - name: Generate NEW-SEED development-only 28-feature separability (no classifier)
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4_dev_separability.py
+      - name: Archive development-only statistics (not Stage 4 results)
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4-DEVONLY-192cases-66pairs
+          path: results/tmp/stage4_devonly/pairwise_feature_separability.json
+          if-no-files-found: error
+          retention-days: 30
