@@ -4,7 +4,7 @@
 
 ## Why a backend adapter is required
 
-The repository contains the sealed Stage 4 preregistration, append-only amendment, and 2,232-row episode manifest. It does **not** currently contain the frozen Stage 3 taycan_sim/model.py, freeze.json, or the executable observation layer. The runner therefore accepts paths to those local artifacts and a backend adapter. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked.
+The repository contains the sealed Stage 4 preregistration, append-only amendment, the 2,232-row episode manifest, **and the byte-verified Stage 4 `freeze.json`**. It does **not** currently contain the frozen Stage 3 `taycan_sim/model.py` or the executable `observation_layer.py`. Their original ZIP archives have been located in the project attachments, but the original Python members have not yet been extracted and checked. The runner therefore accepts paths to the original sources and a backend adapter. Use `scripts/recover_stage3_stage4_sources.py` for fail-closed extraction and hash checks; this does not replace backend integration or testing. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked.
 
 The runner itself does not modify the frozen model or either sealed JSON file. It uses only Python standard-library modules and requires Python 3.10 or newer.
 
