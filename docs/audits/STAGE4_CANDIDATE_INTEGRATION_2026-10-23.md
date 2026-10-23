@@ -41,6 +41,7 @@ All checks run locally with the recovered original and sealed Stage 4 parameters
 - Earlier unmodified boundary candidate: **6/6** passed.
 - Combined local workspace with updated physical and observation candidates, Stage 3 tests and compatible Stage 4 tests: **52/52** passed, including **19** new candidate tests. This count should be interpreted as local test cases, not official episodes.
 - Exploratory candidate coupling: one TRAIN-manifest-configured H00 and one B06 probe, each `120 × 5 s` steps; custom signed torque trace. Neither is a registered six-hour NOMINAL/SHIFTED run. Each produced all 28 feature names and 28 masks, with no missing feature in these probes; power-balance residual < `5e-11 W` and no negative dissipative inverter/gearbox loss. F14/F28 are near zero under counter source `BMS_I`, with nonzero differences under independent `HVBAT_CURRENT` acquisition.
+- Additional end-to-end non-scoring sweep: all **12** hypotheses run with unique TRAIN-manifest seeds, each 120 steps at dt=5s and the same declared custom torque waveform (not a frozen 6-hour driving profile). Every case produced 28 named features and 28 masks; **0 total missing features**, **0 steps with negative inverter/gear dissipation**, maximum instantaneous DC balance residual **6.55e-11 W**. This is an integration-coverage check, **not** the registered Stage 4 smoke.
 - **0** official six-hour Stage 4 smoke experiments scored; **0** of 2,232 official episodes scored.
 
 To reproduce local tests with Python 3.10+:
@@ -48,6 +49,7 @@ To reproduce local tests with Python 3.10+:
 ```bash
 PYTHONPATH=src/simulator:src:. python -m unittest discover -s tests/unit -p 'test_*.py' -v
 python scripts/probe_candidate_pipeline.py
+python scripts/probe_candidate_12_hypotheses.py
 ```
 
 The probe generates `results/candidate_pipeline_probe.json` (synthetic, **NOT** held-out evaluation). Do not optimize nuisance parameters based on its output.
