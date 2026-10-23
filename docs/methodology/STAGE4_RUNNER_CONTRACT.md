@@ -4,7 +4,7 @@
 
 ## Why a backend adapter is required
 
-The repository contains the sealed Stage 4 preregistration, append-only amendment, and 2,232-row episode manifest. It does **not** currently contain the frozen Stage 3 taycan_sim/model.py, freeze.json, or the executable observation layer. The runner therefore accepts paths to those local artifacts and a backend adapter. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked.
+The repository contains the sealed Stage 4 preregistration, append-only amendment, 2,232-row episode manifest, and the byte-verified frozen `freeze.json`. It does **not** currently contain the frozen Stage 3 `taycan_sim/model.py` or the executable observation layer. The runner therefore accepts paths to those local artifacts and a backend adapter. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked.
 
 The runner itself does not modify the frozen model or either sealed JSON file. It uses only Python standard-library modules and requires Python 3.10 or newer.
 
@@ -86,3 +86,28 @@ This is a deliberate fail-closed gate, not a claim that the mapping calibration 
 ## Current limitation
 
 The runner source is committed, but no execution result is implied. Until the frozen model, original freeze file, and a backend adapter satisfying this contract are restored and verified, the correct status is **BLOCKED / NOT EXECUTED**.
+
+
+## Recovery from original Stage 3/4 ZIP archives (2026-10-23)
+
+The original generated ZIP files are registered in the conversation file history:
+
+- `taycan_etapa3_codigo_testes.zip`
+- `taycan_etapa4_codigo_dados.zip`
+- `taycan_etapa4_dados_reais_e_codigo.zip`
+
+They have been materialized to `/mnt/data/recovered/` in the ChatGPT working-file service, but the model's local execution environment returned `ClientError` when asked to open ZIP bytes. **Materialization does not mean extraction or verification.** GitHub has not received the ZIPs or either missing Python source file.
+
+A fail-closed tool now exists at `scripts/recover_frozen_stage3_stage4.py`. It accepts ZIP paths and searches for exact basenames, never invokes code from the ZIPs, rejects a model whose SHA-256 differs from `af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e`, checks the repository's original `freeze.json`, and refuses to overwrite different existing files. If multiple distinct observation layers are present, the operator must supply `--observer-sha256`; the observer's historical hash was not sealed and **must not be invented**.
+
+Read-only inventory (default):
+
+```bash
+python3 scripts/recover_frozen_stage3_stage4.py --archives /mnt/data/recovered/taycan_etapa3_codigo_testes.zip /mnt/data/recovered/taycan_etapa4_codigo_dados.zip /mnt/data/recovered/taycan_etapa4_dados_reais_e_codigo.zip
+```
+
+After the inventory identifies a frozen-hash-matching model and a single unambiguous observation layer, extraction can be explicitly requested with the same arguments and `--extract`. This writes to `src/taycan_sim/model.py` and `src/taycan_sim/observation_layer.py`, with a receipt in `results/stage_04/archive_recovery_receipt.json`. This **does not** certify that the old observation layer implements per-channel uniform persistent bias; that integration still requires separate adapter checks.
+
+The GitHub Actions workflow `.github/workflows/stage4-recovery-unittests.yml` executes **only** synthetic, unit-level checks and manifest checks. Passing those checks must never be reported as a successful Stage 3 simulation, Stage 4 smoke test, physical-model recovery, or external validation.
+
+The approved Stage 3 code must not be rewritten or replaced by another implementation with a different hash without formal Stage 3 revision approval.
