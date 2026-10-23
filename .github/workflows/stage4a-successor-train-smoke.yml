@@ -1,0 +1,69 @@
+name: Stage4A successor research TRAIN-only manifest smoke
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run entire unit suite and verify sealed artifact hashes
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python -m unittest discover -s tests/unit -p 'test_*.py' -v
+  train-smoke:
+    needs: preflight
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run two six-hour original TRAIN records with corrected candidate
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4a_research_train_smoke.py --shard ${{ matrix.shard }}
+      - name: Archive fail-closed train-only QC
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4a-research-train-shard-${{ matrix.shard }}
+          path: results/tmp/stage4a_successor_train_smoke/train-shard-${{ matrix.shard }}.json
+          if-no-files-found: warn
+          retention-days: 30
+  aggregate:
+    needs: train-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: stage4a-research-train-shard-*
+          path: results/tmp/stage4a_successor_train_smoke
+          merge-multiple: true
+      - name: Verify 12 original TRAIN IDs, feature schema, sealed hashes and QC
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4a_research_train_smoke.py --aggregate
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage4a-successor-train-smoke12-attestation
+          path: results/tmp/stage4a_successor_train_smoke/research_train_smoke12_attestation.json
+          if-no-files-found: error
+          retention-days: 30
