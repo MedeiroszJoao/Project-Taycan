@@ -1,7 +1,7 @@
 name: Stage4A Prospective Research Calibration (unsealed, non-scoring)
 on:
-  pull_request:
-    branches: [main]
+  # Completed successful prospective 2-profile calibration is archived.
+  # Explicit manual dispatch is required to repeat expensive 6h bisections.
   workflow_dispatch:
 permissions:
   contents: read
