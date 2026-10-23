@@ -1,0 +1,27 @@
+name: Stage 3/4 research candidate tests
+on:
+  push:
+    branches:
+      - research/stage4-physical-observation-candidates-2026-10-23
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-and-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run all existing and adversarial unit tests
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python -m unittest discover -s tests/unit -p 'test_*.py' -v
+      - name: Independently inspect effective-capacity energy inventory
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/audit_stage4_energy_inventory.py
