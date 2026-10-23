@@ -38,10 +38,10 @@ def run_phys(profile,power_kw,fault=None):
  dt=5.;steps=4320
  duty=build_duty_inputs(dt_s=dt,charge_power_kw=power_kw,profile_id=profile)
  kw=dict(seed=seed_for(profile,"physics"),steps=steps,dt_s=dt,initial_soc=.6,
-         sensor_noise=False,auxiliary_amplitude_W=0,auxiliary_mean_W=700.)
+         sensor_noise=False,auxiliary_amplitude_W=0,auxiliary_mean_W=1900.)
  if profile=="SHIFT_REGEN_COLD_6H":kw.update(coolant_C=10.,init_module_C=16.)
  # No auxiliary RNG observed; reproducible deterministic time-series common across faults.
- aux=[700.+200.*math.sin(i*dt/190.) for i in range(steps)]
+ aux=[1900.+200.*math.sin(i*dt/190.) for i in range(steps)]
  sim=phys.simulate(fault or phys.Fault("H00",severity=0.),
         phys.ModelConfig(**kw),torque_trace_nm=duty.torque_nm,
         rpm_trace_rpm=duty.rpm,external_charge_trace_W=duty.charge_W,
