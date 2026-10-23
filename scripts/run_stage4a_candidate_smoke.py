@@ -66,6 +66,8 @@ def run_one(h,profile,prereg):
  duty=build_duty_inputs(dt_s=5.,charge_power_kw=power,profile_id=profile)
  steps=len(duty.mode)
  if steps!=4320:raise AssertionError("6h timebase")
+ if any(duty.mode.count(mode)!=864 for mode in ("cruise","acceleration","regeneration","rest","charge")):
+  raise AssertionError("unbalanced 12-minute duty blocks")
  aux=auxiliary_trace_candidate(config,5.,steps)
  kw=dict(seed=sd["physics"],dt_s=5.,steps=steps,initial_soc=.6,
          sensor_noise=False,auxiliary_amplitude_W=0,
@@ -95,10 +97,14 @@ def run_one(h,profile,prereg):
    raise AssertionError("nonfinite feature")
  soc_min=min(100*x["min_hidden_branch_soc"] for x in sim.truth)
  soc_max=max(100*x["max_hidden_branch_soc"] for x in sim.truth)
+ if not all(math.isfinite(v) for v in (soc_min,soc_max)):
+  raise AssertionError("nonfinite latent SOC")
  if soc_min<30 or soc_max>80:raise AssertionError("SOC window violation")
  dc_error=max(abs(x["power_requested_dc_W"]-x["power_dc_W"]) for x in sim.truth)
  rc_error=max(abs(x["rc_input_work_J_step"]-x["rc_dissipation_J_step"]
                  -x["rc_capacitor_storage_delta_J_step"]) for x in sim.truth)
+ if not all(math.isfinite(v) for v in (dc_error,rc_error)):
+  raise AssertionError("nonfinite energy residual")
  if dc_error>1e-5:raise AssertionError("local DC balance failure")
  if rc_error>1e-4:raise AssertionError("fixed-step RC identity failure")
  for x in sim.truth:
@@ -120,7 +126,10 @@ def run_one(h,profile,prereg):
    dc_algebra_max_error_W=dc_error,rc_fixed_step_max_error_J=rc_error,
    charge_energy_kWh=sum(x["power_charge_to_dc_bus_W"]*5/3600000 for x in sim.truth),
    feature_sha256=fingerprint,features=data,
-   observer_clipping=obs_meta.get("clipping",None))
+   soc_clipped_group_samples=obs_meta["soc_clipped_group_samples"],
+   auxiliary_cap_W=config["aux_cap_W"],
+   mean_auxiliary_W=sum(x["power_auxiliary_W"] for x in sim.truth)/steps,
+   auxiliary_energy_kWh=sum(x["power_auxiliary_W"]*5/3600000 for x in sim.truth))
 def run_shard(shard):
  if shard not in range(6):raise ValueError("shard outside 0..5")
  hashes=sources();seed_audit()
