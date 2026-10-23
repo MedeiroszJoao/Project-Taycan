@@ -87,7 +87,8 @@ def recover(stage3_zip: Path, stage4_zip: Path, freeze_path: Path, output: Path)
     freeze = freeze_path.read_bytes()
     if sha256(freeze) != FREEZE_SHA256:
         raise ValueError(f"freeze.json não coincide com SHA-256 congelado: {sha256(freeze)}")
-    embedded_freezes = [m for m in all_members if m["basename"] == "freeze.json"]
+    # The Stage 3 archive may contain unrelated historical freeze files.
+    embedded_freezes = [m for m in stage4 if m["basename"] == "freeze.json"]
     for embedded in embedded_freezes:
         if embedded["sha256"] != FREEZE_SHA256:
             raise ValueError(f"freeze.json divergente no ZIP: {embedded['archive']}:{embedded['member']}")
