@@ -62,7 +62,7 @@ def run_one(h,profile,prereg):
  row["episode_id"]="STAGE4A_DEVONLY_"+h+"_"+profile
  row["severity"]=str(0 if h=="H00" else .25)
  config=make_observation_config(row,prereg,verify_draws=True)
- power=47.8046875 if profile=="NOMINAL_6H" else 31.5625
+ power=47.79296875 if profile=="NOMINAL_6H" else 31.5625
  duty=build_duty_inputs(dt_s=5.,charge_power_kw=power,profile_id=profile)
  steps=len(duty.mode)
  if steps!=4320:raise AssertionError("6h timebase")
