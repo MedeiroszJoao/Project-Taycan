@@ -119,6 +119,8 @@ def run_one(h,profile,prereg):
     raise AssertionError("I01 extra inverter loss while parked")
  data={k:f[k] for k in FEATURE_NAMES+MASK_NAMES}
  fingerprint=hashlib.sha256(json.dumps(data,sort_keys=True,allow_nan=False).encode()).hexdigest()
+ mean_aux=sum(aux)/steps
+ sd_aux=math.sqrt(sum((x-mean_aux)**2 for x in aux)/steps)
  return dict(hypothesis=h,profile=profile,status="PASS",severity=0 if h=="H00" else .25,
    steps=steps,dt_s=5.,valid_features=sum(f[k]==0 for k in MASK_NAMES),
    min_branch_SOC_pct=soc_min,max_branch_SOC_pct=soc_max,
@@ -128,8 +130,7 @@ def run_one(h,profile,prereg):
    feature_sha256=fingerprint,features=data,
    soc_clipped_group_samples=obs_meta["soc_clipped_group_samples"],
    auxiliary_residual_cap_W=config["aux_cap_W"],
-   mean_auxiliary_W=sum(x["power_auxiliary_W"] for x in sim.truth)/steps,
-   auxiliary_sd_W=math.sqrt(sum((x["power_auxiliary_W"]-sum(aux)/steps)**2 for x in sim.truth)/steps),
+   mean_auxiliary_W=mean_aux,auxiliary_sd_W=sd_aux,
    auxiliary_energy_kWh=sum(x["power_auxiliary_W"]*5/3600000 for x in sim.truth))
 def run_shard(shard):
  if shard not in range(6):raise ValueError("shard outside 0..5")
