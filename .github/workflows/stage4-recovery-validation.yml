@@ -1,0 +1,25 @@
+name: Stage 4 Recovery Static and Unit Checks
+on:
+  push:
+    branches:
+      - research/stage4-archive-recovery-2026-10-23
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stage4-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python without physical-model execution
+        run: |
+          python -m compileall -q scripts/recover_frozen_stage3_from_archives.py scripts/run_stage4_experiments.py tests/unit/test_stage4_archive_recovery.py tests/unit/test_stage4_counter_alignment.py
+      - name: Run synthetic archive and counter tests only
+        run: |
+          python -m unittest discover -s tests/unit -p 'test_stage4_*.py' -v
