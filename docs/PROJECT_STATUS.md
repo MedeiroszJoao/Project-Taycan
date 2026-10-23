@@ -8,7 +8,7 @@ Scope: probabilistic fault diagnosis for the 2022 Porsche Taycan 4S with standar
 | --- | --- |
 | 1 — Observability catalog | Approved; artifacts not yet imported to this repository |
 | 2 — Fault taxonomy and signal matrix | Approved; artifacts not yet imported |
-| 3 — Physical simulator and tests | Approved; source not yet imported |
+| 3 — Physical simulator and tests | Approved; original `model.py`, required package files, and 28 original unit tests now imported unchanged |
 | 4 — Synthetic and external battery datasets | Delivered for audit; formal approval pending |
 | 5–8 | Not authorized to start |
 
@@ -17,7 +17,7 @@ The Stage 3 `taycan_sim/model.py` approved SHA-256 is:
 
 Do not replace approved files, alter frozen assumptions, or advance a stage without an explicit stage approval.
 
-NASA and Oxford datasets provide external cell-level evidence, **not** Taycan-specific pack/motor/inverter validation. The repository currently contains a scaffold only.
+NASA and Oxford datasets provide external cell-level evidence, **not** Taycan-specific pack/motor/inverter validation. The repository now includes the exact recovered Stage 3 simulator under `src/simulator/taycan_sim/` and the original tests under `tests/unit/test_stage3_simulator.py`. Stage 4 remains blocked on the original observation layer, backend integration, and formal validation. The experimental Stage 4 boundary-condition extension is not part of the approved frozen model.
 
 ## Safety and evidentiary caveats
 

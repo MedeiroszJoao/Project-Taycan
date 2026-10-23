@@ -1,5 +1,7 @@
 # Stage 4 source recovery audit — 2026-10-23
 
+> **Historical snapshot, superseded in part by [Stage 3 source import](STAGE3_SOURCE_IMPORT_2026-10-23.md):** On 2026-10-23 the original Stage 3 `model.py` was subsequently recovered byte-for-byte, its SHA-256 verified, its 28 tests passed, and its package imported into `src/simulator/taycan_sim/`. The original Stage 4 `observation_layer.py` is **still missing**, and Stage 4 is **not approved**. Statements below describe the earlier recovery attempt and have not been silently rewritten.
+
 ## Status
 
 **ORIGINAL ARCHIVES LOCATED AND MATERIALIZED; ORIGINAL PYTHON MEMBERS NOT YET EXTRACTED; STAGE 4 UNAPPROVED.** Do not claim original `model.py` or `observation_layer.py` recovered until the bytes have been read and checked.

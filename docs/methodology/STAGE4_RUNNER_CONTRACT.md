@@ -4,7 +4,7 @@
 
 ## Why a backend adapter is required
 
-The repository contains the sealed Stage 4 preregistration, append-only amendment, the 2,232-row episode manifest, **and the byte-verified Stage 4 `freeze.json`**. It does **not** currently contain the frozen Stage 3 `taycan_sim/model.py` or the executable `observation_layer.py`. Their original ZIP archives have been located in the project attachments, but the original Python members have not yet been extracted and checked. The runner therefore accepts paths to the original sources and a backend adapter. Use `scripts/recover_stage3_stage4_sources.py` for fail-closed extraction and hash checks; this does not replace backend integration or testing. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked.
+The repository contains the sealed Stage 4 preregistration, append-only amendment, the 2,232-row episode manifest, **and the byte-verified Stage 4 `freeze.json`**. It **does** now contain the byte-verified frozen Stage 3 `taycan_sim/model.py` at `src/simulator/taycan_sim/model.py` (with its `signal_contract.json`, package entrypoints, and original tests). It does **not** contain the original executable `observation_layer.py`. The Stage 3 original ZIP has been extracted, SHA-256 verified and its 28 unit tests executed successfully; the Stage 4 observation source remains unavailable. The runner therefore accepts paths to the original sources and a backend adapter. Use `scripts/recover_stage3_stage4_sources.py` for fail-closed extraction and hash checks; this does not replace backend integration or testing. It fails closed if any SHA-256 differs or if the adapter cannot attest that counter timing was checked. The recovery utility remains useful for independent archive verification; the source committed here is not a Stage 4 backend adapter.
 
 The runner itself does not modify the frozen model or either sealed JSON file. It uses only Python standard-library modules and requires Python 3.10 or newer.
 
@@ -48,7 +48,7 @@ The adapter must not add latent truth, injected fault values, severity, labels, 
 
 ## Commands (PowerShell)
 
-First restore the exact Stage 3/4 executable artifacts locally, then supply the adapter path. Example paths below are placeholders; use the actual paths on the machine:
+The frozen Stage 3 model is available in this repository at `src/simulator/taycan_sim/model.py`; restore the original Stage 4 observation layer separately and supply a verified backend adapter before executing any Stage 4 episode. The example below refers to external archive paths and remains illustrative. Example paths below are placeholders; use the actual paths on the machine:
 
 ~~~powershell
 python scripts/run_stage4_experiments.py --mode smoke --model-py "C:\path\to\taycan_etapa4\taycan_sim\model.py" --freeze-json "C:\path\to\taycan_etapa4\freeze.json" --backend-file "C:\path\to\stage4_backend_adapter.py"
@@ -85,4 +85,4 @@ This is a deliberate fail-closed gate, not a claim that the mapping calibration 
 
 ## Current limitation
 
-The runner source is committed, but no execution result is implied. Until the frozen model, original freeze file, and a backend adapter satisfying this contract are restored and verified, the correct status is **BLOCKED / NOT EXECUTED**.
+The runner source is committed, but no execution result is implied. The frozen model and original freeze file are present and verified in this repository. Until the original observation layer is recovered or a separately approved revision is formalized, and a backend adapter satisfying this contract is implemented and verified, the correct status remains **BLOCKED / NOT EXECUTED**.
