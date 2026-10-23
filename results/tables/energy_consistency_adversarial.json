@@ -2,7 +2,7 @@
   "classification": "EXPLORATORY_NOT_STAGE4_SCORED",
   "original_sha256": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
   "bidirectional_candidate_sha256": "9dbc84f67bbf02b32068cb915bd15efbe7298959d420c38bf14d92c7a5e696b0",
-  "energy_strict_candidate_sha256": "2596bf4d794defda9914d4ae51a8650b350801ae19a1cc668a9aae0949f63778",
+  "energy_strict_candidate_sha256": "d4e399755aee9fe9c1b3e2dc3de16a3a48361ebc12270c3f4db3801003c7e4db",
   "boundary_violation_example": "SOC_BOUNDARY_VIOLATION step=0 group=147 branch=1 mechanism=terminal proposed_SOC=1.00033475596 current_A=-174.831859",
   "single_branch_zero_current_relaxation": {
     "initial_polarization_V": 0.15,
