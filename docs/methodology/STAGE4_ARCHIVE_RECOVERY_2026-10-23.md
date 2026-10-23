@@ -8,13 +8,17 @@ Previously generated in the project and recovered as raw files by the conversati
 
 | Original archive | Recovered size (bytes) | Role |
 |---|---:|---|
-| taycan_etapa3_codigo_testes.zip | 33253 | Frozen Stage 3 Python sources/tests |
-| taycan_etapa4_codigo_dados.zip | 86017 | Earlier observation / synthetic data layer |
+| taycan_etapa3_codigo_testes.zip (earlier copy) | 33253 | Initial Stage 3 archive; **do not assume final frozen model** |
+| taycan_etapa3_codigo_testes_final.zip (later copy) | 49271 | Later Stage 3 archive; primary candidate for the approved frozen model |
+| taycan_etapa4_codigo_dados.zip | 86017 | Earlier Stage 4 observation / synthetic data layer |
+| taycan_etapa4_codigo_dados_later.zip | 86017 | Later generated Stage 4 archive; bytes not yet compared |
 | taycan_etapa4_dados_reais_e_codigo.zip | 203907 | Later Stage 4 code and externally oriented package |
 
 The file-service recovery provided these working-copy paths:
 - /mnt/data/recovered/taycan_etapa3_codigo_testes.zip
+- /mnt/data/recovered/taycan_etapa3_codigo_testes_final.zip
 - /mnt/data/recovered/taycan_etapa4_codigo_dados.zip
+- /mnt/data/recovered/taycan_etapa4_codigo_dados_later.zip
 - /mnt/data/recovered/taycan_etapa4_dados_reais_e_codigo.zip
 
 **Important:** The file service reported successfully placing the archive bytes at these paths; an executable Python/container session was unavailable at the time, so contents and archive checksums were **not** yet independently audited. Archive names and sizes are not evidence that either source is present inside.
@@ -32,8 +36,8 @@ After the Python environment becomes available, from repository root:
 
 ```bash
 python3 scripts/recover_frozen_stage3_from_archives.py \
-  --stage3-zip /mnt/data/recovered/taycan_etapa3_codigo_testes.zip \
-  --stage4-zip /mnt/data/recovered/taycan_etapa4_codigo_dados.zip \
+  --stage3-zip /mnt/data/recovered/taycan_etapa3_codigo_testes_final.zip \
+  --stage4-zip /mnt/data/recovered/taycan_etapa4_codigo_dados_later.zip \
   --stage4-zip /mnt/data/recovered/taycan_etapa4_dados_reais_e_codigo.zip
 ```
 
@@ -55,3 +59,5 @@ A. If the approved `model.py` hash occurs in one ZIP, recover that exact file an
 B. If none matches, record `BLOQUEIO: MODEL_FROZEN_HASH_NOT_FOUND` and prepare a **separate, explicitly labelled candidate reconstruction** for review. A reconstructed file cannot claim the old SHA-256, cannot replace the Stage 3 approved model, and would require an explicit Stage 3 revision/re-freeze before becoming authoritative.
 
 No paid infrastructure, storage, compute, or credentials are required by this plan.
+
+**Version integrity warning:** the earliest Stage 3 archive was reportedly generated with fewer tests than the later approved stage. Its size (33,253 bytes) differs from the later 49,271-byte archive, which is now the primary source candidate. The approved model is identified by SHA-256 alone; neither filename nor filesize proves validity. Do not choose the earliest archive just because it was found first.
