@@ -7,7 +7,7 @@ Date: 2026-10-23. This method is fixed by the code commit **before** the dedicat
 - Physics: model_4a_activity_gated; observer not used during training-only H00 charge boundary search.
 - Six-hour profile with five 12-min blocks/hour: drive, accelerate, regenerate, rest, charge; charge applied only parked, 5 s step, 4,320 steps.
 - Nominal profile prospectively restricted to [40, 55] kW; shifted profile [24, 40] kW. These bounds were informed by previous **development** runs; DO NOT call their selection blind.
-- Entirely new SHA256-derived calibration-specific physics and auxiliary seeds, checked for collisions against historical manifesto, Pilot1, Pilot2 and 12-case candidate smoke. Auxiliary waveform is a fixed 700+200sin(t/190) W deterministic common random profile (no stochastic auxiliary innovations); therefore this evaluates a single assumed nuisance trajectory, not robustness.
+- Entirely new SHA256-derived calibration-specific physics and auxiliary seeds, checked for collisions against historical manifesto, Pilot1, Pilot2 and 12-case candidate smoke. Auxiliary waveform is a fixed 1900+200sin(t/190) W deterministic common profile, centered on the 4A corrected observer's 1900 W baseline (no stochastic auxiliary innovations); therefore this evaluates a single assumed nuisance trajectory, not robustness.
 - Constant initial mean and branch SOC=60%; 30–80% **branch** SOC acceptance over the full trajectory; both endpoints must be valid and bracket the target final SOC.
 - 8–12 midpoint bisections, finish with final mean SOC difference at most 0.5 pp and in-window trajectory. If endpoints or intermediate trajectories violate constraints, abort and do not silently move the brackets. Record **all** endpoint and midpoint traces.
 
