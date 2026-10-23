@@ -95,7 +95,8 @@ def recover(stage3_zip: Path, stage4_zip: Path, freeze_path: Path, output: Path)
         (model, output / "taycan_sim" / "model.py"),
         (layer, output / "observation_layer.py"),
     ]
-    statuses = [(str(destination), preserve_exact(destination, item["data"])) for item, destination in locations]
+    for item, destination in locations:
+        preserve_exact(destination, item["data"])
     report = {
         "status": "SOURCES_RECOVERED_NOT_EXECUTED_NOT_APPROVED",
         "model_sha256_verified": True,
@@ -108,8 +109,8 @@ def recover(stage3_zip: Path, stage4_zip: Path, freeze_path: Path, output: Path)
         "sources": [
             {"path": str(destination), "archive": item["archive"],
              "archive_member": item["member"], "sha256": item["sha256"],
-             "size_bytes": item["size_bytes"], "write_status": status}
-            for (item, destination), (_, status) in zip(locations, statuses)
+             "size_bytes": item["size_bytes"]}
+            for item, destination in locations
         ],
         "important": "Original observation-layer bytes recovered but no known approved SHA-256; review its code and Stage 3 compatibility before running.",
     }
