@@ -59,7 +59,7 @@ def run(out):
             meas=loaded.get("meas")
             result=dict(status="MCOS_READ_ATTEMPTED",source_archive_sha256=verify["sha256"],
               tested_file=TEST_NAME,file_role="FIT_DEVELOPMENT_ONLY",
-              dependent_versions=dict(mat_io="0.4.0",scipy=scipy.__version__,
+              dependent_versions=dict(mat_io="1.0.1",scipy=scipy.__version__,
                  pandas=pandas.__version__,numpy=numpy.__version__),
               loaded_root=schema(loaded),meas=schema(meas),
               measurements={k:schema(child(meas,k)) for k in FIELDS},
@@ -72,7 +72,7 @@ def run(out):
         except Exception as err:
             result=dict(status="MCOS_DECODER_ERROR",
                 source_archive_sha256=verify["sha256"],
-                tested_file=TEST_NAME,decoder="mat-io==0.4.0",
+                tested_file=TEST_NAME,decoder="mat-io==1.0.1",
                 error=type(err).__name__+": "+str(err)[:500],
                 validation_file_contents_read=0,blind_file_contents_read=0,
                 stage4_reserved_test_rows_read=0)
