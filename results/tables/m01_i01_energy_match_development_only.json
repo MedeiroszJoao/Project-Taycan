@@ -1,0 +1,166 @@
+{
+  "classification": "DEVELOPMENT_ONLY_NOT_STAGE4_M01_I01_ENERGY_MATCH_RECEIPT",
+  "assumptions": "constant k torque^2 motor copper fault and constant-W inverter fault; not evidence of separability in real EV",
+  "seeds_and_data": "no validation/test; analytic formula on assumed six-hour torque waveform only",
+  "candidate_source_sha256": "d4e399755aee9fe9c1b3e2dc3de16a3a48361ebc12270c3f4db3801003c7e4db",
+  "profile_parameters": {
+    "NOMINAL_6H": {
+      "full_m01_extra_J": 2049335.135217032,
+      "full_i01_extra_J": 34560000.0,
+      "ratio_i01_severity_per_m01_severity": 0.05929789164401134,
+      "total_duration_s": 21600,
+      "charge_power_used_kw": 47.8046875
+    },
+    "SHIFT_REGEN_COLD_6H": {
+      "full_m01_extra_J": 2207074.47715005,
+      "full_i01_extra_J": 34560000.0,
+      "ratio_i01_severity_per_m01_severity": 0.06386210871383247,
+      "total_duration_s": 21600,
+      "charge_power_used_kw": 31.5625
+    }
+  },
+  "entries": [
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 0.25,
+      "i01_severity_used": 0.014824472911002836,
+      "delta_E_motor_J": 512333.783804258,
+      "delta_E_inverter_J": 512333.783804258,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 0.5,
+      "i01_severity_used": 0.02964894582200567,
+      "delta_E_motor_J": 1024667.567608516,
+      "delta_E_inverter_J": 1024667.567608516,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 1.0,
+      "i01_severity_used": 0.05929789164401134,
+      "delta_E_motor_J": 2049335.135217032,
+      "delta_E_inverter_J": 2049335.135217032,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 0.25,
+      "i01_severity_used": 0.014824472911002836,
+      "delta_E_motor_J": 512333.783804258,
+      "delta_E_inverter_J": 512333.783804258,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 0.5,
+      "i01_severity_used": 0.02964894582200567,
+      "delta_E_motor_J": 1024667.567608516,
+      "delta_E_inverter_J": 1024667.567608516,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "NOMINAL_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 1.0,
+      "i01_severity_used": 0.05929789164401134,
+      "delta_E_motor_J": 2049335.135217032,
+      "delta_E_inverter_J": 2049335.135217032,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 0.25,
+      "i01_severity_used": 0.015965527178458117,
+      "delta_E_motor_J": 551768.6192875125,
+      "delta_E_inverter_J": 551768.6192875125,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 0.5,
+      "i01_severity_used": 0.03193105435691623,
+      "delta_E_motor_J": 1103537.238575025,
+      "delta_E_inverter_J": 1103537.238575025,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "winding_proxy",
+      "m01_severity": 1.0,
+      "i01_severity_used": 0.06386210871383247,
+      "delta_E_motor_J": 2207074.47715005,
+      "delta_E_inverter_J": 2207074.47715005,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 0.25,
+      "i01_severity_used": 0.015965527178458117,
+      "delta_E_motor_J": 551768.6192875125,
+      "delta_E_inverter_J": 551768.6192875125,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 0.5,
+      "i01_severity_used": 0.03193105435691623,
+      "delta_E_motor_J": 1103537.238575025,
+      "delta_E_inverter_J": 1103537.238575025,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    },
+    {
+      "profile_id": "SHIFT_REGEN_COLD_6H",
+      "diff_motor_t_mapping": "uninformative",
+      "m01_severity": 1.0,
+      "i01_severity_used": 0.06386210871383247,
+      "delta_E_motor_J": 2207074.47715005,
+      "delta_E_inverter_J": 2207074.47715005,
+      "mismatch_pct": 0.0,
+      "match_status": "MATCHED"
+    }
+  ],
+  "full_6h_reference_checks": [
+    {
+      "profile": "NOMINAL_6H",
+      "E_M01_extra_J": 2049335.135217032,
+      "E_I01_extra_J": 2049335.135217032,
+      "mismatch_pct": 0.0,
+      "H00_final_soc_pct": 60.001978159508496,
+      "M01_final_soc_pct": 59.2738722915261,
+      "I01_final_soc_pct": 59.28097663812859,
+      "note": "matching injected loss energy does not equalize post-loss current, thermal pathways, or observed features"
+    },
+    {
+      "profile": "SHIFT_REGEN_COLD_6H",
+      "E_M01_extra_J": 2207074.47715005,
+      "E_I01_extra_J": 2207074.4771500505,
+      "mismatch_pct": 2.1098576062056504e-14,
+      "H00_final_soc_pct": 60.04427019029188,
+      "M01_final_soc_pct": 59.26588240777415,
+      "I01_final_soc_pct": 59.26787696173202,
+      "note": "matching injected loss energy does not equalize post-loss current, thermal pathways, or observed features"
+    }
+  ]
+}

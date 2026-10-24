@@ -1,0 +1,9 @@
+# Stage4B fallback open-source MCOS table decoder — preregistered developer-only probe
+
+Date: 2026-10-24. The six **DEVELOPMENT-only** real LG E66 module files could be opened with scipy.io.loadmat but the expected numerical fields were MATLAB **MCOS table** objects, emitted as opaque arrays with `s1=MCOS,s2=table`. Treat any fabricated numeric stats as an ERROR. No numerical signal was successfully read by the SciPy-only first pass. Validation+blind module files remain numeric-unaccessed.
+
+Third-party candidate decoder: `mat-io==0.4.0` (Python package `matio`, BSD-3-Clause, published 2025-08-18) openly advertises conversion of MATLAB v7 MCOS `table` objects into `pandas.DataFrame`. Its SciPy requirement is `>=1.15`; pin package version, Python 3.11, and record actual dependent versions. Source: https://pypi.org/project/mat-io/0.4.0/ and https://github.com/foreverallama/matio. This is an independent replacement reader, NOT a new physics model or a reason to unseal protected data.
+
+**First test:** fetch and MD5-check the same original 5,501,501-byte module archive; open **only** `20240314_1C_Test (MCCC).mat` (belongs to preselected development-fit partition). Call `matio.load_from_mat` with `raw_data=False`; report typed schemas of expected current/voltage table objects, row counts, column names, and limited numeric ranges if supported. No preselection based on favorable output, no fitting/tuning and no validation/2C/fast-charge file parsing. If decoding fails, report the exact error and do not pretend successful E66 validation. This is a *schema capability probe*, not signal model fitting.
+
+Only after reliable field decoding and physical topology resolution can all six FIT files be read under the existing split, followed by separately prespecified validation. No historical Stage4 test access.

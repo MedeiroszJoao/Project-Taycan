@@ -1,0 +1,58 @@
+name: Stage4B verify posthoc E66 freeze trace and metric receipts
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate-archived-numeric-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch ONLY small original posthoc reconstruction receipts from successful archived run
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 40126047070
+          github-token: ${{ github.token }}
+          name: stage4b-POSTHOC-RECONSTRUCTION-NOT-original-work-freeze
+          path: results/tmp/stage4b/archived_replay
+      - name: Validate original posthoc receipt hashes before analysis
+        run: |
+          python - <<'PY'
+          import json,hashlib,shutil
+          from pathlib import Path
+          src=Path('results/tmp/stage4b/archived_replay')
+          prior=list(src.rglob('POSTHOC_PROVENANCE.json'))
+          if len(prior)!=1:raise SystemExit('missing/ambiguous posthoc provenance')
+          p=json.loads(prior[0].read_text())
+          if p.get('original_Work_freeze_recovered') is not False:
+              raise SystemExit('NOT AN ORIGINAL WORK FREEZE')
+          if p.get('state')!='POSTHOC_RECONSTRUCTION_COMPLETED_NOT_ORIGINAL_FREEZE':
+              raise SystemExit('POSTHOC STATE INVALID')
+          dst=Path('results/tmp/stage4b/replay_receipts');dst.mkdir(parents=True,exist_ok=True)
+          for name in ['PROSPECTIVE.json','FIT_RESULT.json','GENERATOR_B_FREEZE.json','EVALUATION.json']:
+              found=list(src.rglob(name))
+              if len(found)!=1:raise SystemExit('missing/ambiguous receipt '+name)
+              expect=(p['rewritten_ephemeral_prereg_sha256'] if name=='PROSPECTIVE.json'
+                  else p['reconstruction_receipt_sha256'][name])
+              actual=hashlib.sha256(found[0].read_bytes()).hexdigest()
+              if actual!=expect:raise SystemExit('modified posthoc evidence '+name)
+              shutil.copyfile(found[0],dst/name)
+          print('POSTHOC_BYTE_PROVENANCE_VERIFIED; ORIGINAL_WORK_FREEZE_NOT_RECOVERED')
+          PY
+      - name: Independently recalculate all 4 published RMSE bias max error and coverage from archived 500-point traces
+        env:
+          PYTHONPATH: .
+        run: python scripts/audit_e66_frozen_receipts.py --receipts results/tmp/stage4b/replay_receipts --source scripts/fit_e66_generator_b.py --out results/tmp/stage4b/posthoc_E66_readonly_metric_audit.json
+      - name: Archive ONLY summary of checks, never original real cell data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-posthoc-trace-rmse-integrity-not-original-work
+          path: results/tmp/stage4b/posthoc_E66_readonly_metric_audit.json
+          retention-days: 30
+          if-no-files-found: warn

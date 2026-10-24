@@ -1,0 +1,28 @@
+name: Stage4B E66 module preregistered fit-only MATLAB schema
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fit-schema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install read-only scipy MATLAB reader
+        run: python -m pip install --no-input --disable-pip-version-check 'scipy==1.14.1'
+      - name: Parse ONLY six preassigned E66 development-fit recordings, not validation or blind
+        env:
+          PYTHONPATH: .
+        run: python scripts/audit_stage4b_e66_dev_only.py --out results/tmp/stage4b/e66_module_development_schema.json
+      - name: Archive numeric ranges and public metadata only, never raw MATLAB arrays
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-real-e66-development-only-schema
+          path: results/tmp/stage4b/e66_module_development_schema.json
+          if-no-files-found: warn
+          retention-days: 30

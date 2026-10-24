@@ -1,0 +1,26 @@
+name: Stage4B independent PyBaMM SPMe/DFN solver smoke ONLY
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pybamm-cell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install independent physical-cell solver pinned version
+        run: python -m pip install --disable-pip-version-check --no-input 'pybamm==26.4.2'
+      - name: Run SPMe, DFN and deterministic SPMe rerun
+        run: python scripts/run_stage4b_pybamm_independent_cell.py --out results/tmp/stage4b/pybamm_solver_only_qualification.json
+      - name: Save source and solver output attestation, including explicit failed state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-independent-pybamm-cell-solver-only
+          path: results/tmp/stage4b/pybamm_solver_only_qualification.json
+          retention-days: 30
+          if-no-files-found: warn

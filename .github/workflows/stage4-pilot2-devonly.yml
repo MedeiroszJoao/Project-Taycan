@@ -1,0 +1,79 @@
+name: Stage4 Pilot2 DEVONLY (new seeds, sealed test untouched)
+on:
+  # Pilot2 already has a complete immutable successful exploratory run.
+  # Heavy 2916-case reruns require an explicit manual dispatch; PR pushes
+  # should not silently consume six compute shards on every research commit.
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: All original and adversarial tests
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python -m unittest discover -s tests/unit -p 'test_*.py' -v
+      - name: Verify independent Pilot 2 seed namespace
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python -c "from scripts.run_stage4_pilot2_dev import seed_audit; assert seed_audit()==14580"
+  simulate:
+    needs: preflight
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run development-only shard, NO OFFICIAL EPISODES
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4_pilot2_dev.py --shard ${{ matrix.shard }}
+      - name: Upload all attempted synthetic sessions with QC and errors
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot2-devonly-shard-${{ matrix.shard }}
+          path: |
+            results/tmp/stage4_pilot2/pilot2-shard-${{ matrix.shard }}.jsonl
+            results/tmp/stage4_pilot2/pilot2-shard-${{ matrix.shard }}.summary.json
+          retention-days: 30
+          if-no-files-found: error
+  analyze:
+    needs: simulate
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve only Pilot2 DEVONLY shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pilot2-devonly-shard-*
+          path: results/tmp/stage4_pilot2
+          merge-multiple: true
+      - name: Session-bootstrap all 66 pairs and 28 features
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/analyze_stage4_pilot2_dev.py
+      - name: Archive unabridged Pilot2 analyses
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot2-devonly-pairwise-bootstrap-analysis
+          path: |
+            results/tmp/stage4_pilot2/pilot2_analysis_summary.json
+            results/tmp/stage4_pilot2/pilot2_pairwise_all.jsonl
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,68 @@
+name: Stage4A unsealed candidate smoke 12x6h
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: stage4a-candidate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: All unit tests including new I01 operating-state gates
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python -m unittest discover -s tests/unit -p 'test_*.py' -v
+  smoke:
+    needs: unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run two independent six-hour candidate episodes
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4a_candidate_smoke.py --shard ${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage4a-candidate-shard-${{ matrix.shard }}
+          path: results/tmp/stage4a_candidate_shards/shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 30
+  aggregate:
+    needs: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: stage4a-candidate-shard-*
+          merge-multiple: true
+          path: results/tmp/stage4a_candidate_shards
+      - name: Fail-closed complete 12-class source/hash/feature/energy audit
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/run_stage4a_candidate_smoke.py --aggregate
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage4a-candidate-12x6h-verified
+          path: results/tmp/stage4a_candidate_shards/stage4a_candidate_smoke12.json
+          if-no-files-found: error
+          retention-days: 30

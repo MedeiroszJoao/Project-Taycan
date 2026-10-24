@@ -1,0 +1,28 @@
+name: Stage4B E66 real MATLAB MCOS open-source decoder capability test
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  decoder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install independent open-source MATLAB MCOS table reader
+        run: python -m pip install --no-input --disable-pip-version-check 'mat-io==1.0.1'
+      - name: Verify ONLY one development-fit 1C E66 MATLAB table file (six others remain protected)
+        env:
+          PYTHONPATH: .
+        run: python scripts/test_stage4b_e66_mcos_matio.py --out results/tmp/stage4b/e66_mcos_decoder_capability.json
+      - name: Retain schema or decoder error; NEVER raw MATLAB file
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-e66-mcos-reader-capability
+          path: results/tmp/stage4b/e66_mcos_decoder_capability.json
+          retention-days: 30
+          if-no-files-found: warn
