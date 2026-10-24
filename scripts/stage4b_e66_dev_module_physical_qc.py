@@ -82,9 +82,13 @@ def run(out):
                 raise ValueError("source file roles drifted")
             for name in sorted(DEV):
                 try:
-                    import io
                     content=archive.read(mem[name])
-                    data=matio.load_from_mat(io.BytesIO(content),raw_data=False)
+                    local=Path(tmp)/("fit_"+hashlib.sha256(name.encode()).hexdigest()[:12]+".mat")
+                    local.write_bytes(content)
+                    try:
+                        data=matio.load_from_mat(str(local),raw_data=False)
+                    finally:
+                        local.unlink(missing_ok=True)
                     result=analyze(data["meas"],mem[name],content)
                     results.append(result)
                     print("DECODED FIT",name,"V_RATIO",result["voltage_ratio"],
