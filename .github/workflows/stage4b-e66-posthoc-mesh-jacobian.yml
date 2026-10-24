@@ -1,7 +1,5 @@
 name: Stage4B POSTHOC E66 mesh 20 40 80 160 and Jacobian audit
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
