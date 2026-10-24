@@ -1,0 +1,30 @@
+name: Stage4B PyBaMM SPMe-vs-DFN thermal-rate sensitivity
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned independent electrochemical solver
+        run: python -m pip install --no-input --disable-pip-version-check 'pybamm==26.4.2'
+      - name: Execute 18 predeclared cell physics cases and 9 paired comparisons
+        env:
+          PYTHONPATH: .
+        run: python scripts/run_stage4b_pybamm_sensitivity_grid.py --out results/tmp/stage4b/pybamm_spme_dfn_sensitivity.json
+      - name: Preserve ALL outcomes and failures, no A/test data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-spme-dfn-prospective-18-grid
+          path: results/tmp/stage4b/pybamm_spme_dfn_sensitivity.json
+          if-no-files-found: warn
+          retention-days: 30
