@@ -22,8 +22,8 @@ jobs:
         run: |
           python - <<'PY'
           import unittest
-          suite=unittest.defaultTestLoader.discover('tests/unit', pattern='test_e66_generator_fit.py')
+          suite=unittest.defaultTestLoader.discover('tests/unit', pattern='test_e66_*.py')
           result=unittest.TextTestRunner(verbosity=2).run(suite)
-          if result.testsRun!=2 or result.skipped or result.errors or result.failures:
-              raise SystemExit('E66 dependent tests did not fully run and PASS')
+          if result.testsRun<12 or result.skipped or result.errors or result.failures:
+              raise SystemExit('E66 dependent and numeric diagnostic guard tests did not fully run and PASS')
           PY
