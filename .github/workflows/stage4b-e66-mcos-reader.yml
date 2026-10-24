@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install independent open-source MATLAB MCOS table reader
-        run: python -m pip install --no-input --disable-pip-version-check 'mat-io==0.4.0'
+        run: python -m pip install --no-input --disable-pip-version-check 'mat-io==1.0.1'
       - name: Verify ONLY one development-fit 1C E66 MATLAB table file (six others remain protected)
         env:
           PYTHONPATH: .
