@@ -131,8 +131,8 @@ def predictive_metrics(record,d):
         segment=(grid/target>=lo)&(grid/target<hi)
         errors=delta[segment]
         thirds[name]=(dict(n=int(errors.size),bias_V=float(np.mean(errors)),
-            rms_V=float(np.sqrt(np.mean(errors**2)))))
-            if errors.size else None
+            rms_V=float(np.sqrt(np.mean(errors**2))))
+            if errors.size else None)
     return dict(n_evaluated=int(len(grid)),n_requested=500,
         duration_coverage_fraction=end/target,
         samples_coverage_fraction=float(len(grid)/500),
