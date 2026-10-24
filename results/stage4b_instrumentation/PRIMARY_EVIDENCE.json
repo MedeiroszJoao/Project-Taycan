@@ -1,0 +1,48 @@
+{
+  "audit_utc": "2026-10-24T18:36:43.948539+00:00",
+  "scope": "primary instrumentation/readme only; no MAT numeric payload parsed",
+  "source_doi": "10.5683/SP3/7JP3NM",
+  "source_version": "Borealis V1 published2024-10-10",
+  "license": "CC BY4.0",
+  "archive_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "files": [
+    {
+      "name": "3-Taycan Module Instrumentation.pdf",
+      "bytes": 236837,
+      "sha256": "c7a21d62ba0330b2a741b53a327d809696605ce71cceda8acc886631716da146",
+      "md5": "19e1c0084213255727b07e0db6487916"
+    },
+    {
+      "name": "0-Readme - Cell.txt",
+      "bytes": 9192,
+      "sha256": "2b700b53b45d531b5077fc08c2b22fdede20ed2e3fa5f83ea442335cec5a31f1",
+      "md5": "87ce1362124e0e388f0abf6399537d68"
+    },
+    {
+      "name": "2-Readme - Module.txt",
+      "bytes": 7416,
+      "sha256": "bbeb81ea8033e0379c24e81f6708bbfbc0f8e0ee8eefd0102c9348fae39c359c",
+      "md5": "bc5dc0da04cd32f482cd763034f1b726"
+    }
+  ],
+  "numeric_validation_files_read": 0,
+  "numeric_blind_files_read": 0,
+  "evidence": {
+    "topology_pdf_page1_fig1": "6s2p Taycan module (side view)",
+    "topology_pdf_page3": "Module Specifications (LG E-66 Cells): Configuration:6s2p",
+    "web_description": "twelve E66 cells (6p2s)",
+    "interpretation": "documented module6s2p supported by author apparatusPDF; repository abstract conflicting; no detailed wiring schematic or OEM variant certificate",
+    "stock_temperature_sensor_positions": 2,
+    "lab_thermocouples_single_cell_surface": 9,
+    "lab_under_module_sensors": 3,
+    "lab_cooling_plate_sensors": 3,
+    "coolant_total_flow_L_min": 1.75,
+    "coolant_mix": "50/50water/glycol",
+    "chamber_setpoint_C": 30,
+    "initial_coolant_C": 30,
+    "source_explicit_AVL_BMS_current_polarity": false,
+    "module_readme_1C_reference_A": 132,
+    "cell_readme_nominal_capacity_Ah": 65,
+    "numeric_rerun_required": false
+  }
+}
