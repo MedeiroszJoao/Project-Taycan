@@ -1,7 +1,5 @@
 name: Stage4B independent PyBaMM SPMe/DFN solver smoke ONLY
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
