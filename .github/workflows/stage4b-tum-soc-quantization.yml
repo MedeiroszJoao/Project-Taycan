@@ -1,0 +1,33 @@
+name: Stage4B retrospective CAN SOC quantization stress (no re-download)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  quantization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve archived 12-session aggregate ONLY (not raw CAN)
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 40074088298
+          github-token: ${{ github.token }}
+          name: stage4b-tum12-external-energy-report
+          path: results/tmp/stage4b/input
+      - name: Compute conservative 1 percentage point SOC quantization sensitivity
+        run: python scripts/stage4b_soc_quantization_adversarial.py --input results/tmp/stage4b/input/tum12_energy_real_qc.json --out results/tmp/stage4b/tum12_quantization_sensitivity.json
+      - name: Archive retrospective bounds only
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-tum12-soc-quantization-adversarial
+          path: results/tmp/stage4b/tum12_quantization_sensitivity.json
+          retention-days: 30
+          if-no-files-found: error
