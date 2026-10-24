@@ -43,10 +43,23 @@ def describe_structure(obj):
                       "shape":list(np.shape(getattr(obj,k))),
                       "fields":list(getattr(getattr(obj,k),"_fieldnames",[]) or [])}
                       for k in obj._fieldnames[:12]})
+    arr=np.asarray(obj)
+    nested={}
+    if arr.dtype.names:
+        for fld in arr.dtype.names:
+            item=arr[fld]
+            child=item.flat[0] if item.size else None
+            sub=np.asarray(child) if child is not None else np.asarray([])
+            nested[fld]=dict(child_type=type(child).__name__,
+                             child_dtype=str(getattr(child,"dtype",None)),
+                             child_shape=list(np.shape(child)),
+                             element_type=(type(sub.flat[0]).__name__ if sub.size else None))
+            if isinstance(child,(str,bytes)):
+                nested[fld]["text_prefix"]=str(child)[:90]
     return dict(kind=type(obj).__name__,shape=list(np.shape(obj)),
                 dtype=str(getattr(obj,"dtype",None)),
-                sample_element_type=(type(np.asarray(obj).flat[0]).__name__
-                          if np.asarray(obj).size else None))
+                sample_element_type=(type(arr.flat[0]).__name__
+                          if arr.size else None),opaque_children=nested)
 
 def dev_summary(z,member):
     import scipy.io as sio
