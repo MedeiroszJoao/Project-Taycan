@@ -1,7 +1,5 @@
 name: Stage4B PyBaMM SPMe-vs-DFN thermal-rate sensitivity
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
