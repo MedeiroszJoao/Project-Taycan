@@ -34,6 +34,20 @@ def _simple(obj):
            mean=float(good.mean()) if good.size else None)
     except (TypeError,ValueError):return dict(non_numeric=True)
 
+def describe_structure(obj):
+    import numpy as np
+    if obj is None:return dict(kind="none")
+    if hasattr(obj,"_fieldnames"):
+        return dict(kind="mat_struct",fields=list(obj._fieldnames),
+                    children={k:{"type":type(getattr(obj,k)).__name__,
+                      "shape":list(np.shape(getattr(obj,k))),
+                      "fields":list(getattr(getattr(obj,k),"_fieldnames",[]) or [])}
+                      for k in obj._fieldnames[:12]})
+    return dict(kind=type(obj).__name__,shape=list(np.shape(obj)),
+                dtype=str(getattr(obj,"dtype",None)),
+                sample_element_type=(type(np.asarray(obj).flat[0]).__name__
+                          if np.asarray(obj).size else None))
+
 def dev_summary(z,member):
     import scipy.io as sio
     raw=z.read(member)
@@ -52,7 +66,9 @@ def dev_summary(z,member):
             if lo>14 and hi<30:guess="VOLTAGE_SUGGESTS_SIX_SERIES_GROUPS"
             elif lo>5 and hi<10:guess="VOLTAGE_SUGGESTS_TWO_SERIES_GROUPS"
     return dict(file=Path(member).name,role="FIT_DEVELOPMENT",
-        matlab_meas_fields=list(fields),observables=qc,
+        matlab_meas_fields=list(fields),
+        nested_schema={k:describe_structure(getattr(meas,k,None)) for k in METRICS},
+        observables=qc,
         architecture_voltage_heuristic=guess,
         actual_measurement_source="Original E66 module lab data; not model A")
 
@@ -87,7 +103,7 @@ def run(out):
           ("dev_measured_results",)},indent=2))
         for r in results:
             print(json.dumps({k:v for k,v in r.items() if k in
-                ("file","architecture_voltage_heuristic","observables")},allow_nan=False))
+                ("file","architecture_voltage_heuristic","observables","nested_schema")},allow_nan=False))
         if errors or len(results)!=len(DEV):raise SystemExit(2)
 if __name__=="__main__":
     p=argparse.ArgumentParser()
