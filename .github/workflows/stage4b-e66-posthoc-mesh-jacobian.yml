@@ -1,0 +1,79 @@
+name: Stage4B POSTHOC E66 mesh 20 40 80 160 and Jacobian audit
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  retrospective-refinement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install documented independent PyBaMM and numerical versions
+        run: python -m pip install --no-input --disable-pip-version-check 'pybamm==26.4.2' 'numpy==2.1.3' 'scipy==1.14.1'
+      - name: Prepare fresh official publisher source and new wrapper matching prior posthoc protocol
+        env:
+          PYBAMM_DISABLE_TELEMETRY: 'true'
+        run: python scripts/run_stage4b_posthoc_e66_reconstruction.py prepare
+      - name: Download SMALL previous posthoc results, never any original Work freeze or raw data
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 40126047070
+          github-token: ${{ github.token }}
+          name: stage4b-POSTHOC-RECONSTRUCTION-NOT-original-work-freeze
+          path: results/tmp/stage4b/prior_artifact
+      - name: Restore and independently attest exact posthoc receipts and original publisher SHA
+        run: |
+          python - <<'PY'
+          import hashlib,json,shutil
+          from pathlib import Path
+          root=Path('results/tmp/stage4b/prior_artifact')
+          base=Path('results/tmp/stage4b/posthoc_reconstruction')
+          dst=base/'RECEIPTS'
+          dst.mkdir(exist_ok=True,parents=True)
+          names=['PROSPECTIVE.json','FIT_RESULT.json','GENERATOR_B_FREEZE.json','EVALUATION.json']
+          for name in names:
+              matches=list(root.rglob(name))
+              if len(matches)!=1:
+                  raise SystemExit(f'Expected one {name} in previous posthoc artifact, found {len(matches)}')
+              shutil.copy2(matches[0],dst/name)
+          provenance=list(root.rglob('POSTHOC_PROVENANCE.json'))
+          if len(provenance)!=1:raise SystemExit('No unambiguous prior posthoc provenance')
+          new=json.loads((base/'POSTHOC_PROVENANCE.json').read_text())
+          old=json.loads(provenance[0].read_text())
+          if new['new_wrapper_sha256']!=old['new_wrapper_sha256']:
+              raise SystemExit('Wrapper not reproducible: do not continue')
+          if new['official_inner_sha256']!=old['official_inner_sha256']:
+              raise SystemExit('Publisher cell data source changed')
+          h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          for name in names:
+              actual=h(dst/name)
+              if name!='PROSPECTIVE.json':
+                  expected=old['reconstruction_receipt_sha256'][name]
+              else:
+                  expected=old['rewritten_ephemeral_prereg_sha256']
+              if actual!=expected:
+                  raise SystemExit(f'Previous reconstructed receipt changed: {name}')
+          shutil.copy2(provenance[0],base/'POSTHOC_PROVENANCE.json')
+          print('POSTHOC_RECEIPTS_VERIFIED_SOURCE_ORIGINAL_WORK_NOT_RECOVERED')
+          PY
+      - name: Execute additional 8 mesh solves and fixed-step Jacobian on FIT, no refit
+        env:
+          PYBAMM_DISABLE_TELEMETRY: 'true'
+        run: python scripts/diagnose_e66_1c_mesh_and_jacobian.py --receipts results/tmp/stage4b/posthoc_reconstruction/RECEIPTS --archive results/tmp/stage4b/posthoc_reconstruction/research_wrapper_NOT_original_Work_source.zip --out results/tmp/stage4b/posthoc_reconstruction/EXTENDED_MESH_JACOBIAN.json
+      - name: Preserve tiny audit receipts only, NEVER ZIP data, fitted raw curves or heldouts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-E66-posthoc-mesh-convergence-and-jacobian-only
+          path: |
+            results/tmp/stage4b/posthoc_reconstruction/EXTENDED_MESH_JACOBIAN.json
+            results/tmp/stage4b/posthoc_reconstruction/POSTHOC_PROVENANCE.json
+          retention-days: 30
+          if-no-files-found: warn
