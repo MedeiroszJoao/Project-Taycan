@@ -1,7 +1,5 @@
 name: Stage4B retrospective CAN SOC quantization stress (no re-download)
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
