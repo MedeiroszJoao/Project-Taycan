@@ -1,7 +1,5 @@
 name: Stage4B external TUM 12-recording physical-energy diagnostic
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
