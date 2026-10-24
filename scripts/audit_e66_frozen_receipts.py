@@ -11,6 +11,45 @@ NAME="E66_FROZEN_EVALUATION_RECEIPT_AUDIT"
 def hash_path(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
+def check_numeric_trajectory(row, relative_tol=1e-8):
+    """Recalculate reported voltage metrics from saved 500-point evaluation.
+
+    Returns an explicit failure for missing or incompatible trajectory. Never
+    reconstructs absent records from nominal metrics or hidden test data.
+    """
+    values=row.get("trajectory")
+    if not isinstance(values,list) or len(values)!=500:
+        return dict(status="FAIL",error="ARCHIVED_500_POINT_TRAJECTORY_MISSING_OR_WRONG_LENGTH")
+    try:
+        ts=[float(x["time_s"]) for x in values]
+        model=[float(x["model_V"]) for x in values]
+        actual=[float(x["measured_V"]) for x in values]
+    except (TypeError,ValueError,KeyError):
+        return dict(status="FAIL",error="INVALID_TRAJECTORY_RECORD_SCHEMA")
+    if not all(math.isfinite(v) for v in ts+model+actual):
+        return dict(status="FAIL",error="NONFINITE_TRAJECTORY")
+    if abs(ts[0])>1e-8 or any(t2<=t1 for t1,t2 in zip(ts,ts[1:])):
+        return dict(status="FAIL",error="NONMONOTONE_OR_NONZERO_START")
+    errors=[a-b for a,b in zip(model,actual)]
+    metrics=dict(voltage_RMSE_V=math.sqrt(math.fsum(e*e for e in errors)/len(errors)),
+        voltage_bias_V=math.fsum(errors)/len(errors),
+        voltage_max_error_V=max(map(abs,errors)))
+    duration=row.get("experimental",{}).get("duration_s")
+    if not isinstance(duration,(float,int)) or not math.isfinite(duration) or duration<=0:
+        return dict(status="FAIL",error="EXPERIMENT_DURATION_MISSING")
+    metrics["coverage_fraction"]=ts[-1]/duration
+    disagreements={}
+    for key,expected in metrics.items():
+        registered=row.get(key)
+        if not isinstance(registered,(int,float)) or not math.isfinite(registered):
+            disagreements[key]="REPORTED_VALUE_MISSING_OR_NONFINITE"
+        elif not math.isclose(float(registered),expected,rel_tol=relative_tol,abs_tol=1e-8):
+            disagreements[key]=dict(reported=registered,recomputed=expected)
+    return dict(status="PASS" if not disagreements else "FAIL",
+        error=None if not disagreements else "TRAJECTORY_METRICS_CONTRADICTION",
+        differences=disagreements,recomputed=metrics,
+        points=len(values),last_time_s=ts[-1])
+
 def classify(row,criteria):
     result={"file":row.get("file"),"model":row.get("model"),"status":"FAIL",
             "reasons":[],"error_reported":row.get("error")}
@@ -94,6 +133,10 @@ def audit(directory,source_path,report_path):
     if len(expected)!=4 or len(records)!=4 or expected!=actual:
         reasons.append("MISSING_DUPLICATE_OR_WRONG_EVAL_PAIR")
     classified=[classify(row,c) for row in records]
+    numeric_consistency=[dict(file=row.get("file"),model=row.get("model"),
+        check=check_numeric_trajectory(row)) for row in records]
+    if any(x["check"]["status"]!="PASS" for x in numeric_consistency):
+        reasons.append("ARCHIVED_TRAJECTORY_METRIC_INCONSISTENCY_OR_MISSING")
     counts={"PASS":sum(x["status"]=="PASS" for x in classified),
             "FAIL":sum(x["status"]=="FAIL" for x in classified)}
     evidence=dict(
@@ -107,6 +150,7 @@ def audit(directory,source_path,report_path):
        receipt_failures=reasons,
        models=models if (models:=sorted(set(x.get("model","") for x in records))) else [],
        evaluations=classified,
+       trajectory_integrity=numeric_consistency,
        n_reports=len(records),
        gate_counts=counts,
        all_eval_pass=counts["PASS"]==4 and not reasons,
