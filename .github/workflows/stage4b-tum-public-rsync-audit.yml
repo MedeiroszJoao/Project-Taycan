@@ -1,0 +1,28 @@
+name: Stage4B TUM public CAN source inventory (research only)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Show rsync availability
+        run: rsync --version | head -n 2
+      - name: Inventory public TUM files and probe at most 8 MB of small text files
+        run: python scripts/inspect_stage4b_tum_public_rsync.py --out results/tmp/stage4b/tum_1774217_public_rsync.json
+      - name: Archive inventory, metadata and any explicit access failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-tum-public-rsync-inventory
+          path: results/tmp/stage4b/tum_1774217_public_rsync.json
+          if-no-files-found: warn
+          retention-days: 30

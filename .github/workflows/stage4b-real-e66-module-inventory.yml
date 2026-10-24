@@ -1,0 +1,26 @@
+name: Stage4B real Porsche Taycan LG E66 6p2s module ZIP audit
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-module:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Read only official Borealis module file, verify 5.5MB original MD5 and all member CRC
+        run: python scripts/audit_stage4b_real_e66_module.py --out results/tmp/stage4b/lg_e66_real_taycan_module_inventory.json
+      - name: Archive only checksums, ZIP member names and sizes - not raw cell measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-borealis-real-e66-module-inventory
+          path: results/tmp/stage4b/lg_e66_real_taycan_module_inventory.json
+          retention-days: 30
+          if-no-files-found: warn

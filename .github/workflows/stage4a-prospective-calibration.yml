@@ -1,0 +1,48 @@
+name: Stage4A Prospective Research Calibration (unsealed, non-scoring)
+on:
+  # Completed successful prospective 2-profile calibration is archived.
+  # Explicit manual dispatch is required to repeat expensive 6h bisections.
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: stage4a-calibration-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 4A candidate tests and seed guards
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: |
+          python -m unittest discover -s tests/unit -p 'test_stage4a_activity_gated.py' -v
+          python -c "from scripts.calibrate_stage4a_activity_gated_dev import check_seeds; assert len(check_seeds())==4"
+  calibrate:
+    needs: check
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [NOMINAL_6H, SHIFT_REGEN_COLD_6H]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run full six-hour development-only charge calibration and matching
+        env:
+          PYTHONPATH: 'src/simulator:src:.'
+        run: python scripts/calibrate_stage4a_activity_gated_dev.py --profile ${{ matrix.profile }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage4a-dev-calibration-${{ matrix.profile }}
+          path: results/tmp/stage4a_prospective_calibration/${{ matrix.profile }}.json
+          retention-days: 30
+          if-no-files-found: error

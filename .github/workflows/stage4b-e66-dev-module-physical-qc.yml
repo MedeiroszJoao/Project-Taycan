@@ -1,0 +1,30 @@
+name: Stage4B real E66 six fit-only module physical consistency
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fit-physical-qc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pin Python MCOS MATLAB reader
+        run: python -m pip install --no-input --disable-pip-version-check 'mat-io==1.0.1'
+      - name: Compare module voltages and instrument current signs on ONLY six fit experiments
+        env:
+          PYTHONPATH: .
+        run: python scripts/stage4b_e66_dev_module_physical_qc.py --out results/tmp/stage4b/e66_module_fit_only_physical_qc.json
+      - name: Archive source hashes and aggregate values, no raw MATLAB arrays
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-e66-six-development-module-physical-qc
+          path: results/tmp/stage4b/e66_module_fit_only_physical_qc.json
+          retention-days: 30
+          if-no-files-found: warn

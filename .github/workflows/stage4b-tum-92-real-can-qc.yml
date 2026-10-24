@@ -1,0 +1,30 @@
+name: Stage4B TUM all-92 CAN external QC research
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  numeric-qc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify stdlib-only TUM auditing tests
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests/unit -p 'test_stage4b_tum_*.py' -v
+      - name: Read all 92 public CSVs sequentially with local deletion
+        env:
+          PYTHONPATH: .
+        run: python scripts/audit_stage4b_tum_can_full.py --max-files 92 --out results/tmp/stage4b/tum_1774217_full_qc.json
+      - name: Preserve only aggregated scientific QC, not original CAN files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-tum-all-92-external-qc-only
+          path: results/tmp/stage4b/tum_1774217_full_qc.json
+          if-no-files-found: warn
+          retention-days: 30
