@@ -198,8 +198,16 @@ def run(receipts,archive,out):
         spec,fit,freeze,ev,name,paths=verify_original_receipts(Path(receipts),Path(archive))
         if pybamm.__version__!="26.4.2":
             raise ValueError("PYBAMM_VERSION_DIFFERENT_FROM_PREREG: "+pybamm.__version__)
+        recorded=freeze.get("environment",{})
+        observed_version=platform.python_version()
         report["environment"]=dict(pybamm_version=pybamm.__version__,
-            python_version=platform.python_version())
+            python_version=observed_version)
+        for lib,actual in (("python",observed_version),
+                           ("pybamm",pybamm.__version__)):
+            registered=recorded.get(lib)
+            if registered and registered!=actual:
+                raise ValueError("FROZEN_ENVIRONMENT_DRIFT_"+lib+
+                                 "_registered_"+str(registered)+"_actual_"+str(actual))
         report["freeze_sha256"]=hash_path(paths["GENERATOR_B_FREEZE.json"])
         report["original_evaluation_sha256"]=hash_path(paths["EVALUATION.json"])
         report["source_sha256"]=hash_path(ROOT/"scripts/fit_e66_generator_b.py")
@@ -235,9 +243,21 @@ def run(receipts,archive,out):
                     per_model["pairs"][first+"__"+second]=compare_records(
                         models[first],models[second])
             report["models"][kind]=per_model
+            if baseline.get("status")!="PASS":
+                report["errors"].append(dict(model=kind,case="A_FROZEN",
+                    message="ORIGINAL_ARCHIVED_TRAJECTORY_NOT_REPRODUCED"))
+            for pair_name,comparison in per_model["pairs"].items():
+                if not comparison["eligible_as_full_numerical_convergence_evidence"]:
+                    report["errors"].append(dict(model=kind,case=pair_name,
+                        message="INCOMPLETE_SOLVER_HORIZON_CANNOT_PROVE_CONVERGENCE"))
+            if len(per_model["cases"])!=len(CONFIGS) or len(per_model["pairs"])!=len(PAIRS):
+                report["errors"].append(dict(model=kind,
+                    message="REQUIRED_FACTORIAL_CASE_OR_PAIR_NOT_EXECUTED"))
             report["state"]="PARTIAL" if report["errors"] else "IN_PROGRESS"
             out.write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
-        report["state"]="POST_HOC_NUMERICAL_DIAGNOSTICS_DONE" if not report["errors"] else "PARTIAL_WITH_SOLVER_ERRORS"
+        report["state"]=("POST_HOC_NUMERICAL_DIAGNOSTICS_DONE"
+                         if not report["errors"] and len(report["models"])==2
+                         else "PARTIAL_UNVERIFIED_OR_INCOMPLETE")
     except Exception as exc:
         report["errors"].append(dict(level="PREREQUISITE_OR_CRASH",
             message=type(exc).__name__+": "+str(exc)[:600]))

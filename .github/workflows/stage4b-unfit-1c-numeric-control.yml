@@ -1,0 +1,30 @@
+name: Stage4B independent unfit Chen2020 1C numerical control
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  numeric-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned PyBaMM numerical solver
+        run: python -m pip install --no-input --disable-pip-version-check 'pybamm==26.4.2'
+      - name: Run 8 fixed electrochemical solves; no empirical E66 inputs
+        env:
+          PYBAMM_DISABLE_TELEMETRY: 'true'
+        run: python scripts/run_stage4b_unfit_1c_numeric_control.py --out results/tmp/stage4b/unfit_1c_mesh_tol_control.json
+      - name: Archive numerical control and any explicit failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4b-unfit-chen2020-1c-numeric-control
+          path: results/tmp/stage4b/unfit_1c_mesh_tol_control.json
+          if-no-files-found: warn
+          retention-days: 30
