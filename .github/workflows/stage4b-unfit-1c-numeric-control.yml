@@ -1,7 +1,5 @@
 name: Stage4B independent unfit Chen2020 1C numerical control
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

@@ -1,7 +1,5 @@
 name: Stage4B posthoc E66 reconstruction (NOT original Work freeze)
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

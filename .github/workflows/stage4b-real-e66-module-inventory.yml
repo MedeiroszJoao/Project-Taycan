@@ -1,7 +1,5 @@
 name: Stage4B real Porsche Taycan LG E66 6p2s module ZIP audit
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

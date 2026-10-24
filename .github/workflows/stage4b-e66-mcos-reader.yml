@@ -1,7 +1,5 @@
 name: Stage4B E66 real MATLAB MCOS open-source decoder capability test
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

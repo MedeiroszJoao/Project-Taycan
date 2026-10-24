@@ -1,7 +1,5 @@
 name: Stage4B real E66 six fit-only module physical consistency
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

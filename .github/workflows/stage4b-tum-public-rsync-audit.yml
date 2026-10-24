@@ -1,7 +1,5 @@
 name: Stage4B TUM public CAN source inventory (research only)
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

@@ -1,7 +1,5 @@
 name: Stage4A successor research TRAIN-only manifest smoke
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
