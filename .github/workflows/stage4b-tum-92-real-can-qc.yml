@@ -1,7 +1,5 @@
 name: Stage4B TUM all-92 CAN external QC research
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
