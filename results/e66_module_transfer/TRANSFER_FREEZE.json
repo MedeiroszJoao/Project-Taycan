@@ -1,0 +1,14 @@
+{
+  "script_sha256": "cdeca815cdf9b5441c9e3886c1a1e9ee8e03c7b3693748c168457b99ed1354e7",
+  "protocol_sha256": "a9f4322fa23dd590b5b34cbe92a6b50eb67ad50c6bf4d88025669808c734b004",
+  "cell_freeze_sha256": "6b1f2f9e501b605f4267920858cf15967789d97e23cbd2f40359c6625607935a",
+  "development_allowlist": [
+    "20240209_0.7C_CP_Loss.mat",
+    "20240209_1C_CP_Loss.mat",
+    "20240314_1C_Test (MCCC).mat",
+    "20240315_0.5C_Test (MCCC) Part1.mat",
+    "20240315_0.5C_Test (MCCC) Part2.mat",
+    "20240323_1.2C_CP_Loss.mat"
+  ],
+  "reserved_numeric_access": 0
+}

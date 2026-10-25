@@ -1,0 +1,14 @@
+{
+ "scope":"unfitted transfer of frozen cell candidate to six previously exposed DEVELOPMENT module files only; no reserved files",
+ "topology":"6s2p; predict mean-cell voltage=AVL_Voltage/6, per-cell current=-AVL_Current/2, positive discharge",
+ "current_sign_check":"verify net charge counter AhAccu_Charge+AhAccu_Discharge against cumulative positive AVL current; reject opposite net direction in informative windows",
+ "timing":"all required measurement tables must share length and index; RecordingTime strictly increasing and finite; first prediction window maxdt<=2s",
+ "window":"first abs(module current)>10A sample, require at least5 preceding samples with abs(current)<=1A; first300s after activation or available shorter duration if at least60s; no residual based selection",
+ "initial_condition":"mean last5 quiet module voltages/6 and mean available cell-surface temperatures A1,A2,A3,B1,C1,D1,E1,E2,E3 over same5 rows; infer initialSOC by fixed OCV inversion in[0.05,0.95], no later samples used; reject unbracketed initialOCV",
+ "model":"frozen kinetic+OCP candidate; all parameters fixed; isothermal initial measured surface temperature; measured current interpolated at recorded times; no module parameter fit",
+ "solvers":"SPMe and DFN mesh40 rtol1e-7 atol1e-8, each90s limit; no silent truncation",
+ "criteria":{"mean_cell_RMSE_V":0.05,"mean_cell_max_error_V":0.15,"coverage_min":0.95},
+ "limitations":"first300s sentinel, not whole charging cycle or two-hour thermal test; initial equilibrium/homogeneity assumed from protocol; same recovered module, no independent-unit population inference; exploratory out-of-cell transfer; reference cell and module may differ in age/capacity",
+ "thermal":"report measured temperature drift but do not claim temperature prediction",
+ "protected_numeric_access":0
+}
