@@ -1,0 +1,19 @@
+{
+ "purpose":"prospective two-session validation of fixed cell generator and explicit AVL/BMS observation adapter",
+ "authorization_basis":"User requested completion of4B including independent evaluation after freeze; docs/decisions/STAGE4B_E66_MODULE_SPLIT_TOPOLOGY_GATE_2026-10-24.md designates these two files VALIDATION, numeric results later with preregistered pipeline. Four BLIND files and1152 historical episodes are excluded.",
+ "validation_files":["20240207_1.5C_CP_Loss.mat","20240313_1.5C_Test (MCCC).mat"],
+ "fit_files":"none; no model or adapter fit permitted during/after this evaluation",
+ "candidate":"exact freezes from e66_ocp_recalibration and e66_module_observation_adapter, unchanged electrochemistry and observation parameters",
+ "CP_selection":"frozen adapter select_start at named rate1.5; first alternating high-current sequence preceded by5 quiet samples; first300s",
+ "MCCC_selection":"first positive AVL current>10A following60 quiet samples (absI<=1A) in a-65:a-5, reaches>0.8*198A within10 samples and stays>10A for>=90percent of next30 samples; simulation startsa-5 to include current ramp, prebaseline preceding5 quiet samples; first300s",
+ "initialization":"BMS summed voltage/6 and nine cell4 surface thermocouples from prebaseline only; invert fixed OCV in[0,1]; failure to bracket is INELIGIBLE, never clamp or fit",
+ "QC":"same aligned tables, strictly increasing finite1s-scale clock, exactly one fully empty terminal padding row may be removed; no other missing-data repair; complete300s with maxdt<=2s",
+ "models":["SPMe","DFN"],
+ "numerics":"mesh40 rtol1e-7 atol1e-8,90s limit each; SPMe mesh80 on both records for5mV refinement check,120s limit; no parameter changes",
+ "primary_criteria":{"AVL_RMSE_V_per_mean_cell":0.05,"AVL_max_error_V_per_mean_cell":0.15,"coverage_min":0.95,"coulomb_SOC_proxy_min":0,"coulomb_SOC_proxy_max":1,"mesh40_80_max_gap_V_per_mean_cell":0.005},
+ "secondary":"BMS voltage errors reported, never substituted for failed primary AVL criterion",
+ "decision":"all four primary cases and both numerical refinement controls must pass for PASS_LIMITED; failed error gate gives FAIL; missing/invalid/timeout gives INCONCLUSIVE. Do not retune after observing outcomes.",
+ "scope":"first300s of selected protocols on one recovered module, same unit as development, different sessions and1.5C rate; no population CI, full-charge, thermal,4S vehicle or fault-classification claim",
+ "numeric_exposure_before_freeze":"none by this workflow; earlier declared metadata/CRC inspection only; cannot independently prove all prior human access",
+ "blind_files_to_remain_closed":["20240318_2C_Test (MCCC) Part 1.mat","20240318_2C_Test (MCCC) Part 2.mat","20240322_TopUp&DC_for_FC.mat","20240323_Fast_Charge.mat"]
+}

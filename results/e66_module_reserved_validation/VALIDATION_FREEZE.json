@@ -1,0 +1,12 @@
+{
+  "script_sha256": "ee28abaa47fa391bddd5735d4662beb8448317aabb0c3ba7971f533235b9a164",
+  "protocol_sha256": "f9453c53c540757abd3cc7ae46949919b31514820f17eb5c7c19396541bb37f5",
+  "adapter_freeze_sha256": "d4097b66488f435e023d4d764e29e0f5acca2a076ae780787a1287cbc381105c",
+  "adapter_script_sha256": "e85c76c5c126597c0158061fdd51afb6bfc29f490d6c5b57ed348a9e7453baf0",
+  "cell_freeze_sha256": "6b1f2f9e501b605f4267920858cf15967789d97e23cbd2f40359c6625607935a",
+  "module_script_sha256": "5fa0948c0cad678a28ad678e181c164f22c95f9ce0d4273d48ce81f53ef76684",
+  "validation_allowlist": [
+    "20240207_1.5C_CP_Loss.mat",
+    "20240313_1.5C_Test (MCCC).mat"
+  ]
+}

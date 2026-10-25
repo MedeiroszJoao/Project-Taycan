@@ -1,0 +1,9 @@
+test_charge_start_includes_five_ramp_samples (test_e66_reserved_validation.ReservedBoundaryTests.test_charge_start_includes_five_ramp_samples) ... ok
+test_final_blind_files_stay_rejected (test_e66_reserved_validation.ReservedBoundaryTests.test_final_blind_files_stay_rejected) ... ok
+test_no_quiet_condition_is_rejected (test_e66_reserved_validation.ReservedBoundaryTests.test_no_quiet_condition_is_rejected) ... ok
+test_preparation_current_is_not_main_charge (test_e66_reserved_validation.ReservedBoundaryTests.test_preparation_current_is_not_main_charge) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
