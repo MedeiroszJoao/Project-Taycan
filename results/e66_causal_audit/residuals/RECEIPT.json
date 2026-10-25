@@ -1,0 +1,10 @@
+{
+  "analysis_sha256": "300269db4fa2264c79eb2deadb3684214d8b77fa5a0262d093112ec2e64ed06c",
+  "figure_sha256": "0f699ec0afcbde1878c9142ddb3afbcf1e132fd8386baaaf0401dc60e365351e",
+  "models": 2,
+  "sessions": 2,
+  "cells": 1,
+  "no_new_solver_runs": true,
+  "new_physical_fit": false,
+  "blind_files_read": 0
+}

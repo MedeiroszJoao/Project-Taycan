@@ -1,0 +1,29 @@
+{
+  "completed_attempts": [
+    {
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "COMPLETED",
+      "output_sha256": "689ce4c27260ac0164f18ef26d4957f3592fe7038e99d85ccf960672b098a66a"
+    },
+    {
+      "model": "SPMe",
+      "mesh": 80,
+      "status": "COMPLETED",
+      "output_sha256": "2cf70e51301b7b670e83cae6d5d55eaad5de6057ffb72aa714ed1f672f232849"
+    },
+    {
+      "model": "DFN",
+      "mesh": 40,
+      "status": "COMPLETED",
+      "output_sha256": "3b98e432e82e18819707e24061fd01cbe1315bdc6e5b6da8869829b08b39057f"
+    },
+    {
+      "model": "DFN",
+      "mesh": 80,
+      "status": "TIMEOUT",
+      "output_sha256": "80469dd5bdb33eabd4b8e3a76be8c61ddf26bf86376083ae3f48566eb7fd1724"
+    }
+  ],
+  "planned": 4
+}

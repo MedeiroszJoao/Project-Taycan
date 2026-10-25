@@ -1,0 +1,831 @@
+{
+  "classification": "RETROSPECTIVE_DATA_PARSER_DIAGNOSTIC_ONLY",
+  "original_work_receipts_recovered": false,
+  "baseline_commit": "809b5c57d96f8ad4d81d7a612d8bdbd464548b02",
+  "config_sha256": "9432c3b05f4e8080179b643a579821770cc9b6aad7979727c11ecdc688e33de8",
+  "audit_source_sha256": "fc1bd13ef832a5eddd7274b3684cef7507e57d33ba7407595a64a950eb761aad",
+  "python": "3.12.14",
+  "source_outer_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "members": [
+    {
+      "raw_rows": 2997,
+      "raw_fields": [
+        "Time",
+        "TimeStamp",
+        "Status",
+        "Voltage",
+        "Current",
+        "Ah",
+        "Wh",
+        "Power",
+        "Battery_Temp_degC"
+      ],
+      "selected_rows": 1135,
+      "valid_discharge_rows_all_runs": 1135,
+      "discarded_later_discharge_rows": 0,
+      "selected_start_index": 1801,
+      "selected_end_index": 2935,
+      "selected_fraction_of_raw_rows": 0.37871204537871206,
+      "raw_nonfinite_counts": {
+        "Time": 0,
+        "Current": 0,
+        "Voltage": 0,
+        "Battery_Temp_degC": 0,
+        "Ah": 0,
+        "Power": 0
+      },
+      "raw_status_counts": {
+        "PAU": 1862,
+        "DCH": 1135
+      },
+      "selected_status_counts": {
+        "DCH": 1135
+      },
+      "duration_s": 68011.45999990404,
+      "dt_s": {
+        "n": 1134,
+        "nonfinite": 0,
+        "min": 31.457000970840454,
+        "max": 60.00699698925018,
+        "mean": 59.97483245141449,
+        "median": 59.99999642372131
+      },
+      "large_gap_count": 0,
+      "large_gap_time_fraction": 0.0,
+      "capacity_trapezoid_Ah": 61.259778569358865,
+      "current_discharge_A": {
+        "n": 1135,
+        "nonfinite": 0,
+        "min": 3.2324,
+        "max": 3.2476,
+        "mean": 3.242615947136564,
+        "median": 3.2425
+      },
+      "temperature_C": {
+        "n": 1135,
+        "nonfinite": 0,
+        "min": 24.3089,
+        "max": 25.4665,
+        "mean": 24.79170704845815,
+        "median": 24.7299
+      },
+      "temperature_initial_C": 25.0456,
+      "temperature_final_C": 25.3613,
+      "voltage_initial_loaded_V": 4.1871,
+      "voltage_final_loaded_V": 2.7998,
+      "current_initial_discharge_A": 3.2451,
+      "first_selected_is_rest": false,
+      "sign_check": {
+        "source_current_negative_fraction": 1.0,
+        "power_minus_sourceVI_W": {
+          "n": 1135,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "power_plus_dischargeVI_W": {
+          "n": 1135,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "scope": "cell Digatron signals; not module AVL/Orion inference"
+      },
+      "counter_check": {
+        "first_counter_Ah": -0.054,
+        "last_counter_Ah": -61.314,
+        "signed_Ah_delta": -61.26,
+        "abs_Ah_delta": 61.26,
+        "integral_minus_abs_counter_Ah": -0.00022143064113322453,
+        "difference_percent_of_integral": -0.0003614617066931099,
+        "counter_increment_min_Ah": -0.054100000000005366,
+        "counter_increment_max_Ah": -0.028300000000001546,
+        "shared_instrument_not_independent_calibration": true
+      },
+      "integration_sensitivity_Ah": {
+        "left": 61.25982256273767,
+        "right": 61.25973457598006,
+        "coarse_every_2": 61.26076961609968,
+        "coarse_every_10": 61.26879438993289
+      },
+      "endpoint_trim_Ah": {
+        "1": 61.177402571725565,
+        "5": 60.7451500749242
+      },
+      "threshold_sensitivity": [
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.5,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.8,
+          "n": 1134,
+          "capacity_Ah": 61.2314677053879
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.5,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.8,
+          "n": 1134,
+          "capacity_Ah": 61.2314677053879
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.5,
+          "n": 1135,
+          "capacity_Ah": 61.259778569358865
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.8,
+          "n": 1134,
+          "capacity_Ah": 61.2314677053879
+        }
+      ],
+      "timestamp_check": {
+        "start": "2023-07-26T20:08:50",
+        "end": "2023-07-27T15:02:21",
+        "time_vs_timestamp_elapsed_difference_s": {
+          "n": 1135,
+          "nonfinite": 0,
+          "min": -0.0029962509870529175,
+          "max": 0.4599999040365219,
+          "mean": 0.0014759148007447498,
+          "median": 0.0010011345148086548
+        },
+        "nonincreasing_timestamp_steps": 0,
+        "note": "TimeStamp rounded seconds can repeat; Time used for integration"
+      },
+      "preceding_rest": {
+        "recorded": true,
+        "n": 1801,
+        "duration_s": 1799.006999284029,
+        "last_rest_voltage_V": 4.1939,
+        "last_rest_to_first_loaded_gap_s": 60.006001219153404,
+        "last_rest_minus_first_loaded_mV": 6.800000000000139,
+        "conditional_unobserved_transition_charge_upper_Ah": 0.05413208043314516,
+        "transition_bound_assumption": "current between last rest and first loaded lies between zero and selected maximum; not a measured correction",
+        "interpretation": "recorded preceding low-current interval, not proof of full thermodynamic equilibrium"
+      },
+      "linear_interpolation_checks": {
+        "query500_grid_within_domain": true,
+        "input_gap_max_s": 60.00699698925018,
+        "constant_input_sanity_A": 0.015199999999999658,
+        "warning": "shared arrays do not independently prove instrument channel synchronization; no per-channel timestamps"
+      },
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat",
+      "source_sha256": "c2f94cbdecd24fc71f461e4ff5f895ec7f4ba1e816b662c3e6e786046a28adff",
+      "historical_segment_exact_row_count_match": true,
+      "historical_segment_integral_difference_Ah": 0.0,
+      "normalization": {
+        "median_Crate_vs_65Ah": 0.04988461538461539,
+        "median_Crate_vs_Qref": 0.052930325177862225,
+        "median_representative_cell_current_A": 0.2646516258893111,
+        "delivered_charge_fraction_Qref": 1.0
+      }
+    },
+    {
+      "raw_rows": 21368,
+      "raw_fields": [
+        "Time",
+        "TimeStamp",
+        "Status",
+        "Voltage",
+        "Current",
+        "Ah",
+        "Wh",
+        "Power",
+        "Battery_Temp_degC"
+      ],
+      "selected_rows": 10020,
+      "valid_discharge_rows_all_runs": 20044,
+      "discarded_later_discharge_rows": 10024,
+      "selected_start_index": 60,
+      "selected_end_index": 10079,
+      "selected_fraction_of_raw_rows": 0.46892549606888806,
+      "raw_nonfinite_counts": {
+        "Time": 0,
+        "Current": 0,
+        "Voltage": 0,
+        "Battery_Temp_degC": 0,
+        "Ah": 0,
+        "Power": 0
+      },
+      "raw_status_counts": {
+        "PAU": 1325,
+        "DCH": 20043
+      },
+      "selected_status_counts": {
+        "DCH": 10019,
+        "PAU": 1
+      },
+      "duration_s": 10017.287005484104,
+      "dt_s": {
+        "n": 10019,
+        "nonfinite": 0,
+        "min": 0.007000565528869629,
+        "max": 1.0089967399835587,
+        "mean": 0.9998290254001502,
+        "median": 1.0000046342611313
+      },
+      "large_gap_count": 0,
+      "large_gap_time_fraction": 0.0,
+      "capacity_trapezoid_Ah": 60.21347376185773,
+      "current_discharge_A": {
+        "n": 10020,
+        "nonfinite": 0,
+        "min": 3.6042,
+        "max": 21.6431,
+        "mean": 21.637648522954095,
+        "median": 21.6405
+      },
+      "temperature_C": {
+        "n": 10020,
+        "nonfinite": 0,
+        "min": 24.9403,
+        "max": 25.8874,
+        "mean": 25.402589231536925,
+        "median": 25.3613
+      },
+      "temperature_initial_C": 24.9403,
+      "temperature_final_C": 25.256,
+      "voltage_initial_loaded_V": 4.1678,
+      "voltage_final_loaded_V": 2.7998,
+      "current_initial_discharge_A": 21.6405,
+      "first_selected_is_rest": false,
+      "sign_check": {
+        "source_current_negative_fraction": 1.0,
+        "power_minus_sourceVI_W": {
+          "n": 10020,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "power_plus_dischargeVI_W": {
+          "n": 10020,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "scope": "cell Digatron signals; not module AVL/Orion inference"
+      },
+      "counter_check": {
+        "first_counter_Ah": -0.006,
+        "last_counter_Ah": -60.2194,
+        "signed_Ah_delta": -60.2134,
+        "abs_Ah_delta": 60.2134,
+        "integral_minus_abs_counter_Ah": 7.376185772756116e-05,
+        "difference_percent_of_integral": 0.00012250058520006145,
+        "counter_increment_min_Ah": -0.006100000000003547,
+        "counter_increment_max_Ah": 0.0,
+        "shared_instrument_not_independent_calibration": true
+      },
+      "integration_sensitivity_Ah": {
+        "left": 60.213491492116084,
+        "right": 60.21345603159936,
+        "coarse_every_2": 60.213441920943374,
+        "coarse_every_10": 60.19491195775797
+      },
+      "endpoint_trim_Ah": {
+        "1": 60.20745602191225,
+        "5": 60.163714746193904
+      },
+      "threshold_sensitivity": [
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.5,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.8,
+          "n": 10018,
+          "capacity_Ah": 60.21174823884597
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.5,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.8,
+          "n": 10018,
+          "capacity_Ah": 60.21174823884597
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.5,
+          "n": 10020,
+          "capacity_Ah": 60.21347376185773
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.8,
+          "n": 10018,
+          "capacity_Ah": 60.21174823884597
+        }
+      ],
+      "timestamp_check": {
+        "start": "2023-07-27T19:29:06",
+        "end": "2023-07-27T22:16:03",
+        "time_vs_timestamp_elapsed_difference_s": {
+          "n": 10020,
+          "nonfinite": 0,
+          "min": -0.0060021281242370605,
+          "max": 0.2870054841041565,
+          "mean": -0.0019396881946546589,
+          "median": -0.001998603343963623
+        },
+        "nonincreasing_timestamp_steps": 2,
+        "note": "TimeStamp rounded seconds can repeat; Time used for integration"
+      },
+      "preceding_rest": {
+        "recorded": true,
+        "n": 60,
+        "duration_s": 58.004000410437584,
+        "last_rest_voltage_V": 4.1896,
+        "last_rest_to_first_loaded_gap_s": 1.0080009698867798,
+        "last_rest_minus_first_loaded_mV": 21.800000000000708,
+        "conditional_unobserved_transition_charge_upper_Ah": 0.0060600738309323785,
+        "transition_bound_assumption": "current between last rest and first loaded lies between zero and selected maximum; not a measured correction",
+        "interpretation": "recorded preceding low-current interval, not proof of full thermodynamic equilibrium"
+      },
+      "linear_interpolation_checks": {
+        "query500_grid_within_domain": true,
+        "input_gap_max_s": 1.0089967399835587,
+        "constant_input_sanity_A": 18.0389,
+        "warning": "shared arrays do not independently prove instrument channel synchronization; no per-channel timestamps"
+      },
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat",
+      "source_sha256": "1d40bb5c842f2e5946ce04834779c691fcaecbdfc31c7ca4a853d14944ca345a",
+      "historical_segment_exact_row_count_match": true,
+      "historical_segment_integral_difference_Ah": 0.0,
+      "normalization": {
+        "median_Crate_vs_65Ah": 0.3329307692307692,
+        "median_Crate_vs_Qref": 0.3532578880528997,
+        "median_representative_cell_current_A": 1.7662894402644986,
+        "delivered_charge_fraction_Qref": 0.9829201993226845
+      }
+    },
+    {
+      "raw_rows": 6638,
+      "raw_fields": [
+        "Time",
+        "TimeStamp",
+        "Status",
+        "Voltage",
+        "Current",
+        "Ah",
+        "Wh",
+        "Power",
+        "Battery_Temp_degC"
+      ],
+      "selected_rows": 6638,
+      "valid_discharge_rows_all_runs": 6638,
+      "discarded_later_discharge_rows": 0,
+      "selected_start_index": 0,
+      "selected_end_index": 6637,
+      "selected_fraction_of_raw_rows": 1.0,
+      "raw_nonfinite_counts": {
+        "Time": 0,
+        "Current": 0,
+        "Voltage": 0,
+        "Battery_Temp_degC": 0,
+        "Ah": 0,
+        "Power": 0
+      },
+      "raw_status_counts": {
+        "DCH": 6638
+      },
+      "selected_status_counts": {
+        "DCH": 6638
+      },
+      "duration_s": 6636.317997425795,
+      "dt_s": {
+        "n": 6637,
+        "nonfinite": 0,
+        "min": 0.3210000693798065,
+        "max": 1.0089967399835587,
+        "mean": 0.9998972423422924,
+        "median": 1.0000046342611313
+      },
+      "large_gap_count": 0,
+      "large_gap_time_fraction": 0.0,
+      "capacity_trapezoid_Ah": 59.90282466075216,
+      "current_discharge_A": {
+        "n": 6638,
+        "nonfinite": 0,
+        "min": 32.4836,
+        "max": 32.4989,
+        "mean": 32.49545479059958,
+        "median": 32.4963
+      },
+      "temperature_C": {
+        "n": 6638,
+        "nonfinite": 0,
+        "min": 24.7299,
+        "max": 25.8874,
+        "mean": 25.419098990659837,
+        "median": 25.4665
+      },
+      "temperature_initial_C": 24.8351,
+      "temperature_final_C": 25.1508,
+      "voltage_initial_loaded_V": 4.1547,
+      "voltage_final_loaded_V": 2.7998,
+      "current_initial_discharge_A": 32.4989,
+      "first_selected_is_rest": false,
+      "sign_check": {
+        "source_current_negative_fraction": 1.0,
+        "power_minus_sourceVI_W": {
+          "n": 6638,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "power_plus_dischargeVI_W": {
+          "n": 6638,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "scope": "cell Digatron signals; not module AVL/Orion inference"
+      },
+      "counter_check": {
+        "first_counter_Ah": -0.018,
+        "last_counter_Ah": -59.9208,
+        "signed_Ah_delta": -59.9028,
+        "abs_Ah_delta": 59.9028,
+        "integral_minus_abs_counter_Ah": 2.466075216034369e-05,
+        "difference_percent_of_integral": 4.116792872457184e-05,
+        "counter_increment_min_Ah": -0.00910000000000366,
+        "counter_increment_max_Ah": -0.00280000000000058,
+        "shared_instrument_not_independent_calibration": true
+      },
+      "integration_sensitivity_Ah": {
+        "left": 59.90282495748773,
+        "right": 59.902824364016574,
+        "coarse_every_2": 59.9028395862008,
+        "coarse_every_10": 59.902694023216284
+      },
+      "endpoint_trim_Ah": {
+        "1": 59.890909000155325,
+        "5": 59.81875412484817
+      },
+      "threshold_sensitivity": [
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.5,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.8,
+          "n": 6637,
+          "capacity_Ah": 59.899927073375885
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.5,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.8,
+          "n": 6637,
+          "capacity_Ah": 59.899927073375885
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.5,
+          "n": 6638,
+          "capacity_Ah": 59.90282466075216
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.8,
+          "n": 6637,
+          "capacity_Ah": 59.899927073375885
+        }
+      ],
+      "timestamp_check": {
+        "start": "2023-08-03T12:33:07",
+        "end": "2023-08-03T14:23:43",
+        "time_vs_timestamp_elapsed_difference_s": {
+          "n": 6638,
+          "nonfinite": 0,
+          "min": -0.005006954073905945,
+          "max": 0.31799742579460144,
+          "mean": -0.0009381780022057686,
+          "median": -0.0010022372007369995
+        },
+        "nonincreasing_timestamp_steps": 1,
+        "note": "TimeStamp rounded seconds can repeat; Time used for integration"
+      },
+      "preceding_rest": {
+        "recorded": false,
+        "interpretation": "no preceding rest in selected file; SOC1/preconditioning not established by first loaded point"
+      },
+      "linear_interpolation_checks": {
+        "query500_grid_within_domain": true,
+        "input_gap_max_s": 1.0089967399835587,
+        "constant_input_sanity_A": 0.015299999999996317,
+        "warning": "shared arrays do not independently prove instrument channel synchronization; no per-channel timestamps"
+      },
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "source_sha256": "181f1966002a769cc69298c62b975b8bee1c8526760df0bfa8baa9e453c754cb",
+      "historical_segment_exact_row_count_match": true,
+      "historical_segment_integral_difference_Ah": 0.0,
+      "normalization": {
+        "median_Crate_vs_65Ah": 0.4999430769230769,
+        "median_Crate_vs_Qref": 0.5304671475951778,
+        "median_representative_cell_current_A": 2.6523357379758887,
+        "delivered_charge_fraction_Qref": 0.9778491868515269
+      }
+    },
+    {
+      "raw_rows": 3281,
+      "raw_fields": [
+        "Time",
+        "TimeStamp",
+        "Status",
+        "Voltage",
+        "Current",
+        "Ah",
+        "Wh",
+        "Power",
+        "Battery_Temp_degC"
+      ],
+      "selected_rows": 3281,
+      "valid_discharge_rows_all_runs": 3281,
+      "discarded_later_discharge_rows": 0,
+      "selected_start_index": 0,
+      "selected_end_index": 3280,
+      "selected_fraction_of_raw_rows": 1.0,
+      "raw_nonfinite_counts": {
+        "Time": 0,
+        "Current": 0,
+        "Voltage": 0,
+        "Battery_Temp_degC": 0,
+        "Ah": 0,
+        "Power": 0
+      },
+      "raw_status_counts": {
+        "DCH": 3281
+      },
+      "selected_status_counts": {
+        "DCH": 3281
+      },
+      "duration_s": 3279.698998108506,
+      "dt_s": {
+        "n": 3280,
+        "nonfinite": 0,
+        "min": 0.6959930062294006,
+        "max": 1.007990911602974,
+        "mean": 0.9999082311306421,
+        "median": 1.0000046342611313
+      },
+      "large_gap_count": 0,
+      "large_gap_time_fraction": 0.0,
+      "capacity_trapezoid_Ah": 59.21435114169592,
+      "current_discharge_A": {
+        "n": 3281,
+        "nonfinite": 0,
+        "min": 64.9876,
+        "max": 65.0003,
+        "mean": 64.99732578482168,
+        "median": 64.9978
+      },
+      "temperature_C": {
+        "n": 3281,
+        "nonfinite": 0,
+        "min": 24.7299,
+        "max": 28.3078,
+        "mean": 27.20495053337397,
+        "median": 27.2555
+      },
+      "temperature_initial_C": 24.7299,
+      "temperature_final_C": 28.2026,
+      "voltage_initial_loaded_V": 4.1202,
+      "voltage_final_loaded_V": 2.7998,
+      "current_initial_discharge_A": 64.9978,
+      "first_selected_is_rest": false,
+      "sign_check": {
+        "source_current_negative_fraction": 1.0,
+        "power_minus_sourceVI_W": {
+          "n": 3281,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "power_plus_dischargeVI_W": {
+          "n": 3281,
+          "nonfinite": 0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0
+        },
+        "scope": "cell Digatron signals; not module AVL/Orion inference"
+      },
+      "counter_check": {
+        "first_counter_Ah": -0.0361,
+        "last_counter_Ah": -59.2505,
+        "signed_Ah_delta": -59.214400000000005,
+        "abs_Ah_delta": 59.214400000000005,
+        "integral_minus_abs_counter_Ah": -4.8858304083410076e-05,
+        "difference_percent_of_integral": -8.251091693379443e-05,
+        "counter_increment_min_Ah": -0.018200000000000216,
+        "counter_increment_max_Ah": -0.012599999999999056,
+        "shared_instrument_not_independent_calibration": true
+      },
+      "integration_sensitivity_Ah": {
+        "left": 59.21435118571557,
+        "right": 59.21435109767626,
+        "coarse_every_2": 59.21438440226647,
+        "coarse_every_10": 59.21428765235078
+      },
+      "endpoint_trim_Ah": {
+        "1": 59.18371251294022,
+        "5": 59.03925509287063
+      },
+      "threshold_sensitivity": [
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.5,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 0.5,
+          "voltage_threshold_V": 2.8,
+          "n": 3280,
+          "capacity_Ah": 59.20178551962976
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.5,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 1,
+          "voltage_threshold_V": 2.8,
+          "n": 3280,
+          "capacity_Ah": 59.20178551962976
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.5,
+          "n": 3281,
+          "capacity_Ah": 59.21435114169592
+        },
+        {
+          "current_threshold_A": 2,
+          "voltage_threshold_V": 2.8,
+          "n": 3280,
+          "capacity_Ah": 59.20178551962976
+        }
+      ],
+      "timestamp_check": {
+        "start": "2023-08-03T17:47:31",
+        "end": "2023-08-03T18:42:11",
+        "time_vs_timestamp_elapsed_difference_s": {
+          "n": 3281,
+          "nonfinite": 0,
+          "min": -0.3010018914937973,
+          "max": 0.005998522043228149,
+          "mean": -7.529394160098907e-05,
+          "median": -1.043081283569336e-07
+        },
+        "nonincreasing_timestamp_steps": 0,
+        "note": "TimeStamp rounded seconds can repeat; Time used for integration"
+      },
+      "preceding_rest": {
+        "recorded": false,
+        "interpretation": "no preceding rest in selected file; SOC1/preconditioning not established by first loaded point"
+      },
+      "linear_interpolation_checks": {
+        "query500_grid_within_domain": true,
+        "input_gap_max_s": 1.007990911602974,
+        "constant_input_sanity_A": 0.01269999999999527,
+        "warning": "shared arrays do not independently prove instrument channel synchronization; no per-channel timestamps"
+      },
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "source_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+      "historical_segment_exact_row_count_match": true,
+      "historical_segment_integral_difference_Ah": 0.0,
+      "normalization": {
+        "median_Crate_vs_65Ah": 0.9999661538461538,
+        "median_Crate_vs_Qref": 1.0610191795977342,
+        "median_representative_cell_current_A": 5.305095897988671,
+        "delivered_charge_fraction_Qref": 0.9666105971090462
+      }
+    }
+  ],
+  "protected_numeric_members_opened": 0,
+  "source_inner_sha256": "fc65efb69fe196952b430443b0e3c8df0ff789076f91ecebe3f8e10d86937e65",
+  "normalization": {
+    "Qref_Ah": 61.259778569358865,
+    "virtual_parallel_Qref_over_5": 12.251955713871773,
+    "mapping": "I_rep=I_exp/(Qref/5); I_rep/5=I_exp/Qref. This preserves nominal relative charge depletion, not geometry/kinetics/E66 physics."
+  }
+}

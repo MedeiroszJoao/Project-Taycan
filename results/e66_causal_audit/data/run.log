@@ -1,0 +1,88 @@
+[
+  {
+    "name": "07-26-23_19.37 31974_C20Dis.mat",
+    "rows": 1135,
+    "Q": 61.259778569358865,
+    "counter_difference_percent": -0.0003614617066931099,
+    "dt": {
+      "n": 1134,
+      "nonfinite": 0,
+      "min": 31.457000970840454,
+      "max": 60.00699698925018,
+      "mean": 59.97483245141449,
+      "median": 59.99999642372131
+    },
+    "preceding_rest": {
+      "recorded": true,
+      "n": 1801,
+      "duration_s": 1799.006999284029,
+      "last_rest_voltage_V": 4.1939,
+      "last_rest_to_first_loaded_gap_s": 60.006001219153404,
+      "last_rest_minus_first_loaded_mV": 6.800000000000139,
+      "conditional_unobserved_transition_charge_upper_Ah": 0.05413208043314516,
+      "transition_bound_assumption": "current between last rest and first loaded lies between zero and selected maximum; not a measured correction",
+      "interpretation": "recorded preceding low-current interval, not proof of full thermodynamic equilibrium"
+    }
+  },
+  {
+    "name": "07-27-23_19.28 31974_Cap_C_3.mat",
+    "rows": 10020,
+    "Q": 60.21347376185773,
+    "counter_difference_percent": 0.00012250058520006145,
+    "dt": {
+      "n": 10019,
+      "nonfinite": 0,
+      "min": 0.007000565528869629,
+      "max": 1.0089967399835587,
+      "mean": 0.9998290254001502,
+      "median": 1.0000046342611313
+    },
+    "preceding_rest": {
+      "recorded": true,
+      "n": 60,
+      "duration_s": 58.004000410437584,
+      "last_rest_voltage_V": 4.1896,
+      "last_rest_to_first_loaded_gap_s": 1.0080009698867798,
+      "last_rest_minus_first_loaded_mV": 21.800000000000708,
+      "conditional_unobserved_transition_charge_upper_Ah": 0.0060600738309323785,
+      "transition_bound_assumption": "current between last rest and first loaded lies between zero and selected maximum; not a measured correction",
+      "interpretation": "recorded preceding low-current interval, not proof of full thermodynamic equilibrium"
+    }
+  },
+  {
+    "name": "08-03-23_12.33 31974_Dis_0p5C.mat",
+    "rows": 6638,
+    "Q": 59.90282466075216,
+    "counter_difference_percent": 4.116792872457184e-05,
+    "dt": {
+      "n": 6637,
+      "nonfinite": 0,
+      "min": 0.3210000693798065,
+      "max": 1.0089967399835587,
+      "mean": 0.9998972423422924,
+      "median": 1.0000046342611313
+    },
+    "preceding_rest": {
+      "recorded": false,
+      "interpretation": "no preceding rest in selected file; SOC1/preconditioning not established by first loaded point"
+    }
+  },
+  {
+    "name": "08-03-23_17.47 31974_Dis_1C.mat",
+    "rows": 3281,
+    "Q": 59.21435114169592,
+    "counter_difference_percent": -8.251091693379443e-05,
+    "dt": {
+      "n": 3280,
+      "nonfinite": 0,
+      "min": 0.6959930062294006,
+      "max": 1.007990911602974,
+      "mean": 0.9999082311306421,
+      "median": 1.0000046342611313
+    },
+    "preceding_rest": {
+      "recorded": false,
+      "interpretation": "no preceding rest in selected file; SOC1/preconditioning not established by first loaded point"
+    }
+  }
+]

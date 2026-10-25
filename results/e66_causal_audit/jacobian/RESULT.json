@@ -1,0 +1,115 @@
+{
+  "classification": "RESULTADO_EXPLORATORIO_POSTHOC",
+  "reports": [
+    {
+      "absolute_delta": 0.001,
+      "status": "COMPLETE",
+      "summary": {
+        "column_norms": [
+          17.320508075689787,
+          2.650411237350471,
+          21.872809127458186
+        ],
+        "singular_values_raw": [
+          26.58915428364554,
+          8.473543404185719,
+          2.5807742077137883
+        ],
+        "singular_values_unit_column": [
+          1.3804361185577425,
+          0.9479210781068342,
+          0.4425401137320898
+        ],
+        "rank_default": 3,
+        "rank_unit_column_threshold_1e_3": 3,
+        "rank_unit_column_threshold_1e_6": 3,
+        "condition_unit_column": 3.119346869860135,
+        "column_cosine_matrix": [
+          [
+            1.000000000000004,
+            0.2197384298996036,
+            -0.8040819627945139
+          ],
+          [
+            0.2197384298996036,
+            1.0000000000000004,
+            -0.20906281956606332
+          ],
+          [
+            -0.8040819627945139,
+            -0.20906281956606332,
+            0.9999999999999992
+          ]
+        ]
+      },
+      "contact_analytic_max_abs_error_V_per_ohm": 8.077982727172639e-13,
+      "contact_derivative_range": [
+        -1.7665016512831144,
+        -0.2641959275022643
+      ]
+    },
+    {
+      "absolute_delta": 0.0001,
+      "status": "COMPLETE",
+      "summary": {
+        "column_norms": [
+          17.320508075700687,
+          2.6504112373487696,
+          21.872809127457614
+        ],
+        "singular_values_raw": [
+          26.589154283653073,
+          8.473543404183486,
+          2.58077420771039
+        ],
+        "singular_values_unit_column": [
+          1.3804361185586353,
+          0.9479210781056764,
+          0.4425401137317866
+        ],
+        "rank_default": 3,
+        "rank_unit_column_threshold_1e_3": 3,
+        "rank_unit_column_threshold_1e_6": 3,
+        "condition_unit_column": 3.11934686986429,
+        "column_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.21973842990246614,
+            -0.804081962794777
+          ],
+          [
+            0.21973842990246614,
+            0.9999999999999999,
+            -0.20906281956843145
+          ],
+          [
+            -0.804081962794777,
+            -0.20906281956843145,
+            0.9999999999999998
+          ]
+        ]
+      },
+      "contact_analytic_max_abs_error_V_per_ohm": 6.807665542396535e-12,
+      "contact_derivative_range": [
+        -1.766501651281338,
+        -0.26419592749959975
+      ]
+    }
+  ],
+  "step_relative_frobenius_difference": 4.051244326565195e-12,
+  "stable_under_predeclared_1percent": true,
+  "source_optimizer_rank": 2,
+  "source_relative_contact_step_ohm": 2.6387202740172145e-19,
+  "new_absolute_steps_ohm": [
+    0.001,
+    0.0001
+  ],
+  "computed_jobs": 14,
+  "planned_jobs": 14,
+  "seconds": 116.62371899099998,
+  "structural_identifiability_proven": false,
+  "onecell_iid_confidence_intervals": false,
+  "no_refit": true,
+  "no_evaluation_data_used": true,
+  "prospective_sha256": "6a0e3b2b972ed7a22cc167c5c1fc507f886a09665b45722c0264bb313f96fc36"
+}

@@ -1,0 +1,8 @@
+test_analytic_contact_direction_and_absolute_step_at_boundary (test_e66_absolute_jacobian_audit.AbsoluteJacobianDiagnostics.test_analytic_contact_direction_and_absolute_step_at_boundary) ... ok
+test_normalized_rank_invariant_to_parameter_units (test_e66_absolute_jacobian_audit.AbsoluteJacobianDiagnostics.test_normalized_rank_invariant_to_parameter_units) ... ok
+test_zero_contact_column_not_silently_full_rank (test_e66_absolute_jacobian_audit.AbsoluteJacobianDiagnostics.test_zero_contact_column_not_silently_full_rank) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.012s
+
+OK

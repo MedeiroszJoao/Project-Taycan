@@ -1,0 +1,112 @@
+{
+  "classification": "IMPLEMENTATION_AND_PRIMARY_LITERATURE_AUDIT_NOT_CAUSE_IDENTIFICATION",
+  "pybamm_version": "26.4.2",
+  "repo_base": "809b5c57d96f8ad4d81d7a612d8bdbd464548b02",
+  "fit_script_sha256": "415f2ec033c41069f646600046a7d3588a010c93101aba83c974e544dd97bb30",
+  "raw_data_files_opened": 0,
+  "parameter_values": {
+    "Nominal cell capacity [A.h]": 5.0,
+    "Electrode height [m]": 0.065,
+    "Electrode width [m]": 1.58,
+    "Negative electrode thickness [m]": 8.52e-05,
+    "Positive electrode thickness [m]": 7.56e-05,
+    "Separator thickness [m]": 1.2e-05,
+    "Negative particle radius [m]": 5.86e-06,
+    "Positive particle radius [m]": 5.22e-06,
+    "Negative electrode diffusivity [m2.s-1]": 3.3e-14,
+    "Positive electrode diffusivity [m2.s-1]": 4e-15,
+    "Negative electrode porosity": 0.25,
+    "Positive electrode porosity": 0.335,
+    "Separator porosity": 0.47,
+    "Negative electrode active material volume fraction": 0.75,
+    "Positive electrode active material volume fraction": 0.665,
+    "Maximum concentration in negative electrode [mol.m-3]": 33133.0,
+    "Maximum concentration in positive electrode [mol.m-3]": 63104.0,
+    "Initial concentration in electrolyte [mol.m-3]": 1000.0,
+    "Cation transference number": 0.2594,
+    "Negative electrode conductivity [S.m-1]": 215.0,
+    "Positive electrode conductivity [S.m-1]": 0.18,
+    "Negative electrode OCP entropic change [V.K-1]": 0.0,
+    "Positive electrode OCP entropic change [V.K-1]": 0.0,
+    "Cell volume [m3]": 2.42e-05,
+    "Cell cooling surface area [m2]": 0.00531
+  },
+  "initial_concentration_before_set_SOC1": {
+    "Initial concentration in negative electrode [mol.m-3]": 29866.0,
+    "Initial concentration in positive electrode [mol.m-3]": 17038.0
+  },
+  "after_set_SOC1_original_OCP": {
+    "Initial concentration in negative electrode [mol.m-3]": 30171.50773973545,
+    "Initial concentration in positive electrode [mol.m-3]": 16649.68905260978
+  },
+  "callables": {
+    "Negative electrode OCP [V]": {
+      "name": "graphite_LGM50_ocp_Chen2020",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "0bdcc03354d1e3ac01bec73785aac768a566064daa74c7e1a017e5b73a09e762",
+      "temperature_dependence": "stoichiometry only",
+      "source_code": "def graphite_LGM50_ocp_Chen2020(sto):\n    \"\"\"\n    LG M50 Graphite open-circuit potential as a function of stoichiometry, fit taken\n    from [1].\n\n    References\n    ----------\n    .. [1] Chang-Hui Chen, Ferran Brosa Planella, Kieran O\u2019Regan, Dominika Gastol, W.\n    Dhammika Widanage, and Emma Kendrick. \"Development of Experimental Techniques for\n    Parameterization of Multi-scale Lithium-ion Battery Models.\" Journal of the\n    Electrochemical Society 167 (2020): 080534.\n\n    Parameters\n    ----------\n    sto: :class:`pybamm.Symbol`\n        Electrode stoichiometry\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Open-circuit potential\n    \"\"\"\n\n    u_eq = (\n        1.9793 * np.exp(-39.3631 * sto)\n        + 0.2482\n        - 0.0909 * np.tanh(29.8538 * (sto - 0.1234))\n        - 0.04478 * np.tanh(14.9159 * (sto - 0.2769))\n        - 0.0205 * np.tanh(30.4444 * (sto - 0.6103))\n    )\n\n    return u_eq\n"
+    },
+    "Positive electrode OCP [V]": {
+      "name": "nmc_LGM50_ocp_Chen2020",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "aab5cd80f3faa6e5e909e34abb9fd3c54c7b0a6d6c3fe4fcb790ae643b941b29",
+      "temperature_dependence": "stoichiometry only",
+      "source_code": "def nmc_LGM50_ocp_Chen2020(sto):\n    \"\"\"\n    LG M50 NMC open-circuit potential as a function of stoichiometry, fit taken\n    from [1].\n\n    References\n    ----------\n    .. [1] Chang-Hui Chen, Ferran Brosa Planella, Kieran O\u2019Regan, Dominika Gastol, W.\n    Dhammika Widanage, and Emma Kendrick. \"Development of Experimental Techniques for\n    Parameterization of Multi-scale Lithium-ion Battery Models.\" Journal of the\n    Electrochemical Society 167 (2020): 080534.\n\n    Parameters\n    ----------\n    sto: :class:`pybamm.Symbol`\n        Electrode stoichiometry\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Open-circuit potential\n    \"\"\"\n\n    u_eq = (\n        -0.8090 * sto\n        + 4.4875\n        - 0.0428 * np.tanh(18.5138 * (sto - 0.5542))\n        - 17.7326 * np.tanh(15.7890 * (sto - 0.3117))\n        + 17.5842 * np.tanh(15.9308 * (sto - 0.3120))\n    )\n\n    return u_eq\n"
+    },
+    "Negative electrode exchange-current density [A.m-2]": {
+      "name": "graphite_LGM50_electrolyte_exchange_current_density_Chen2020",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "931d2efab36c03a21e79c25767a60a66ce8fbd415ebabe4e809fd1651bcbd2cd",
+      "temperature_dependence": "Arrhenius",
+      "source_code": "def graphite_LGM50_electrolyte_exchange_current_density_Chen2020(\n    c_e, c_s_surf, c_s_max, T\n):\n    \"\"\"\n    Exchange-current density for Butler-Volmer reactions between graphite and LiPF6 in\n    EC:DMC.\n\n    References\n    ----------\n    .. [1] Chang-Hui Chen, Ferran Brosa Planella, Kieran O\u2019Regan, Dominika Gastol, W.\n    Dhammika Widanage, and Emma Kendrick. \"Development of Experimental Techniques for\n    Parameterization of Multi-scale Lithium-ion Battery Models.\" Journal of the\n    Electrochemical Society 167 (2020): 080534.\n\n    Parameters\n    ----------\n    c_e : :class:`pybamm.Symbol`\n        Electrolyte concentration [mol.m-3]\n    c_s_surf : :class:`pybamm.Symbol`\n        Particle concentration [mol.m-3]\n    c_s_max : :class:`pybamm.Symbol`\n        Maximum particle concentration [mol.m-3]\n    T : :class:`pybamm.Symbol`\n        Temperature [K]\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Exchange-current density [A.m-2]\n    \"\"\"\n    m_ref = 6.48e-7  # (A/m2)(m3/mol)**1.5 - includes ref concentrations\n    E_r = 35000\n    arrhenius = np.exp(E_r / pybamm.constants.R * (1 / 298.15 - 1 / T))\n\n    return m_ref * arrhenius * c_e**0.5 * c_s_surf**0.5 * (c_s_max - c_s_surf) ** 0.5\n"
+    },
+    "Positive electrode exchange-current density [A.m-2]": {
+      "name": "nmc_LGM50_electrolyte_exchange_current_density_Chen2020",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "829fc352c345d2f903efe7a2969a049b9a583858f2f353c16f6c773dfdd23ea7",
+      "temperature_dependence": "Arrhenius",
+      "source_code": "def nmc_LGM50_electrolyte_exchange_current_density_Chen2020(c_e, c_s_surf, c_s_max, T):\n    \"\"\"\n    Exchange-current density for Butler-Volmer reactions between NMC and LiPF6 in\n    EC:DMC.\n\n    References\n    ----------\n    .. [1] Chang-Hui Chen, Ferran Brosa Planella, Kieran O\u2019Regan, Dominika Gastol, W.\n    Dhammika Widanage, and Emma Kendrick. \"Development of Experimental Techniques for\n    Parameterization of Multi-scale Lithium-ion Battery Models.\" Journal of the\n    Electrochemical Society 167 (2020): 080534.\n\n    Parameters\n    ----------\n    c_e : :class:`pybamm.Symbol`\n        Electrolyte concentration [mol.m-3]\n    c_s_surf : :class:`pybamm.Symbol`\n        Particle concentration [mol.m-3]\n    c_s_max : :class:`pybamm.Symbol`\n        Maximum particle concentration [mol.m-3]\n    T : :class:`pybamm.Symbol`\n        Temperature [K]\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Exchange-current density [A.m-2]\n    \"\"\"\n    m_ref = 3.42e-6  # (A/m2)(m3/mol)**1.5 - includes ref concentrations\n    E_r = 17800\n    arrhenius = np.exp(E_r / pybamm.constants.R * (1 / 298.15 - 1 / T))\n\n    return m_ref * arrhenius * c_e**0.5 * c_s_surf**0.5 * (c_s_max - c_s_surf) ** 0.5\n"
+    },
+    "Electrolyte diffusivity [m2.s-1]": {
+      "name": "electrolyte_diffusivity_Nyman2008",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "cb19697cdcb4dcc835a7e6a1cb903cefd17c951a5eb7df5b3996dd78c83eade2",
+      "temperature_dependence": "none explicit; T argument ignored",
+      "source_code": "def electrolyte_diffusivity_Nyman2008(c_e, T):\n    \"\"\"\n    Diffusivity of LiPF6 in EC:EMC (3:7) as a function of ion concentration. The data\n    comes from [1]\n\n    References\n    ----------\n    .. [1] A. Nyman, M. Behm, and G. Lindbergh, \"Electrochemical characterisation and\n    modelling of the mass transport phenomena in LiPF6-EC-EMC electrolyte,\"\n    Electrochim. Acta, vol. 53, no. 22, pp. 6356\u20136365, 2008.\n\n    Parameters\n    ----------\n    c_e: :class:`pybamm.Symbol`\n        Dimensional electrolyte concentration\n    T: :class:`pybamm.Symbol`\n        Dimensional temperature\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Solid diffusivity\n    \"\"\"\n\n    D_c_e = 8.794e-11 * (c_e / 1000) ** 2 - 3.972e-10 * (c_e / 1000) + 4.862e-10\n\n    # Nyman et al. (2008) does not provide temperature dependence\n\n    return D_c_e\n"
+    },
+    "Electrolyte conductivity [S.m-1]": {
+      "name": "electrolyte_conductivity_Nyman2008",
+      "source_module_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+      "function_sha256": "5d693dea12c3d73c5b9b52e2622d7856d6c375c076620788fe03e9c3546959e0",
+      "temperature_dependence": "none explicit; T argument ignored",
+      "source_code": "def electrolyte_conductivity_Nyman2008(c_e, T):\n    \"\"\"\n    Conductivity of LiPF6 in EC:EMC (3:7) as a function of ion concentration. The data\n    comes from [1].\n\n    References\n    ----------\n    .. [1] A. Nyman, M. Behm, and G. Lindbergh, \"Electrochemical characterisation and\n    modelling of the mass transport phenomena in LiPF6-EC-EMC electrolyte,\"\n    Electrochim. Acta, vol. 53, no. 22, pp. 6356\u20136365, 2008.\n\n    Parameters\n    ----------\n    c_e: :class:`pybamm.Symbol`\n        Dimensional electrolyte concentration\n    T: :class:`pybamm.Symbol`\n        Dimensional temperature\n\n    Returns\n    -------\n    :class:`pybamm.Symbol`\n        Solid diffusivity\n    \"\"\"\n\n    sigma_e = (\n        0.1297 * (c_e / 1000) ** 3 - 2.51 * (c_e / 1000) ** 1.5 + 3.329 * (c_e / 1000)\n    )\n\n    # Nyman et al. (2008) does not provide temperature dependence\n\n    return sigma_e\n"
+    }
+  },
+  "independent_numeric_checks": {
+    "negative_kinetic_arrhenius_ratio_303p15K_to_298p15K": 1.2622159822628756,
+    "positive_kinetic_arrhenius_ratio_303p15K_to_298p15K": 1.1257285941064892,
+    "negative_R_squared_over_D_seconds": 1040.5939393939393,
+    "positive_R_squared_over_D_seconds": 6812.099999999999
+  },
+  "sources": [
+    {
+      "url": "https://iopscience.iop.org/article/10.1149/1945-7111/ab9050",
+      "doi": "10.1149/1945-7111/ab9050",
+      "authors": "Chen et al.2020",
+      "kind": "primaryresearch",
+      "finding": "35parameter cylindrical21700LG M50; NMC811andgraphite-SiOx; notE66; useseffectiveconstanttransportandparticleapproximations"
+    },
+    {
+      "url": "https://docs.pybamm.org/en/stable/_modules/pybamm/parameters/parameter_values.html",
+      "kind": "officialAPIreference",
+      "finding": "set_initial_stoichiometries deprecated delegatesinitial-state computation; local26.4.2 bytes authoritative"
+    },
+    {
+      "url": "https://borealisdata.ca/dataset.xhtml?persistentId=doi%3A10.5683%2FSP3%2F7JP3NM",
+      "doi": "10.5683/SP3/7JP3NM",
+      "kind": "primaryE66dataREADME",
+      "finding": "single65AhNMCpouchE66 and Digatroncellpath; surfacecaseTnotinternalcore"
+    }
+  ]
+}

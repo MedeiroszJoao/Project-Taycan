@@ -1,0 +1,9 @@
+test_completed (tests.unit.test_e66_causal_receipts.ReceiptTests.test_completed) ... ok
+test_false_rmse (tests.unit.test_e66_causal_receipts.ReceiptTests.test_false_rmse) ... ok
+test_omission (tests.unit.test_e66_causal_receipts.ReceiptTests.test_omission) ... ok
+test_relabel_fit (tests.unit.test_e66_causal_receipts.ReceiptTests.test_relabel_fit) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

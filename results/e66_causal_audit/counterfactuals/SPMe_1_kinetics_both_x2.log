@@ -1,0 +1,2 @@
+/workspace/scratch/00a46563aa6f/taycan/scripts/e66_causal_counterfactuals.py:19: DeprecationWarning: pybamm.parameter_values.set_initial_stoichiometries is deprecated, please use set_initial_state.
+  if case!='reinitialize_corrected_ocp':p.set_initial_stoichiometries(soc,inplace=True)

@@ -1,0 +1,222 @@
+{"model": "SPMe", "mesh": 40, "status": "COMPLETED", "output_sha256": "689ce4c27260ac0164f18ef26d4957f3592fe7038e99d85ccf960672b098a66a"}
+{"model": "SPMe", "mesh": 80, "status": "COMPLETED", "output_sha256": "2cf70e51301b7b670e83cae6d5d55eaad5de6057ffb72aa714ed1f672f232849"}
+{"model": "DFN", "mesh": 40, "status": "COMPLETED", "output_sha256": "3b98e432e82e18819707e24061fd01cbe1315bdc6e5b6da8869829b08b39057f"}
+{"model": "DFN", "mesh": 80, "status": "TIMEOUT", "output_sha256": "80469dd5bdb33eabd4b8e3a76be8c61ddf26bf86376083ae3f48566eb7fd1724"}
+{
+  "classification": "POSTHOC_CAUSAL_DIAGNOSTIC",
+  "environment": {
+    "python": "3.12.14",
+    "pybamm": "26.4.2",
+    "pybammsolvers": "0.6.0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "casadi": "3.7.2"
+  },
+  "original_1C_empirical_failure_preserved": true,
+  "mesh160": "NOT_EXECUTED",
+  "models": {
+    "SPMe": {
+      "comparison": {
+        "gate": "PASS",
+        "full_horizon_both": true,
+        "points": 500,
+        "max_abs_mesh_difference_V": 0.0029631134984686724,
+        "RMS_mesh_difference_V": 0.00018897446629094204,
+        "mean_mesh40_minus_mesh80_V": 5.775494205998566e-05,
+        "mesh40_empirical_gate": "FAIL",
+        "mesh80_empirical_gate": "FAIL",
+        "interpretation": "numericalgateonly; empiricalfailureunchangedifFAIL;notasymptoticconvergence"
+      },
+      "mesh40_archived_check": {
+        "metric_differences_from_archived_mesh40_tighttol_V": {
+          "rmse_V": 1.1193413765320237e-08,
+          "bias_V": -1.2883300190558167e-08,
+          "max_abs_V": -4.518607710224387e-12
+        },
+        "within_0_1mV_all_scalar_metrics": true,
+        "limitation": "archivedmesh40fullcurveunavailable; scalarsnotbytewiseorpointwiseequality"
+      },
+      "cases": [
+        {
+          "status": "COMPLETED",
+          "classification": "POSTHOC_NUMERICAL_DIAGNOSTIC",
+          "model": "SPMe",
+          "mesh": 40,
+          "summary": {
+            "model": "SPMe",
+            "mesh": 40,
+            "rtol": 1e-08,
+            "atol": 1e-09,
+            "target_duration_s": 3279.698998108506,
+            "achieved_duration_s": 3279.698998108506,
+            "coverage_fraction": 1.0,
+            "termination": "final time",
+            "solver_wall_seconds": 1.6037281669999857,
+            "threshold95pct_reached": true,
+            "complete_full_horizon": true
+          },
+          "predictive_scalar_metrics": {
+            "n_evaluated": 500,
+            "n_requested": 500,
+            "duration_coverage_fraction": 1.0,
+            "samples_coverage_fraction": 1.0,
+            "terminated_before_full_horizon": false,
+            "rmse_V": 0.08511128233107927,
+            "bias_V": -0.08190377400704815,
+            "max_abs_V": 0.1566618278438776,
+            "residual_by_horizon_thirds": {
+              "first_third": {
+                "n": 167,
+                "bias_V": -0.09123003846282911,
+                "rms_V": 0.09592766059994144
+              },
+              "middle_third": {
+                "n": 166,
+                "bias_V": -0.06365301365502217,
+                "rms_V": 0.06381111847370004
+              },
+              "final_third": {
+                "n": 167,
+                "bias_V": -0.0907189839131613,
+                "rms_V": 0.09186305998999582
+              }
+            }
+          },
+          "worker_wall_s": 3.1638171889999285,
+          "source_cell_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+          "protocol_sha256": "058dc7c51754d04e2623c6f0d7cc40b5b279a9f6ab5461fafc752a3edbd334c2",
+          "original_empirical_gate": "FAIL",
+          "raw_measured_curve_published": false
+        },
+        {
+          "status": "COMPLETED",
+          "classification": "POSTHOC_NUMERICAL_DIAGNOSTIC",
+          "model": "SPMe",
+          "mesh": 80,
+          "summary": {
+            "model": "SPMe",
+            "mesh": 80,
+            "rtol": 1e-08,
+            "atol": 1e-09,
+            "target_duration_s": 3279.698998108506,
+            "achieved_duration_s": 3279.698998108506,
+            "coverage_fraction": 1.0,
+            "termination": "final time",
+            "solver_wall_seconds": 2.3588625410000077,
+            "threshold95pct_reached": true,
+            "complete_full_horizon": true
+          },
+          "predictive_scalar_metrics": {
+            "n_evaluated": 500,
+            "n_requested": 500,
+            "duration_coverage_fraction": 1.0,
+            "samples_coverage_fraction": 1.0,
+            "terminated_before_full_horizon": false,
+            "rmse_V": 0.08518472522907505,
+            "bias_V": -0.08196152894910816,
+            "max_abs_V": 0.15712416164323129,
+            "residual_by_horizon_thirds": {
+              "first_third": {
+                "n": 167,
+                "bias_V": -0.09136180639340585,
+                "rms_V": 0.09609046720079774
+              },
+              "middle_third": {
+                "n": 166,
+                "bias_V": -0.06367556353257162,
+                "rms_V": 0.06383421448212297
+              },
+              "final_third": {
+                "n": 167,
+                "bias_V": -0.09073772012244555,
+                "rms_V": 0.09188076910952547
+              }
+            }
+          },
+          "worker_wall_s": 3.8667006849999552,
+          "source_cell_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+          "protocol_sha256": "058dc7c51754d04e2623c6f0d7cc40b5b279a9f6ab5461fafc752a3edbd334c2",
+          "original_empirical_gate": "FAIL",
+          "raw_measured_curve_published": false
+        }
+      ]
+    },
+    "DFN": {
+      "comparison": {
+        "gate": "INCONCLUSIVO",
+        "reason": "incomplete or interrupted solve"
+      },
+      "mesh40_archived_check": {
+        "metric_differences_from_archived_mesh40_tighttol_V": {
+          "rmse_V": -2.1129357014038064e-09,
+          "bias_V": 1.354319795199288e-09,
+          "max_abs_V": -1.7668190022135377e-08
+        },
+        "within_0_1mV_all_scalar_metrics": true,
+        "limitation": "archivedmesh40fullcurveunavailable; scalarsnotbytewiseorpointwiseequality"
+      },
+      "cases": [
+        {
+          "status": "COMPLETED",
+          "classification": "POSTHOC_NUMERICAL_DIAGNOSTIC",
+          "model": "DFN",
+          "mesh": 40,
+          "summary": {
+            "model": "DFN",
+            "mesh": 40,
+            "rtol": 1e-08,
+            "atol": 1e-09,
+            "target_duration_s": 3279.698998108506,
+            "achieved_duration_s": 3279.698998108506,
+            "coverage_fraction": 1.0,
+            "termination": "final time",
+            "solver_wall_seconds": 55.53193785999997,
+            "threshold95pct_reached": true,
+            "complete_full_horizon": true
+          },
+          "predictive_scalar_metrics": {
+            "n_evaluated": 500,
+            "n_requested": 500,
+            "duration_coverage_fraction": 1.0,
+            "samples_coverage_fraction": 1.0,
+            "terminated_before_full_horizon": false,
+            "rmse_V": 0.08705167345330471,
+            "bias_V": -0.08415343184186587,
+            "max_abs_V": 0.15397382509884805,
+            "residual_by_horizon_thirds": {
+              "first_third": {
+                "n": 167,
+                "bias_V": -0.0904786852538144,
+                "rms_V": 0.09430939575801617
+              },
+              "middle_third": {
+                "n": 166,
+                "bias_V": -0.06460700623725193,
+                "rms_V": 0.064688826370389
+              },
+              "final_third": {
+                "n": 167,
+                "bias_V": -0.09725755956983298,
+                "rms_V": 0.09815679145630307
+              }
+            }
+          },
+          "worker_wall_s": 57.34039704200006,
+          "source_cell_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+          "protocol_sha256": "058dc7c51754d04e2623c6f0d7cc40b5b279a9f6ab5461fafc752a3edbd334c2",
+          "original_empirical_gate": "FAIL",
+          "raw_measured_curve_published": false
+        },
+        {
+          "status": "TIMEOUT",
+          "model": "DFN",
+          "mesh": 80,
+          "error": "Command '['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python', '/workspace/scratch/00a46563aa6f/taycan/scripts/e66_mesh80_batch.py', 'worker', '--model', 'DFN', '--mesh', '80']' timed out after 119.99997303200007 seconds",
+          "elapsed_s": 120.28869605800003,
+          "protocol_sha256": "058dc7c51754d04e2623c6f0d7cc40b5b279a9f6ab5461fafc752a3edbd334c2"
+        }
+      ]
+    }
+  },
+  "protocol_sha256": "058dc7c51754d04e2623c6f0d7cc40b5b279a9f6ab5461fafc752a3edbd334c2"
+}

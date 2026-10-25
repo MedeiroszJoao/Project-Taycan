@@ -1,0 +1,1559 @@
+{
+  "classification": "POSTHOC_RESIDUAL_DIAGNOSTIC_NOT_REFIT_OR_NEW_VALIDATION",
+  "plan_sha256": "aacc03e10ec4a31d86246cd70ee6272637570bf1c6d6697e5dd746cbb150f3cf",
+  "evaluation_sha256": "56f18292dd8a5499de49aa63284d5a1d01fbc4b7c457db8ec385dec267eb974e",
+  "rows": [
+    {
+      "model": "SPMe",
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "source_sha256": "181f1966002a769cc69298c62b975b8bee1c8526760df0bfa8baa9e453c754cb",
+      "independent_sessions": 1,
+      "measured_receipt_interpolation_max_V": 0.0,
+      "metrics": {
+        "n_time_samples": 500,
+        "bias_mV": -33.87369175980622,
+        "RMSE_mV": 46.25208677551993,
+        "centered_RMSE_mV": 31.493309410918712,
+        "bias_fraction_MSE": 0.5363674309882945,
+        "max_abs_error_mV": 124.94522759385873
+      },
+      "thirds": {
+        "1": {
+          "n_time_samples": 167,
+          "bias_mV": -44.23493570655981,
+          "RMSE_mV": 59.958696805231945,
+          "centered_RMSE_mV": 40.47611376624801,
+          "bias_fraction_MSE": 0.5442850816574079,
+          "max_abs_error_mV": 124.94522759385873
+        },
+        "2": {
+          "n_time_samples": 167,
+          "bias_mV": -13.407691149699252,
+          "RMSE_mV": 17.53609960325689,
+          "centered_RMSE_mV": 11.302592947179097,
+          "bias_fraction_MSE": 0.5845773544018751,
+          "max_abs_error_mV": 34.50695573648499
+        },
+        "3": {
+          "n_time_samples": 166,
+          "bias_mV": -44.0393204512521,
+          "RMSE_mV": 50.17440827906655,
+          "centered_RMSE_mV": 24.041828140688263,
+          "bias_fraction_MSE": 0.7704007538400598,
+          "max_abs_error_mV": 73.38854125971572
+        }
+      },
+      "endpoint_regions": {
+        "first_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -98.00645403763582,
+          "RMSE_mV": 100.28284460107983,
+          "centered_RMSE_mV": 21.245796955000415,
+          "bias_fraction_MSE": 0.9551158749016507,
+          "max_abs_error_mV": 124.94522759385873
+        },
+        "middle_80pct": {
+          "n_time_samples": 400,
+          "bias_mV": -28.006235527770908,
+          "RMSE_mV": 36.42404564585214,
+          "centered_RMSE_mV": 23.28866404013212,
+          "bias_fraction_MSE": 0.5911982101611762,
+          "max_abs_error_mV": 73.38854125971572
+        },
+        "last_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -16.680579338259182,
+          "RMSE_mV": 26.874106123347925,
+          "centered_RMSE_mV": 21.07073451185334,
+          "bias_fraction_MSE": 0.3852602523014264,
+          "max_abs_error_mV": 58.2972703913307
+        }
+      },
+      "associations": {
+        "time_s": {
+          "residual_correlation": 0.14950579750367912,
+          "linear_descriptive_slope_V_per_unit": 2.4528510626018364e-06,
+          "range": [
+            0.0,
+            6636.317997425795
+          ],
+          "sd": 1919.5753102575716
+        },
+        "discharged_Ah": {
+          "residual_correlation": 0.14950690631135524,
+          "linear_descriptive_slope_V_per_unit": 0.0002717399705688427,
+          "range": [
+            0.0,
+            59.90282466075228
+          ],
+          "sd": 17.32710594498242
+        },
+        "relative_discharged_capacity": {
+          "residual_correlation": 0.14950690631135533,
+          "linear_descriptive_slope_V_per_unit": 0.016277991810303406,
+          "range": [
+            0.0,
+            1.0
+          ],
+          "sd": 0.28925357098118554
+        },
+        "current_A": {
+          "residual_correlation": 0.036927146111782376,
+          "linear_descriptive_slope_V_per_unit": 0.5118037052069547,
+          "range": [
+            32.4887,
+            32.4989
+          ],
+          "sd": 0.0022722735813589545
+        },
+        "temperature_C": {
+          "residual_correlation": 0.6105004710793691,
+          "linear_descriptive_slope_V_per_unit": 0.07938950891188838,
+          "range": [
+            24.7299,
+            25.8874
+          ],
+          "sd": 0.24218162443293625
+        }
+      },
+      "predictor_correlations": {
+        "time_s vs discharged_Ah": 0.9999999999921834,
+        "relative_discharged_capacity vs temperature_C": -0.3009887781232271,
+        "relative_discharged_capacity vs current_A": -0.1345505405477146,
+        "temperature_C vs current_A": 0.0933832014759899
+      },
+      "descriptive_joint_regression": {
+        "columns": [
+          "intercept",
+          "relative_Ah",
+          "temperature",
+          "current"
+        ],
+        "standardized_slopes_V": [
+          -0.03387369175980634,
+          0.011612299831993895,
+          0.022664993980215847,
+          0.0006088695582508904
+        ],
+        "condition": 1.4038448788261972,
+        "rank": 4,
+        "in_sample_centered_R2": 0.495203350547455,
+        "causal_interpretation": "FORBIDDEN: one trajectory, autocorrelation, progress/temperature confounding; no fitted prediction exported"
+      },
+      "bins": [
+        {
+          "relative_capacity_bin": [
+            0.0,
+            0.1
+          ],
+          "time_mean_s": 325.8312443625891,
+          "Ah_mean": 2.9410990336208287,
+          "relative_Ah_mean": 0.04909783554076386,
+          "current_mean_A": 32.49566378981807,
+          "temperature_change_mean_C": 0.34172308303227583,
+          "n_time_samples": 50,
+          "bias_mV": -98.00645403763582,
+          "RMSE_mV": 100.28284460107983,
+          "centered_RMSE_mV": 21.245796955000415,
+          "bias_fraction_MSE": 0.9551158749016507,
+          "max_abs_error_mV": 124.94522759385873,
+          "residual_min_mV": -124.94522759385873,
+          "residual_max_mV": -60.29073819713737
+        },
+        {
+          "relative_capacity_bin": [
+            0.1,
+            0.2
+          ],
+          "time_mean_s": 990.7929675515464,
+          "Ah_mean": 8.943447442957478,
+          "relative_Ah_mean": 0.149299260821287,
+          "current_mean_A": 32.496091469914326,
+          "temperature_change_mean_C": 0.5909895161931588,
+          "n_time_samples": 50,
+          "bias_mV": -40.50424070731747,
+          "RMSE_mV": 41.45435602174478,
+          "centered_RMSE_mV": 8.824404676875007,
+          "bias_fraction_MSE": 0.9546861996973042,
+          "max_abs_error_mV": 58.968922531581924,
+          "residual_min_mV": -58.968922531581924,
+          "residual_max_mV": -27.097198862253258
+        },
+        {
+          "relative_capacity_bin": [
+            0.2,
+            0.30000000000000004
+          ],
+          "time_mean_s": 1655.754690740504,
+          "Ah_mean": 14.945781407529726,
+          "relative_Ah_mean": 0.2495004449651946,
+          "current_mean_A": 32.495370422663996,
+          "temperature_change_mean_C": 0.7006304056386263,
+          "n_time_samples": 50,
+          "bias_mV": -11.430566576898675,
+          "RMSE_mV": 14.761217061516577,
+          "centered_RMSE_mV": 9.340004115004177,
+          "bias_fraction_MSE": 0.5996408098316565,
+          "max_abs_error_mV": 26.72974105546322,
+          "residual_min_mV": -26.72974105546322,
+          "residual_max_mV": 4.05754525880031
+        },
+        {
+          "relative_capacity_bin": [
+            0.30000000000000004,
+            0.4
+          ],
+          "time_mean_s": 2320.7164139294614,
+          "Ah_mean": 20.94808216020965,
+          "relative_Ah_mean": 0.3497010746796155,
+          "current_mean_A": 32.4955222183702,
+          "temperature_change_mean_C": 0.7438458291429719,
+          "n_time_samples": 50,
+          "bias_mV": 2.886612027102755,
+          "RMSE_mV": 4.580330546580415,
+          "centered_RMSE_mV": 3.556247871130943,
+          "bias_fraction_MSE": 0.39717617793973425,
+          "max_abs_error_mV": 7.214017913705462,
+          "residual_min_mV": -2.558114620945684,
+          "residual_max_mV": 7.214017913705462
+        },
+        {
+          "relative_capacity_bin": [
+            0.4,
+            0.5
+          ],
+          "time_mean_s": 2985.6781371184184,
+          "Ah_mean": 26.950411955433275,
+          "relative_Ah_mean": 0.44990218922165304,
+          "current_mean_A": 32.49570193589054,
+          "temperature_change_mean_C": 0.92385127717588,
+          "n_time_samples": 50,
+          "bias_mV": -6.311817383602483,
+          "RMSE_mV": 7.039685557693491,
+          "centered_RMSE_mV": 3.1173921901569956,
+          "bias_fraction_MSE": 0.8039005551014443,
+          "max_abs_error_mV": 12.585504979257589,
+          "residual_min_mV": -12.585504979257589,
+          "residual_max_mV": -2.633422005092534
+        },
+        {
+          "relative_capacity_bin": [
+            0.5,
+            0.6
+          ],
+          "time_mean_s": 3650.639860307376,
+          "Ah_mean": 32.952745543589344,
+          "relative_Ah_mean": 0.5501033670817805,
+          "current_mean_A": 32.49568420205965,
+          "temperature_change_mean_C": 0.9181606254974275,
+          "n_time_samples": 50,
+          "bias_mV": -19.23994445989071,
+          "RMSE_mV": 19.548138930810556,
+          "centered_RMSE_mV": 3.457495168267349,
+          "bias_fraction_MSE": 0.96871671654131,
+          "max_abs_error_mV": 24.74288869374064,
+          "residual_min_mV": -24.74288869374064,
+          "residual_max_mV": -12.8475193681723
+        },
+        {
+          "relative_capacity_bin": [
+            0.6000000000000001,
+            0.7000000000000001
+          ],
+          "time_mean_s": 4315.601583496334,
+          "Ah_mean": 38.95506231253396,
+          "relative_Ah_mean": 0.6503042641669772,
+          "current_mean_A": 32.49558444019287,
+          "temperature_change_mean_C": 0.5784766184422709,
+          "n_time_samples": 50,
+          "bias_mV": -32.19248726678241,
+          "RMSE_mV": 32.57468863247833,
+          "centered_RMSE_mV": 4.975349543596429,
+          "bias_fraction_MSE": 0.9766715089285044,
+          "max_abs_error_mV": 42.098581375054955,
+          "residual_min_mV": -42.098581375054955,
+          "residual_max_mV": -24.99384230748669
+        },
+        {
+          "relative_capacity_bin": [
+            0.7000000000000001,
+            0.8
+          ],
+          "time_mean_s": 4980.563306685291,
+          "Ah_mean": 44.9573045460001,
+          "relative_Ah_mean": 0.7505039169789878,
+          "current_mean_A": 32.494737955570564,
+          "temperature_change_mean_C": 0.4420138939087089,
+          "n_time_samples": 50,
+          "bias_mV": -57.20977763259956,
+          "RMSE_mV": 57.91541433228631,
+          "centered_RMSE_mV": 9.013132668995022,
+          "bias_fraction_MSE": 0.9757806104753877,
+          "max_abs_error_mV": 72.03899468171659,
+          "residual_min_mV": -72.03899468171659,
+          "residual_max_mV": -42.65842491735184
+        },
+        {
+          "relative_capacity_bin": [
+            0.8,
+            0.9
+          ],
+          "time_mean_s": 5645.525029874248,
+          "Ah_mean": 50.95952557787476,
+          "relative_Ah_mean": 0.8507032158579148,
+          "current_mean_A": 32.49492327985914,
+          "temperature_change_mean_C": 0.32310143611751535,
+          "n_time_samples": 50,
+          "bias_mV": -60.0476622221787,
+          "RMSE_mV": 61.72001097104142,
+          "centered_RMSE_mV": 14.270179253135057,
+          "bias_fraction_MSE": 0.9465427187105168,
+          "max_abs_error_mV": 73.38854125971572,
+          "residual_min_mV": -73.38854125971572,
+          "residual_max_mV": -31.230473357337196
+        },
+        {
+          "relative_capacity_bin": [
+            0.9,
+            1.0
+          ],
+          "time_mean_s": 6310.4867530632055,
+          "Ah_mean": 56.961730473559676,
+          "relative_Ah_mean": 0.9509022453640725,
+          "current_mean_A": 32.49491799172427,
+          "temperature_change_mean_C": 0.27843366877482106,
+          "n_time_samples": 50,
+          "bias_mV": -16.680579338259182,
+          "RMSE_mV": 26.874106123347925,
+          "centered_RMSE_mV": 21.07073451185334,
+          "bias_fraction_MSE": 0.3852602523014264,
+          "max_abs_error_mV": 58.2972703913307,
+          "residual_min_mV": -30.171992064693676,
+          "residual_max_mV": 58.2972703913307
+        }
+      ],
+      "notes": [
+        "500 time samples are NOT 500 independent validation units",
+        "Centered RMSE subtracts known posthoc mean residual algebraically; not corrected predictive performance",
+        "No confidence interval for between-cell accuracy: only one cell/two discharge sessions available"
+      ]
+    },
+    {
+      "model": "DFN",
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "source_sha256": "181f1966002a769cc69298c62b975b8bee1c8526760df0bfa8baa9e453c754cb",
+      "independent_sessions": 1,
+      "measured_receipt_interpolation_max_V": 0.0,
+      "metrics": {
+        "n_time_samples": 500,
+        "bias_mV": -34.18808338511181,
+        "RMSE_mV": 46.338656460486334,
+        "centered_RMSE_mV": 31.280122074819555,
+        "bias_fraction_MSE": 0.544330455078012,
+        "max_abs_error_mV": 123.74347462889989
+      },
+      "thirds": {
+        "1": {
+          "n_time_samples": 167,
+          "bias_mV": -44.101325971313614,
+          "RMSE_mV": 59.09297019604528,
+          "centered_RMSE_mV": 39.33258412770048,
+          "bias_fraction_MSE": 0.556969810505981,
+          "max_abs_error_mV": 123.74347462889989
+        },
+        "2": {
+          "n_time_samples": 167,
+          "bias_mV": -13.437017318163491,
+          "RMSE_mV": 18.595271650425367,
+          "centered_RMSE_mV": 12.854209168380907,
+          "bias_fraction_MSE": 0.5221565130298261,
+          "max_abs_error_mV": 38.36987403722203
+        },
+        "3": {
+          "n_time_samples": 166,
+          "bias_mV": -45.091194959115846,
+          "RMSE_mV": 51.05684746956613,
+          "centered_RMSE_mV": 23.949651577623154,
+          "bias_fraction_MSE": 0.7799656887926165,
+          "max_abs_error_mV": 73.32600124851574
+        }
+      },
+      "endpoint_regions": {
+        "first_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -96.86785792678589,
+          "RMSE_mV": 99.14329100494861,
+          "centered_RMSE_mV": 21.118954802924016,
+          "bias_fraction_MSE": 0.954624838941915,
+          "max_abs_error_mV": 123.74347462889989
+        },
+        "middle_80pct": {
+          "n_time_samples": 400,
+          "bias_mV": -28.48324583468921,
+          "RMSE_mV": 36.91068200727128,
+          "centered_RMSE_mV": 23.475586317759117,
+          "bias_fraction_MSE": 0.595490471614419,
+          "max_abs_error_mV": 73.32600124851574
+        },
+        "last_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -17.14700924681856,
+          "RMSE_mV": 27.2787665484091,
+          "centered_RMSE_mV": 21.215823771235513,
+          "bias_fraction_MSE": 0.3951184466970019,
+          "max_abs_error_mV": 58.121502306663245
+        }
+      },
+      "associations": {
+        "time_s": {
+          "residual_correlation": 0.12758953461891814,
+          "linear_descriptive_slope_V_per_unit": 2.079114165004373e-06,
+          "range": [
+            0.0,
+            6636.317997425795
+          ],
+          "sd": 1919.5753102575716
+        },
+        "discharged_Ah": {
+          "residual_correlation": 0.1275905825164216,
+          "linear_descriptive_slope_V_per_unit": 0.00023033557995106061,
+          "range": [
+            0.0,
+            59.90282466075228
+          ],
+          "sd": 17.32710594498242
+        },
+        "relative_discharged_capacity": {
+          "residual_correlation": 0.12759058251642166,
+          "linear_descriptive_slope_V_per_unit": 0.013797751858941098,
+          "range": [
+            0.0,
+            1.0
+          ],
+          "sd": 0.28925357098118554
+        },
+        "current_A": {
+          "residual_correlation": 0.04385872995310461,
+          "linear_descriptive_slope_V_per_unit": 0.6037593528600894,
+          "range": [
+            32.4887,
+            32.4989
+          ],
+          "sd": 0.0022722735813589545
+        },
+        "temperature_C": {
+          "residual_correlation": 0.6239931799225218,
+          "linear_descriptive_slope_V_per_unit": 0.08059481344851697,
+          "range": [
+            24.7299,
+            25.8874
+          ],
+          "sd": 0.24218162443293625
+        }
+      },
+      "predictor_correlations": {
+        "time_s vs discharged_Ah": 0.9999999999921834,
+        "relative_discharged_capacity vs temperature_C": -0.3009887781232271,
+        "relative_discharged_capacity vs current_A": -0.1345505405477146,
+        "temperature_C vs current_A": 0.0933832014759899
+      },
+      "descriptive_joint_regression": {
+        "columns": [
+          "intercept",
+          "relative_Ah",
+          "temperature",
+          "current"
+        ],
+        "standardized_slopes_V": [
+          -0.03418808338511201,
+          0.010932939642345188,
+          0.02274211303659147,
+          0.0007192080419469846
+        ],
+        "condition": 1.4038448788261972,
+        "rank": 4,
+        "in_sample_centered_R2": 0.4992757727537023,
+        "causal_interpretation": "FORBIDDEN: one trajectory, autocorrelation, progress/temperature confounding; no fitted prediction exported"
+      },
+      "bins": [
+        {
+          "relative_capacity_bin": [
+            0.0,
+            0.1
+          ],
+          "time_mean_s": 325.8312443625891,
+          "Ah_mean": 2.9410990336208287,
+          "relative_Ah_mean": 0.04909783554076386,
+          "current_mean_A": 32.49566378981807,
+          "temperature_change_mean_C": 0.34172308303227583,
+          "n_time_samples": 50,
+          "bias_mV": -96.86785792678589,
+          "RMSE_mV": 99.14329100494861,
+          "centered_RMSE_mV": 21.118954802924016,
+          "bias_fraction_MSE": 0.954624838941915,
+          "max_abs_error_mV": 123.74347462889989,
+          "residual_min_mV": -123.74347462889989,
+          "residual_max_mV": -59.29670908180151
+        },
+        {
+          "relative_capacity_bin": [
+            0.1,
+            0.2
+          ],
+          "time_mean_s": 990.7929675515464,
+          "Ah_mean": 8.943447442957478,
+          "relative_Ah_mean": 0.149299260821287,
+          "current_mean_A": 32.496091469914326,
+          "temperature_change_mean_C": 0.5909895161931588,
+          "n_time_samples": 50,
+          "bias_mV": -39.34714360614956,
+          "RMSE_mV": 40.33721512375716,
+          "centered_RMSE_mV": 8.882185202826381,
+          "bias_fraction_MSE": 0.951512719531214,
+          "max_abs_error_mV": 57.96372716018183,
+          "residual_min_mV": -57.96372716018183,
+          "residual_max_mV": -25.911755799541858
+        },
+        {
+          "relative_capacity_bin": [
+            0.2,
+            0.30000000000000004
+          ],
+          "time_mean_s": 1655.754690740504,
+          "Ah_mean": 14.945781407529726,
+          "relative_Ah_mean": 0.2495004449651946,
+          "current_mean_A": 32.495370422663996,
+          "temperature_change_mean_C": 0.7006304056386263,
+          "n_time_samples": 50,
+          "bias_mV": -11.983198245299054,
+          "RMSE_mV": 14.278143214193197,
+          "centered_RMSE_mV": 7.763268220206805,
+          "bias_fraction_MSE": 0.7043718980751603,
+          "max_abs_error_mV": 25.55073897030402,
+          "residual_min_mV": -25.55073897030402,
+          "residual_max_mV": 0.1494957165917299
+        },
+        {
+          "relative_capacity_bin": [
+            0.30000000000000004,
+            0.4
+          ],
+          "time_mean_s": 2320.7164139294614,
+          "Ah_mean": 20.94808216020965,
+          "relative_Ah_mean": 0.3497010746796155,
+          "current_mean_A": 32.4955222183702,
+          "temperature_change_mean_C": 0.7438458291429719,
+          "n_time_samples": 50,
+          "bias_mV": 2.4378467592924213,
+          "RMSE_mV": 2.861008969650945,
+          "centered_RMSE_mV": 1.4974229538211974,
+          "bias_fraction_MSE": 0.7260631021095774,
+          "max_abs_error_mV": 4.362194251180895,
+          "residual_min_mV": -0.4084323742694629,
+          "residual_max_mV": 4.362194251180895
+        },
+        {
+          "relative_capacity_bin": [
+            0.4,
+            0.5
+          ],
+          "time_mean_s": 2985.6781371184184,
+          "Ah_mean": 26.950411955433275,
+          "relative_Ah_mean": 0.44990218922165304,
+          "current_mean_A": 32.49570193589054,
+          "temperature_change_mean_C": 0.92385127717588,
+          "n_time_samples": 50,
+          "bias_mV": -5.051264037476786,
+          "RMSE_mV": 6.110770703242517,
+          "centered_RMSE_mV": 3.4389315508309797,
+          "bias_fraction_MSE": 0.6832948776961184,
+          "max_abs_error_mV": 11.78672292427052,
+          "residual_min_mV": -11.78672292427052,
+          "residual_max_mV": -0.5451032275072265
+        },
+        {
+          "relative_capacity_bin": [
+            0.5,
+            0.6
+          ],
+          "time_mean_s": 3650.639860307376,
+          "Ah_mean": 32.952745543589344,
+          "relative_Ah_mean": 0.5501033670817805,
+          "current_mean_A": 32.49568420205965,
+          "temperature_change_mean_C": 0.9181606254974275,
+          "n_time_samples": 50,
+          "bias_mV": -19.368230216072888,
+          "RMSE_mV": 19.810748850392947,
+          "centered_RMSE_mV": 4.163823760745239,
+          "bias_fraction_MSE": 0.9558243555611052,
+          "max_abs_error_mV": 26.41109439348277,
+          "residual_min_mV": -26.41109439348277,
+          "residual_max_mV": -12.065258252873079
+        },
+        {
+          "relative_capacity_bin": [
+            0.6000000000000001,
+            0.7000000000000001
+          ],
+          "time_mean_s": 4315.601583496334,
+          "Ah_mean": 38.95506231253396,
+          "relative_Ah_mean": 0.6503042641669772,
+          "current_mean_A": 32.49558444019287,
+          "temperature_change_mean_C": 0.5784766184422709,
+          "n_time_samples": 50,
+          "bias_mV": -35.40062370910903,
+          "RMSE_mV": 35.809458380033945,
+          "centered_RMSE_mV": 5.395660337479645,
+          "bias_fraction_MSE": 0.9772964536449622,
+          "max_abs_error_mV": 45.08985228877327,
+          "residual_min_mV": -45.08985228877327,
+          "residual_max_mV": -26.751575031956687
+        },
+        {
+          "relative_capacity_bin": [
+            0.7000000000000001,
+            0.8
+          ],
+          "time_mean_s": 4980.563306685291,
+          "Ah_mean": 44.9573045460001,
+          "relative_Ah_mean": 0.7505039169789878,
+          "current_mean_A": 32.494737955570564,
+          "temperature_change_mean_C": 0.4420138939087089,
+          "n_time_samples": 50,
+          "bias_mV": -57.89500743206737,
+          "RMSE_mV": 58.451018538575184,
+          "centered_RMSE_mV": 8.042989657939632,
+          "bias_fraction_MSE": 0.9810656302480582,
+          "max_abs_error_mV": 71.68793264429851,
+          "residual_min_mV": -71.68793264429851,
+          "residual_max_mV": -45.54835157994353
+        },
+        {
+          "relative_capacity_bin": [
+            0.8,
+            0.9
+          ],
+          "time_mean_s": 5645.525029874248,
+          "Ah_mean": 50.95952557787476,
+          "relative_Ah_mean": 0.8507032158579148,
+          "current_mean_A": 32.49492327985914,
+          "temperature_change_mean_C": 0.32310143611751535,
+          "n_time_samples": 50,
+          "bias_mV": -61.258346190631414,
+          "RMSE_mV": 62.700875063720616,
+          "centered_RMSE_mV": 13.372163465387887,
+          "bias_fraction_MSE": 0.9545162619283679,
+          "max_abs_error_mV": 73.32600124851574,
+          "residual_min_mV": -73.32600124851574,
+          "residual_max_mV": -33.08843199957412
+        },
+        {
+          "relative_capacity_bin": [
+            0.9,
+            1.0
+          ],
+          "time_mean_s": 6310.4867530632055,
+          "Ah_mean": 56.961730473559676,
+          "relative_Ah_mean": 0.9509022453640725,
+          "current_mean_A": 32.49491799172427,
+          "temperature_change_mean_C": 0.27843366877482106,
+          "n_time_samples": 50,
+          "bias_mV": -17.14700924681856,
+          "RMSE_mV": 27.2787665484091,
+          "centered_RMSE_mV": 21.215823771235513,
+          "bias_fraction_MSE": 0.3951184466970019,
+          "max_abs_error_mV": 58.121502306663245,
+          "residual_min_mV": -31.908500404630225,
+          "residual_max_mV": 58.121502306663245
+        }
+      ],
+      "notes": [
+        "500 time samples are NOT 500 independent validation units",
+        "Centered RMSE subtracts known posthoc mean residual algebraically; not corrected predictive performance",
+        "No confidence interval for between-cell accuracy: only one cell/two discharge sessions available"
+      ]
+    },
+    {
+      "model": "SPMe",
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "source_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+      "independent_sessions": 1,
+      "measured_receipt_interpolation_max_V": 0.0,
+      "metrics": {
+        "n_time_samples": 500,
+        "bias_mV": -81.67736635934294,
+        "RMSE_mV": 84.8291077070773,
+        "centered_RMSE_mV": 22.90819370837863,
+        "bias_fraction_MSE": 0.9270724042797555,
+        "max_abs_error_mV": 155.05346239626715
+      },
+      "thirds": {
+        "1": {
+          "n_time_samples": 167,
+          "bias_mV": -90.72040437857885,
+          "RMSE_mV": 95.30844341229975,
+          "centered_RMSE_mV": 29.214852644890765,
+          "bias_fraction_MSE": 0.906039645432498,
+          "max_abs_error_mV": 155.05346239626715
+        },
+        "2": {
+          "n_time_samples": 167,
+          "bias_mV": -63.558762655328216,
+          "RMSE_mV": 63.713657949773264,
+          "centered_RMSE_mV": 4.44003367829129,
+          "bias_fraction_MSE": 0.9951436782879034,
+          "max_abs_error_mV": 70.47072681101297
+        },
+        "3": {
+          "n_time_samples": 166,
+          "bias_mV": -90.80760412656016,
+          "RMSE_mV": 91.93653241721753,
+          "centered_RMSE_mV": 14.363322237422109,
+          "bias_fraction_MSE": 0.9755919227595727,
+          "max_abs_error_mV": 109.85237122727298
+        }
+      },
+      "endpoint_regions": {
+        "first_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -126.09584429926446,
+          "RMSE_mV": 127.39968687720332,
+          "centered_RMSE_mV": 18.180161354209908,
+          "bias_fraction_MSE": 0.9796362036305201,
+          "max_abs_error_mV": 155.05346239626715
+        },
+        "middle_80pct": {
+          "n_time_samples": 400,
+          "bias_mV": -75.94272301890302,
+          "RMSE_mV": 78.01368487699457,
+          "centered_RMSE_mV": 17.85603115367995,
+          "bias_fraction_MSE": 0.9476124260980444,
+          "max_abs_error_mV": 109.85237122727298
+        },
+        "last_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -83.13603514294067,
+          "RMSE_mV": 83.90479546893417,
+          "centered_RMSE_mV": 11.332006150519451,
+          "bias_fraction_MSE": 0.981759361475984,
+          "max_abs_error_mV": 92.8605297465146
+        }
+      },
+      "associations": {
+        "time_s": {
+          "residual_correlation": 0.151678624790635,
+          "linear_descriptive_slope_V_per_unit": 3.662716247553091e-06,
+          "range": [
+            0.0,
+            3279.698998108506
+          ],
+          "sd": 948.6629821367264
+        },
+        "discharged_Ah": {
+          "residual_correlation": 0.15167779702919043,
+          "linear_descriptive_slope_V_per_unit": 0.00020286531473091352,
+          "range": [
+            0.0,
+            59.21435114169647
+          ],
+          "sd": 17.127937125248444
+        },
+        "relative_discharged_capacity": {
+          "residual_correlation": 0.15167779702919104,
+          "linear_descriptive_slope_V_per_unit": 0.012012537980947077,
+          "range": [
+            0.0,
+            1.0
+          ],
+          "sd": 0.28925314210168906
+        },
+        "current_A": {
+          "residual_correlation": -0.021868739870072294,
+          "linear_descriptive_slope_V_per_unit": -0.2286275972986254,
+          "range": [
+            64.98871955779978,
+            65.0003
+          ],
+          "sd": 0.0021912198483964697
+        },
+        "temperature_C": {
+          "residual_correlation": 0.38704928779304654,
+          "linear_descriptive_slope_V_per_unit": 0.013743439184314636,
+          "range": [
+            24.7299,
+            28.3078
+          ],
+          "sd": 0.6451514748631821
+        }
+      },
+      "predictor_correlations": {
+        "time_s vs discharged_Ah": 0.9999999999993431,
+        "relative_discharged_capacity vs temperature_C": 0.9135152329598989,
+        "relative_discharged_capacity vs current_A": 0.05681830503770385,
+        "temperature_C vs current_A": 0.03510892593590763
+      },
+      "descriptive_joint_regression": {
+        "columns": [
+          "intercept",
+          "relative_Ah",
+          "temperature",
+          "current"
+        ],
+        "standardized_slopes_V": [
+          -0.08167736635934354,
+          -0.027929851364042323,
+          0.03438520253623243,
+          -0.00012127404377763782
+        ],
+        "condition": 4.716479693944217,
+        "rank": 4,
+        "in_sample_centered_R2": 0.39615004360709993,
+        "causal_interpretation": "FORBIDDEN: one trajectory, autocorrelation, progress/temperature confounding; no fitted prediction exported"
+      },
+      "bins": [
+        {
+          "relative_capacity_bin": [
+            0.0,
+            0.1
+          ],
+          "time_mean_s": 161.0273055183535,
+          "Ah_mean": 2.9073255493667336,
+          "relative_Ah_mean": 0.04909832655954759,
+          "current_mean_A": 64.99718983824468,
+          "temperature_change_mean_C": 1.0405142274562027,
+          "n_time_samples": 50,
+          "bias_mV": -126.09584429926446,
+          "RMSE_mV": 127.39968687720332,
+          "centered_RMSE_mV": 18.180161354209908,
+          "bias_fraction_MSE": 0.9796362036305201,
+          "max_abs_error_mV": 155.05346239626715,
+          "residual_min_mV": -155.05346239626715,
+          "residual_max_mV": -102.82249322232984
+        },
+        {
+          "relative_capacity_bin": [
+            0.1,
+            0.2
+          ],
+          "time_mean_s": 489.6544596374422,
+          "Ah_mean": 8.840590402835865,
+          "relative_Ah_mean": 0.14929810480707373,
+          "current_mean_A": 64.99670679062604,
+          "temperature_change_mean_C": 1.9158296770216754,
+          "n_time_samples": 50,
+          "bias_mV": -93.7661380573183,
+          "RMSE_mV": 93.9585298801326,
+          "centered_RMSE_mV": 6.009716386960108,
+          "bias_fraction_MSE": 0.9959089430215942,
+          "max_abs_error_mV": 102.43719698568876,
+          "residual_min_mV": -102.43719698568876,
+          "residual_max_mV": -81.82124214764653
+        },
+        {
+          "relative_capacity_bin": [
+            0.2,
+            0.30000000000000004
+          ],
+          "time_mean_s": 818.281613756531,
+          "Ah_mean": 14.77387091204897,
+          "relative_Ah_mean": 0.2494981474456414,
+          "current_mean_A": 64.99679839872866,
+          "temperature_change_mean_C": 2.209620589574164,
+          "n_time_samples": 50,
+          "bias_mV": -65.22882306325994,
+          "RMSE_mV": 65.84969603768431,
+          "centered_RMSE_mV": 9.021258783415176,
+          "bias_fraction_MSE": 0.9812316223698749,
+          "max_abs_error_mV": 81.1644765513475,
+          "residual_min_mV": -81.1644765513475,
+          "residual_max_mV": -52.15434345599812
+        },
+        {
+          "relative_capacity_bin": [
+            0.30000000000000004,
+            0.4
+          ],
+          "time_mean_s": 1146.90876787562,
+          "Ah_mean": 20.70717882619627,
+          "relative_Ah_mean": 0.3496986528932016,
+          "current_mean_A": 64.99721127462952,
+          "temperature_change_mean_C": 2.418206000000001,
+          "n_time_samples": 50,
+          "bias_mV": -60.73475271460241,
+          "RMSE_mV": 61.12044539834359,
+          "centered_RMSE_mV": 6.855556752590912,
+          "bias_fraction_MSE": 0.9874190788604429,
+          "max_abs_error_mV": 70.137006861978,
+          "residual_min_mV": -70.137006861978,
+          "residual_max_mV": -51.58139860287969
+        },
+        {
+          "relative_capacity_bin": [
+            0.4,
+            0.5
+          ],
+          "time_mean_s": 1475.5359219947088,
+          "Ah_mean": 26.640493487753325,
+          "relative_Ah_mean": 0.4498992722896547,
+          "current_mean_A": 64.99765743209576,
+          "temperature_change_mean_C": 2.51266519558601,
+          "n_time_samples": 50,
+          "bias_mV": -68.35956035897719,
+          "RMSE_mV": 68.38538013103539,
+          "centered_RMSE_mV": 1.879021871496337,
+          "bias_fraction_MSE": 0.999245017057252,
+          "max_abs_error_mV": 70.47072681101297,
+          "residual_min_mV": -70.47072681101297,
+          "residual_max_mV": -64.46835571577658
+        },
+        {
+          "relative_capacity_bin": [
+            0.5,
+            0.6
+          ],
+          "time_mean_s": 1804.1630761137974,
+          "Ah_mean": 32.57380882206835,
+          "relative_Ah_mean": 0.5500999030475087,
+          "current_mean_A": 64.99717460694264,
+          "temperature_change_mean_C": 2.5372413467214034,
+          "n_time_samples": 50,
+          "bias_mV": -60.50581806911737,
+          "RMSE_mV": 60.53651009301574,
+          "centered_RMSE_mV": 1.9274423541747496,
+          "bias_fraction_MSE": 0.9989862566104389,
+          "max_abs_error_mV": 64.32485066372485,
+          "residual_min_mV": -64.32485066372485,
+          "residual_max_mV": -58.050091685362126
+        },
+        {
+          "relative_capacity_bin": [
+            0.6000000000000001,
+            0.7000000000000001
+          ],
+          "time_mean_s": 2132.790230232886,
+          "Ah_mean": 38.50709175245089,
+          "relative_Ah_mean": 0.6502999865742966,
+          "current_mean_A": 64.99706872577636,
+          "temperature_change_mean_C": 2.6908047046800108,
+          "n_time_samples": 50,
+          "bias_mV": -62.38680340851534,
+          "RMSE_mV": 62.54422092802561,
+          "centered_RMSE_mV": 4.4346738280211415,
+          "bias_fraction_MSE": 0.9949725357470931,
+          "max_abs_error_mV": 73.19286277309045,
+          "residual_min_mV": -73.19286277309045,
+          "residual_max_mV": -58.09769422614952
+        },
+        {
+          "relative_capacity_bin": [
+            0.7000000000000001,
+            0.8
+          ],
+          "time_mean_s": 2461.417384351975,
+          "Ah_mean": 44.440405248868956,
+          "relative_Ah_mean": 0.7505005862941176,
+          "current_mean_A": 64.99731568244502,
+          "temperature_change_mean_C": 2.9512402564856655,
+          "n_time_samples": 50,
+          "bias_mV": -94.88149011660845,
+          "RMSE_mV": 95.56294235819063,
+          "centered_RMSE_mV": 11.392049218942145,
+          "bias_fraction_MSE": 0.985788998702325,
+          "max_abs_error_mV": 109.53859997394177,
+          "residual_min_mV": -109.53859997394177,
+          "residual_max_mV": -73.98596842892059
+        },
+        {
+          "relative_capacity_bin": [
+            0.8,
+            0.9
+          ],
+          "time_mean_s": 2790.0445384710642,
+          "Ah_mean": 50.373726692572916,
+          "relative_Ah_mean": 0.8507013202260976,
+          "current_mean_A": 64.99719775086135,
+          "temperature_change_mean_C": 3.210791045961201,
+          "n_time_samples": 50,
+          "bias_mV": -101.67839836282518,
+          "RMSE_mV": 101.99852342047141,
+          "centered_RMSE_mV": 8.074780884153398,
+          "bias_fraction_MSE": 0.9937327975649676,
+          "max_abs_error_mV": 109.85237122727298,
+          "residual_min_mV": -109.85237122727298,
+          "residual_max_mV": -85.6041323085921
+        },
+        {
+          "relative_capacity_bin": [
+            0.9,
+            1.0
+          ],
+          "time_mean_s": 3118.671692590153,
+          "Ah_mean": 56.307033411983575,
+          "relative_Ah_mean": 0.950901805497187,
+          "current_mean_A": 64.99742904004171,
+          "temperature_change_mean_C": 3.245097337262217,
+          "n_time_samples": 50,
+          "bias_mV": -83.13603514294067,
+          "RMSE_mV": 83.90479546893417,
+          "centered_RMSE_mV": 11.332006150519451,
+          "bias_fraction_MSE": 0.981759361475984,
+          "max_abs_error_mV": 92.8605297465146,
+          "residual_min_mV": -92.8605297465146,
+          "residual_max_mV": -42.71548594106189
+        }
+      ],
+      "notes": [
+        "500 time samples are NOT 500 independent validation units",
+        "Centered RMSE subtracts known posthoc mean residual algebraically; not corrected predictive performance",
+        "No confidence interval for between-cell accuracy: only one cell/two discharge sessions available"
+      ]
+    },
+    {
+      "model": "DFN",
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "source_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+      "independent_sessions": 1,
+      "measured_receipt_interpolation_max_V": 0.0,
+      "metrics": {
+        "n_time_samples": 500,
+        "bias_mV": -83.67471243629831,
+        "RMSE_mV": 86.53551013947026,
+        "centered_RMSE_mV": 22.0666493560112,
+        "bias_fraction_MSE": 0.9349744444127018,
+        "max_abs_error_mV": 151.89992343509084
+      },
+      "thirds": {
+        "1": {
+          "n_time_samples": 167,
+          "bias_mV": -89.7092527678641,
+          "RMSE_mV": 93.4427745905933,
+          "centered_RMSE_mV": 26.149609768023293,
+          "bias_fraction_MSE": 0.9216860781024347,
+          "max_abs_error_mV": 151.89992343509084
+        },
+        "2": {
+          "n_time_samples": 167,
+          "bias_mV": -64.32412173155927,
+          "RMSE_mV": 64.41254060074978,
+          "centered_RMSE_mV": 3.3738331474423977,
+          "bias_fraction_MSE": 0.9972564912909759,
+          "max_abs_error_mV": 75.27553077078241
+        },
+        "3": {
+          "n_time_samples": 166,
+          "bias_mV": -97.07097998039424,
+          "RMSE_mV": 97.96572929811424,
+          "centered_RMSE_mV": 13.210184047063851,
+          "bias_fraction_MSE": 0.981816838969079,
+          "max_abs_error_mV": 113.55978655496735
+        }
+      },
+      "endpoint_regions": {
+        "first_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -122.55333680759598,
+          "RMSE_mV": 123.9163630843122,
+          "centered_RMSE_mV": 18.32879366917073,
+          "bias_fraction_MSE": 0.9781218574546932,
+          "max_abs_error_mV": 151.89992343509084
+        },
+        "middle_80pct": {
+          "n_time_samples": 400,
+          "bias_mV": -78.25274444348048,
+          "RMSE_mV": 80.32310608873695,
+          "centered_RMSE_mV": 18.119309004645388,
+          "bias_fraction_MSE": 0.94911353591204,
+          "max_abs_error_mV": 113.55978655496735
+        },
+        "last_10pct": {
+          "n_time_samples": 50,
+          "bias_mV": -88.171832007543,
+          "RMSE_mV": 88.96217812644089,
+          "centered_RMSE_mV": 11.83204029042389,
+          "bias_fraction_MSE": 0.9823107889040944,
+          "max_abs_error_mV": 96.77471688963158
+        }
+      },
+      "associations": {
+        "time_s": {
+          "residual_correlation": -0.0074852392262674235,
+          "linear_descriptive_slope_V_per_unit": -1.7411256943943486e-07,
+          "range": [
+            0.0,
+            3279.698998108506
+          ],
+          "sd": 948.6629821367264
+        },
+        "discharged_Ah": {
+          "residual_correlation": -0.007486034663198308,
+          "linear_descriptive_slope_V_per_unit": -9.644576621911444e-06,
+          "range": [
+            0.0,
+            59.21435114169647
+          ],
+          "sd": 17.127937125248444
+        },
+        "relative_discharged_capacity": {
+          "residual_correlation": -0.007486034663198334,
+          "linear_descriptive_slope_V_per_unit": -0.0005710973467028375,
+          "range": [
+            0.0,
+            1.0
+          ],
+          "sd": 0.28925314210168906
+        },
+        "current_A": {
+          "residual_correlation": -0.01742445944455343,
+          "linear_descriptive_slope_V_per_unit": -0.1754727792622617,
+          "range": [
+            64.98871955779978,
+            65.0003
+          ],
+          "sd": 0.0021912198483964697
+        },
+        "temperature_C": {
+          "residual_correlation": 0.2537461472656041,
+          "linear_descriptive_slope_V_per_unit": 0.008679089291915982,
+          "range": [
+            24.7299,
+            28.3078
+          ],
+          "sd": 0.6451514748631821
+        }
+      },
+      "predictor_correlations": {
+        "time_s vs discharged_Ah": 0.9999999999993431,
+        "relative_discharged_capacity vs temperature_C": 0.9135152329598989,
+        "relative_discharged_capacity vs current_A": 0.05681830503770385,
+        "temperature_C vs current_A": 0.03510892593590763
+      },
+      "descriptive_joint_regression": {
+        "columns": [
+          "intercept",
+          "relative_Ah",
+          "temperature",
+          "current"
+        ],
+        "standardized_slopes_V": [
+          -0.08367471243629732,
+          -0.03193818021561239,
+          0.034767985824719516,
+          0.00020950718979806425
+        ],
+        "condition": 4.716479693944217,
+        "rank": 4,
+        "in_sample_centered_R2": 0.41046930504570955,
+        "causal_interpretation": "FORBIDDEN: one trajectory, autocorrelation, progress/temperature confounding; no fitted prediction exported"
+      },
+      "bins": [
+        {
+          "relative_capacity_bin": [
+            0.0,
+            0.1
+          ],
+          "time_mean_s": 161.0273055183535,
+          "Ah_mean": 2.9073255493667336,
+          "relative_Ah_mean": 0.04909832655954759,
+          "current_mean_A": 64.99718983824468,
+          "temperature_change_mean_C": 1.0405142274562027,
+          "n_time_samples": 50,
+          "bias_mV": -122.55333680759598,
+          "RMSE_mV": 123.9163630843122,
+          "centered_RMSE_mV": 18.32879366917073,
+          "bias_fraction_MSE": 0.9781218574546932,
+          "max_abs_error_mV": 151.89992343509084,
+          "residual_min_mV": -151.89992343509084,
+          "residual_max_mV": -98.6547596117684
+        },
+        {
+          "relative_capacity_bin": [
+            0.1,
+            0.2
+          ],
+          "time_mean_s": 489.6544596374422,
+          "Ah_mean": 8.840590402835865,
+          "relative_Ah_mean": 0.14929810480707373,
+          "current_mean_A": 64.99670679062604,
+          "temperature_change_mean_C": 1.9158296770216754,
+          "n_time_samples": 50,
+          "bias_mV": -89.42194891502365,
+          "RMSE_mV": 89.61762718332817,
+          "centered_RMSE_mV": 5.918965636738956,
+          "bias_fraction_MSE": 0.9956378082150533,
+          "max_abs_error_mV": 98.24414182018559,
+          "residual_min_mV": -98.24414182018559,
+          "residual_max_mV": -78.12015220842295
+        },
+        {
+          "relative_capacity_bin": [
+            0.2,
+            0.30000000000000004
+          ],
+          "time_mean_s": 818.281613756531,
+          "Ah_mean": 14.77387091204897,
+          "relative_Ah_mean": 0.2494981474456414,
+          "current_mean_A": 64.99679839872866,
+          "temperature_change_mean_C": 2.209620589574164,
+          "n_time_samples": 50,
+          "bias_mV": -67.45733616749013,
+          "RMSE_mV": 67.65415469101352,
+          "centered_RMSE_mV": 5.156786222233379,
+          "bias_fraction_MSE": 0.994190091249568,
+          "max_abs_error_mV": 77.57352468522383,
+          "residual_min_mV": -77.57352468522383,
+          "residual_max_mV": -60.33337225446944
+        },
+        {
+          "relative_capacity_bin": [
+            0.30000000000000004,
+            0.4
+          ],
+          "time_mean_s": 1146.90876787562,
+          "Ah_mean": 20.70717882619627,
+          "relative_Ah_mean": 0.3496986528932016,
+          "current_mean_A": 64.99721127462952,
+          "temperature_change_mean_C": 2.418206000000001,
+          "n_time_samples": 50,
+          "bias_mV": -60.7735161287691,
+          "RMSE_mV": 60.79929031014862,
+          "centered_RMSE_mV": 1.7701524126396537,
+          "bias_fraction_MSE": 0.9991523348999113,
+          "max_abs_error_mV": 64.62511639245072,
+          "residual_min_mV": -64.62511639245072,
+          "residual_max_mV": -59.00139663600213
+        },
+        {
+          "relative_capacity_bin": [
+            0.4,
+            0.5
+          ],
+          "time_mean_s": 1475.5359219947088,
+          "Ah_mean": 26.640493487753325,
+          "relative_Ah_mean": 0.4498992722896547,
+          "current_mean_A": 64.99765743209576,
+          "temperature_change_mean_C": 2.51266519558601,
+          "n_time_samples": 50,
+          "bias_mV": -64.72336693496605,
+          "RMSE_mV": 64.73161755747769,
+          "centered_RMSE_mV": 1.0334815960128874,
+          "bias_fraction_MSE": 0.999745098391939,
+          "max_abs_error_mV": 65.86353143529155,
+          "residual_min_mV": -65.86353143529155,
+          "residual_max_mV": -62.47282692298661
+        },
+        {
+          "relative_capacity_bin": [
+            0.5,
+            0.6
+          ],
+          "time_mean_s": 1804.1630761137974,
+          "Ah_mean": 32.57380882206835,
+          "relative_Ah_mean": 0.5500999030475087,
+          "current_mean_A": 64.99717460694264,
+          "temperature_change_mean_C": 2.5372413467214034,
+          "n_time_samples": 50,
+          "bias_mV": -62.29381795227825,
+          "RMSE_mV": 62.3001006042963,
+          "centered_RMSE_mV": 0.8847486840094336,
+          "bias_fraction_MSE": 0.9997983202219524,
+          "max_abs_error_mV": 64.62617587886311,
+          "residual_min_mV": -64.62617587886311,
+          "residual_max_mV": -61.356956923114936
+        },
+        {
+          "relative_capacity_bin": [
+            0.6000000000000001,
+            0.7000000000000001
+          ],
+          "time_mean_s": 2132.790230232886,
+          "Ah_mean": 38.50709175245089,
+          "relative_Ah_mean": 0.6502999865742966,
+          "current_mean_A": 64.99706872577636,
+          "temperature_change_mean_C": 2.6908047046800108,
+          "n_time_samples": 50,
+          "bias_mV": -72.61045893730706,
+          "RMSE_mV": 72.80966074533269,
+          "centered_RMSE_mV": 5.382188287684379,
+          "bias_fraction_MSE": 0.9945356342733809,
+          "max_abs_error_mV": 83.41833365600282,
+          "residual_min_mV": -83.41833365600282,
+          "residual_max_mV": -64.89601608879347
+        },
+        {
+          "relative_capacity_bin": [
+            0.7000000000000001,
+            0.8
+          ],
+          "time_mean_s": 2461.417384351975,
+          "Ah_mean": 44.440405248868956,
+          "relative_Ah_mean": 0.7505005862941176,
+          "current_mean_A": 64.99731568244502,
+          "temperature_change_mean_C": 2.9512402564856655,
+          "n_time_samples": 50,
+          "bias_mV": -99.3022116937896,
+          "RMSE_mV": 99.66628153099684,
+          "centered_RMSE_mV": 8.511076720234822,
+          "bias_fraction_MSE": 0.9927075661232448,
+          "max_abs_error_mV": 111.07282997228963,
+          "residual_min_mV": -111.07282997228963,
+          "residual_max_mV": -84.01355641188424
+        },
+        {
+          "relative_capacity_bin": [
+            0.8,
+            0.9
+          ],
+          "time_mean_s": 2790.0445384710642,
+          "Ah_mean": 50.373726692572916,
+          "relative_Ah_mean": 0.8507013202260976,
+          "current_mean_A": 64.99719775086135,
+          "temperature_change_mean_C": 3.210791045961201,
+          "n_time_samples": 50,
+          "bias_mV": -109.43929881822015,
+          "RMSE_mV": 109.55982066349529,
+          "centered_RMSE_mV": 5.137526446994986,
+          "bias_fraction_MSE": 0.9978010998154763,
+          "max_abs_error_mV": 113.55978655496735,
+          "residual_min_mV": -113.55978655496735,
+          "residual_max_mV": -96.03773208976696
+        },
+        {
+          "relative_capacity_bin": [
+            0.9,
+            1.0
+          ],
+          "time_mean_s": 3118.671692590153,
+          "Ah_mean": 56.307033411983575,
+          "relative_Ah_mean": 0.950901805497187,
+          "current_mean_A": 64.99742904004171,
+          "temperature_change_mean_C": 3.245097337262217,
+          "n_time_samples": 50,
+          "bias_mV": -88.171832007543,
+          "RMSE_mV": 88.96217812644089,
+          "centered_RMSE_mV": 11.83204029042389,
+          "bias_fraction_MSE": 0.9823107889040944,
+          "max_abs_error_mV": 96.77471688963158,
+          "residual_min_mV": -96.77471688963158,
+          "residual_max_mV": -46.13224293874918
+        }
+      ],
+      "notes": [
+        "500 time samples are NOT 500 independent validation units",
+        "Centered RMSE subtracts known posthoc mean residual algebraically; not corrected predictive performance",
+        "No confidence interval for between-cell accuracy: only one cell/two discharge sessions available"
+      ]
+    }
+  ],
+  "cross_rate": [
+    {
+      "model": "SPMe",
+      "delta_bias_mV": -47.80367459953672,
+      "bias_ratio_1C_to_05C": 2.4112330872733367,
+      "bias_divided_by_physical_current_ohm": [
+        -0.0010424143463580234,
+        -0.0012566294830059716
+      ],
+      "note": "Equivalent residual/current is a descriptive quotient, not contact resistance identification. Two rates on one cell do not identify linear ohmic vs kinetic vs OCV causes."
+    },
+    {
+      "model": "DFN",
+      "delta_bias_mV": -49.4866290511865,
+      "bias_ratio_1C_to_05C": 2.4474818167998524,
+      "bias_divided_by_physical_current_ohm": [
+        -0.0010520892983212529,
+        -0.0012873592197732652
+      ],
+      "note": "Equivalent residual/current is a descriptive quotient, not contact resistance identification. Two rates on one cell do not identify linear ohmic vs kinetic vs OCV causes."
+    }
+  ],
+  "parameter_audit": {
+    "pybamm_version": "26.4.2",
+    "parameter_source_sha256": "7c360a546a76492585e147231caee2f8f4fe29222b893cb12091dc4d158f62f0",
+    "base": "LG M50, not E66",
+    "entries": {
+      "SEI solvent diffusivity [m2.s-1]": {
+        "kind": "inherited_value",
+        "value": 2.5e-22
+      },
+      "SEI electron conductivity [S.m-1]": {
+        "kind": "inherited_value",
+        "value": 8.95e-14
+      },
+      "SEI lithium interstitial diffusivity [m2.s-1]": {
+        "kind": "inherited_value",
+        "value": 1e-20
+      },
+      "Initial SEI thickness [m]": {
+        "kind": "inherited_value",
+        "value": 5e-09
+      },
+      "EC diffusivity [m2.s-1]": {
+        "kind": "inherited_value",
+        "value": 2e-18
+      },
+      "Negative current collector thickness [m]": {
+        "kind": "inherited_value",
+        "value": 1.2e-05
+      },
+      "Negative electrode thickness [m]": {
+        "kind": "inherited_value",
+        "value": 8.52e-05
+      },
+      "Separator thickness [m]": {
+        "kind": "inherited_value",
+        "value": 1.2e-05
+      },
+      "Positive electrode thickness [m]": {
+        "kind": "inherited_value",
+        "value": 7.56e-05
+      },
+      "Positive current collector thickness [m]": {
+        "kind": "inherited_value",
+        "value": 1.6e-05
+      },
+      "Electrode height [m]": {
+        "kind": "inherited_value",
+        "value": 0.065
+      },
+      "Electrode width [m]": {
+        "kind": "inherited_value",
+        "value": 1.58
+      },
+      "Negative current collector conductivity [S.m-1]": {
+        "kind": "inherited_value",
+        "value": 58411000.0
+      },
+      "Positive current collector conductivity [S.m-1]": {
+        "kind": "inherited_value",
+        "value": 36914000.0
+      },
+      "Negative current collector thermal conductivity [W.m-1.K-1]": {
+        "kind": "inherited_value",
+        "value": 401.0
+      },
+      "Positive current collector thermal conductivity [W.m-1.K-1]": {
+        "kind": "inherited_value",
+        "value": 237.0
+      },
+      "Nominal cell capacity [A.h]": {
+        "kind": "inherited_value",
+        "value": 5.0
+      },
+      "Negative electrode conductivity [S.m-1]": {
+        "kind": "inherited_value",
+        "value": 215.0
+      },
+      "Maximum concentration in negative electrode [mol.m-3]": {
+        "kind": "inherited_value",
+        "value": 33133.0
+      },
+      "Negative particle diffusivity [m2.s-1]": {
+        "kind": "inherited_value",
+        "value": 3.3e-14
+      },
+      "Negative electrode porosity": {
+        "kind": "inherited_value",
+        "value": 0.25
+      },
+      "Negative electrode active material volume fraction": {
+        "kind": "inherited_value",
+        "value": 0.75
+      },
+      "Negative particle radius [m]": {
+        "kind": "inherited_value",
+        "value": 5.86e-06
+      },
+      "Negative electrode exchange-current density [A.m-2]": {
+        "kind": "inherited_function",
+        "name": "graphite_LGM50_electrolyte_exchange_current_density_Chen2020",
+        "source_sha256": "931d2efab36c03a21e79c25767a60a66ce8fbd415ebabe4e809fd1651bcbd2cd"
+      },
+      "Negative electrode thermal conductivity [W.m-1.K-1]": {
+        "kind": "inherited_value",
+        "value": 1.7
+      },
+      "Positive electrode conductivity [S.m-1]": {
+        "kind": "inherited_value",
+        "value": 0.18
+      },
+      "Maximum concentration in positive electrode [mol.m-3]": {
+        "kind": "inherited_value",
+        "value": 63104.0
+      },
+      "Positive particle diffusivity [m2.s-1]": {
+        "kind": "inherited_value",
+        "value": 4e-15
+      },
+      "Positive electrode porosity": {
+        "kind": "inherited_value",
+        "value": 0.335
+      },
+      "Positive electrode active material volume fraction": {
+        "kind": "inherited_value",
+        "value": 0.665
+      },
+      "Positive particle radius [m]": {
+        "kind": "inherited_value",
+        "value": 5.22e-06
+      },
+      "Positive electrode exchange-current density [A.m-2]": {
+        "kind": "inherited_function",
+        "name": "nmc_LGM50_electrolyte_exchange_current_density_Chen2020",
+        "source_sha256": "829fc352c345d2f903efe7a2969a049b9a583858f2f353c16f6c773dfdd23ea7"
+      },
+      "Positive electrode thermal conductivity [W.m-1.K-1]": {
+        "kind": "inherited_value",
+        "value": 2.1
+      },
+      "Separator porosity": {
+        "kind": "inherited_value",
+        "value": 0.47
+      },
+      "Separator thermal conductivity [W.m-1.K-1]": {
+        "kind": "inherited_value",
+        "value": 0.16
+      },
+      "Initial concentration in electrolyte [mol.m-3]": {
+        "kind": "inherited_value",
+        "value": 1000.0
+      },
+      "Electrolyte diffusivity [m2.s-1]": {
+        "kind": "inherited_function",
+        "name": "electrolyte_diffusivity_Nyman2008",
+        "source_sha256": "cb19697cdcb4dcc835a7e6a1cb903cefd17c951a5eb7df5b3996dd78c83eade2"
+      },
+      "Electrolyte conductivity [S.m-1]": {
+        "kind": "inherited_function",
+        "name": "electrolyte_conductivity_Nyman2008",
+        "source_sha256": "5d693dea12c3d73c5b9b52e2622d7856d6c375c076620788fe03e9c3546959e0"
+      },
+      "Initial concentration in negative electrode [mol.m-3]": {
+        "kind": "inherited_value",
+        "value": 29866.0
+      },
+      "Initial concentration in positive electrode [mol.m-3]": {
+        "kind": "inherited_value",
+        "value": 17038.0
+      }
+    },
+    "fitted_physical_curve_parameters": [
+      "Positive OCP additive offset",
+      "Positive OCP linear stoichiometry correction",
+      "Contact resistance"
+    ],
+    "extra_overrides": [
+      "initial stoichiometries(SOC=1) using uncorrected OCP",
+      "ambient and initial T",
+      "voltage cutoffs",
+      "current normalized by measured C20 capacity/5Ah"
+    ],
+    "temperature_dependency": {
+      "negative_solid_diffusivity": "constant3.3e-14 m2/s",
+      "positive_solid_diffusivity": "constant4e-15 m2/s",
+      "electrolyte_diffusivity": "Nyman2008 concentration-dependent, T argument unused",
+      "electrolyte_conductivity": "Nyman2008 concentration-dependent, T argument unused",
+      "exchange_current_density": "Arrhenius temperature dependence retained for both electrodes"
+    },
+    "interpretation": "Current normalization preserves nominal relative discharge rate in a virtual5Ah M50; it does not identify E66 electrode geometry, kinetics, transport, active surface or stoichiometric windows."
+  }
+}

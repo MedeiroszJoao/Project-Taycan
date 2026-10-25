@@ -1,0 +1,13 @@
+test_capacity_current_mapping_exact (test_e66_exposed_data_audit.ExposedDataAudit.test_capacity_current_mapping_exact) ... ok
+test_constant_current_units (test_e66_exposed_data_audit.ExposedDataAudit.test_constant_current_units) ... ok
+test_first_contiguous_run_only (test_e66_exposed_data_audit.ExposedDataAudit.test_first_contiguous_run_only) ... ok
+test_legacy_gap_bridging_characterized (test_e66_exposed_data_audit.ExposedDataAudit.test_legacy_gap_bridging_characterized) ... ok
+test_legacy_short_first_run_bug_characterized_not_modified (test_e66_exposed_data_audit.ExposedDataAudit.test_legacy_short_first_run_bug_characterized_not_modified) ... ok
+test_nonfinite_break_exposed (test_e66_exposed_data_audit.ExposedDataAudit.test_nonfinite_break_exposed) ... ok
+test_nonmonotone_time_rejected (test_e66_exposed_data_audit.ExposedDataAudit.test_nonmonotone_time_rejected) ... ok
+test_source_cell_negative_discharge_not_module_convention (test_e66_exposed_data_audit.ExposedDataAudit.test_source_cell_negative_discharge_not_module_convention) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK

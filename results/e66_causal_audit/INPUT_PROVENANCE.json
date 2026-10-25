@@ -1,0 +1,29 @@
+{
+  "status": "POSTHOC_ARTIFACT_AUTHENTICATED_NOT_ORIGINAL_WORK",
+  "PR2_head": "809b5c57d96f8ad4d81d7a612d8bdbd464548b02",
+  "actual_main": "30f11e9070cebae5e0a9c851a7b0bdcf0777f5d2",
+  "PR2_base_record": "1162039ab52ecf295853e71cb9aa4e4279a76e52",
+  "artifact_id": 12573407008,
+  "artifact_run": 40126047070,
+  "artifact_sha256": "bed7c9cfedc5cad3da59a380f42d8b2fe733834d008d7ce2139d2cdd6eede1c0",
+  "file_hashes": {
+    "scripts/fit_e66_generator_b.py": "415f2ec033c41069f646600046a7d3588a010c93101aba83c974e544dd97bb30",
+    "scripts/run_stage4b_posthoc_e66_reconstruction.py": "0349b042a04991c630d61b83521395fb8af12c42dcdebd929404d4daa09168e0",
+    "scripts/diagnose_e66_1c_frozen_numerics.py": "7cd1344a50e92c9e29a335cefa2a97ff6bc58077b73d2851148aade63c1211b4",
+    "scripts/diagnose_e66_1c_mesh_and_jacobian.py": "9a4fda5f9b4caa0af8a95e92ebb3cf937e43b6d21d85b37d6dd779e4c732d3fb",
+    "results/e66_calibration/PROSPECTIVE.json": "acfd40a444cfb36b9cae9cfbb4f861be27ca6f7a2450b45bfca56db917f3b866",
+    "src/simulator/taycan_sim/model.py": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e",
+    "experiments/stage_04_data_validation/freeze.json": "5822c3e43e6f4634c7ca60d0aabb6f38afe5cecece99883833ee1c4d12dc5df8",
+    "experiments/stage_04_data_validation/STAGE4_EPISODE_MANIFEST.csv": "1894681c771335e5ecb06f8fa421c11aaf8806c5f5ebab3182035e44d28b86f0"
+  },
+  "receipt_hashes": {
+    "PROSPECTIVE.json": "465007e10daf02d9d6dd9ecc928d50ace8d90bc88256803a56c254f965f3e986",
+    "FIT_RESULT.json": "9ff5c54c5c991c30479fc076fb0fc5a12e7cf16f64f6b87be128cc77cbf1762b",
+    "FIT_HISTORY.json": "448a2456c2471f7f33a0b57d525e95e9f5be61884ce10e0d0cebd851687b9a6a",
+    "GENERATOR_B_FREEZE.json": "f42369ee4818f6278a369bf7d52c6f86ab445d325fabb4085671f4afba2bb99d",
+    "EVALUATION.json": "56f18292dd8a5499de49aa63284d5a1d01fbc4b7c457db8ec385dec267eb974e"
+  },
+  "originalWorkchronologyRecovered": false,
+  "protected_numeric_payloads_read": 0,
+  "raw_data_publication": false
+}

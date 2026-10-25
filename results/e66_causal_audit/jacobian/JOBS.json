@@ -1,0 +1,114 @@
+[
+  {
+    "dataset_index": 0,
+    "parameter_index": -1,
+    "absolute_delta": 0.0,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 4.457071054000039
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": -1,
+    "absolute_delta": 0.0,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 10.362501022000004
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 0,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 5.573961280999981
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 1,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 4.777204960999995
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 2,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 4.493401296000002
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 0,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 9.670681201999969
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 1,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 8.687987528999997
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 2,
+    "absolute_delta": 0.001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 9.71501049599999
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 0,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 5.554299390999972
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 1,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 8.091162453000038
+  },
+  {
+    "dataset_index": 0,
+    "parameter_index": 2,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 5.006998524999972
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 0,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 8.222791209999968
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 1,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 20.36956558899999
+  },
+  {
+    "dataset_index": 1,
+    "parameter_index": 2,
+    "absolute_delta": 0.0001,
+    "status": "COMPLETED",
+    "termination": "final time",
+    "seconds": 11.606302207999988
+  }
+]
