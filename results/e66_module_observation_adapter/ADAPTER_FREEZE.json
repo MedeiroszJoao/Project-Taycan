@@ -1,0 +1,27 @@
+{
+  "signature": {
+    "script_sha256": "e85c76c5c126597c0158061fdd51afb6bfc29f490d6c5b57ed348a9e7453baf0",
+    "protocol_sha256": "3d1f79e1272738b37628721b94daf81397c51b66482c770ecc0d9c109b78457d",
+    "cell_freeze_sha256": "6b1f2f9e501b605f4267920858cf15967789d97e23cbd2f40359c6625607935a",
+    "module_interface_script_sha256": "5fa0948c0cad678a28ad678e181c164f22c95f9ce0d4273d48ce81f53ef76684"
+  },
+  "offset_V": -0.1962027898391567,
+  "R_effective_ohm": 0.0030648773038621253,
+  "fit_metadata": {
+    "name": "20240209_0.7C_CP_Loss.mat",
+    "source_sha256": "8a1dabef7588361170924a6e1bb514e0c81c1a913ebe8b32c14803cb119e13ac",
+    "activation_time_s": 14.0,
+    "initial_SOC_from_BMS_voltage": 0.6979336800488958,
+    "initial_cell4_mean_surface_temperature_C": 30.741555555555546,
+    "initial_BMS_mean_cell_voltage_V": 3.885,
+    "initial_AVL_mean_cell_voltage_V": 3.859666666666666,
+    "module_AVL_current_range_A": [
+      -96.44,
+      93.28
+    ]
+  },
+  "fit_rows": 301,
+  "fit_observables": "paired measured AVL-BMS voltage and current only; no B model residuals",
+  "exposure": "exploratory development files",
+  "before_new_predictions": true
+}

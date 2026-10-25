@@ -1,0 +1,15 @@
+{
+ "scope":"exploratory explicit measurement-port adapter; fixed cell electrochemistry; preserve unadapted AVL failures",
+ "training":"first300s of 0.7C alternating-current module test; regress measured AVL_V minus measured BMS_V on constant and charge-positive AVL current; no simulator residual enters adapter fit",
+ "adapter":"V_AVL_prediction=6*V_cell_prediction+offset_V+R_effective_ohm*I_AVL; require abs(offset)<=0.5V and0<=R<=0.02ohm; no physical identification claim for leads or contact resistance",
+ "initialization":"invert frozen cell OCV against pre-pulse BMS summed voltage/6; SOC in[0,1]; initial temperature mean of nine thermocouples on cell4",
+ "selection":"first sample with AVL_I<-10A, five prior quiet samples absI<=1A, negative peak within next12 samples exceeds0.8*132*named_Crate, followed by positive peak within samples8..24 exceeding same threshold; this selects alternating protocol after preparation, not first activity in file",
+ "prediction_window_s":300,
+ "fit_file":"20240209_0.7C_CP_Loss.mat",
+ "evaluation_files":["20240209_1C_CP_Loss.mat","20240323_1.2C_CP_Loss.mat"],
+ "solvers":"SPMe and DFN mesh40,90s each; actual measured current, isothermal initial cell4 surface temperature",
+ "criteria":{"RMSE_V_per_mean_cell":0.05,"max_abs_V_per_mean_cell":0.15,"coverage_min":0.95,"coulomb_SOC_proxy_min":0,"coulomb_SOC_proxy_max":1},
+ "exposure":"all files are previously exposed development data; 1C result already seen; stage1.2C selected by input-only protocol; NOT blind or confirmatory",
+ "limits":"no full MCCC/fast-charge/thermal qualification; no reserved payloads; temperaturesandstates assumedhomogeneous",
+ "freeze":"publish adapter values, code and protocol hashes before new model predictions; no further fit after evaluation"
+}
