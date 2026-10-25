@@ -1,0 +1,125 @@
+{
+  "scope": "post-QC-failure diagnosis; no model fits, no prediction success claims",
+  "results": [
+    {
+      "name": "20240209_0.7C_CP_Loss.mat",
+      "initial_active_row": 14,
+      "initial_mean_cell_V": 3.859666666666666,
+      "T_for_domain_check_C": 30.742380952380955,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 98.73000000000002,
+      "discharge_counter_delta_Ah": -98.75999999999996,
+      "integrated_positive_AVL_Ah": 98.00861666666691,
+      "integrated_negative_AVL_Ah": -98.32956944444466,
+      "charge_correlation": 0.9999999782515779,
+      "discharge_correlation": 0.9999999742979581,
+      "net_correlation": 0.6914697304900898,
+      "terminal_padding_removed": 1
+    },
+    {
+      "name": "20240209_1C_CP_Loss.mat",
+      "initial_active_row": 14,
+      "initial_mean_cell_V": 3.848333333333333,
+      "T_for_domain_check_C": 30.954761904761906,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 131.85,
+      "discharge_counter_delta_Ah": -131.84,
+      "integrated_positive_AVL_Ah": 133.2939874999918,
+      "integrated_negative_AVL_Ah": -130.88077916665853,
+      "charge_correlation": 0.9999999876017588,
+      "discharge_correlation": 0.9999999831889451,
+      "net_correlation": 0.4681258519937571,
+      "terminal_padding_removed": 1
+    },
+    {
+      "name": "20240314_1C_Test (MCCC).mat",
+      "initial_active_row": 38,
+      "initial_mean_cell_V": 4.144333333333333,
+      "T_for_domain_check_C": 29.995730994152048,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 112.29,
+      "discharge_counter_delta_Ah": -112.08,
+      "integrated_positive_AVL_Ah": 112.07209583333479,
+      "integrated_negative_AVL_Ah": -111.85187916667437,
+      "charge_correlation": 0.9999999965583425,
+      "discharge_correlation": 0.9999999833654968,
+      "net_correlation": 0.9999999804372783,
+      "terminal_padding_removed": 1
+    },
+    {
+      "name": "20240315_0.5C_Test (MCCC) Part1.mat",
+      "initial_active_row": 39,
+      "initial_mean_cell_V": 4.137666666666667,
+      "T_for_domain_check_C": 30.3765811965812,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 0.83,
+      "discharge_counter_delta_Ah": -10.32,
+      "integrated_positive_AVL_Ah": 0.8330055555555701,
+      "integrated_negative_AVL_Ah": -10.301870833333352,
+      "charge_correlation": 0.9999661366019037,
+      "discharge_correlation": 0.9999997323277651,
+      "net_correlation": 0.9999997011036271,
+      "terminal_padding_removed": 1
+    },
+    {
+      "name": "20240315_0.5C_Test (MCCC) Part2.mat",
+      "initial_active_row": 4,
+      "initial_mean_cell_V": 4.0425,
+      "T_for_domain_check_C": 30.745277777777783,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 111.64,
+      "discharge_counter_delta_Ah": -101.76,
+      "integrated_positive_AVL_Ah": 111.42914027777782,
+      "integrated_negative_AVL_Ah": -101.5355944444504,
+      "charge_correlation": 0.9999999959159452,
+      "discharge_correlation": 0.9999999863064966,
+      "net_correlation": 0.9999999500767431,
+      "terminal_padding_removed": 1
+    },
+    {
+      "name": "20240323_1.2C_CP_Loss.mat",
+      "initial_active_row": 15,
+      "initial_mean_cell_V": 4.182,
+      "T_for_domain_check_C": 30.11911111111111,
+      "OCV_domain_V": [
+        2.422731641599529,
+        3.03335369547268,
+        4.0686304279404295,
+        4.1462536761753155
+      ],
+      "charge_counter_delta_Ah": 198.53000000000003,
+      "discharge_counter_delta_Ah": -201.63,
+      "integrated_positive_AVL_Ah": 198.8531027777488,
+      "integrated_negative_AVL_Ah": -200.42296944441392,
+      "charge_correlation": 0.9999998510666384,
+      "discharge_correlation": 0.9999998767317915,
+      "net_correlation": 0.9988572731464528,
+      "terminal_padding_removed": 1
+    }
+  ]
+}

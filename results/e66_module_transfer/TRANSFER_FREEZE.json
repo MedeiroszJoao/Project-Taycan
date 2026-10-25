@@ -1,6 +1,7 @@
 {
-  "script_sha256": "22c9c4fee93fda0e1ecdab48b6c9060b5011647624d780162675fb6dd72ca20b",
+  "script_sha256": "5fa0948c0cad678a28ad678e181c164f22c95f9ce0d4273d48ce81f53ef76684",
   "amendment_sha256": "5ec4e9982d74f04ad17c7c2d02d1853949f9c137ab7808901bdb0774ed3d7b7f",
+  "input_domain_amendment_sha256": "4cd0a39683930c5bf32af4af22cc79bf44ef7ba7e0c062b059b0a53e8933a857",
   "protocol_sha256": "a9f4322fa23dd590b5b34cbe92a6b50eb67ad50c6bf4d88025669808c734b004",
   "cell_freeze_sha256": "6b1f2f9e501b605f4267920858cf15967789d97e23cbd2f40359c6625607935a",
   "development_allowlist": [

@@ -1,0 +1,11 @@
+{
+  "reason": "Net counter correlation is ill-conditioned in nearly charge-balanced alternating-current tests: separate charge/discharge correlations exceed0.9999 while net correlations are0.69/0.47. Two files start near full charge and exceed the initial0.95 SOC bracket; one remains beyond even SOC1. No model prediction was produced before this amendment.",
+  "counter_check": "Retain0.9 correlation threshold separately for integrated positive AVL vs charge counter and integrated negative AVL vs signed discharge counter; require expected signs. Report integral mismatches; do not use net correlation as a sign gate.",
+  "initial_SOC_bracket": [
+    0,
+    1
+  ],
+  "limits": "Full physical SOC bracket is exploratory domain extrapolation, not calibration-domain extension approval. Unbracketed OCV still rejected. Five quiet samples and voltage error gates unchanged.",
+  "model_parameters_changed": false,
+  "registered_before_predictions": true
+}

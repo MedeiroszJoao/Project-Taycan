@@ -49,12 +49,15 @@ def window(name):
  if t[ix[-1]]-t[a]<60 or np.max(np.diff(t[ix]))>2:raise ValueError('short/gapped sentinel')
  initialT=float(np.nanmean(np.array([d[k][a-5:a] for k in THERM if k in d])));initialV=float(np.mean(d['AVL_Voltage'][a-5:a])/6)
  if not np.isfinite(initialT):raise ValueError('missing initial temperature')
- z=brentq(lambda soc:ocv(soc,initialT)-initialV,.05,.95,xtol=1e-10)
+ z=brentq(lambda soc:ocv(soc,initialT)-initialV,0,1,xtol=1e-10)
  # Signed counter and current are compared over the same complete record, not used as voltage targets.
  q=np.r_[0,np.cumsum((I[1:]+I[:-1])*.5*np.diff(t)/3600)];counter=d['AhAccu_Charge']+d['AhAccu_Discharge'];counter=counter-counter[0]
  corr=float(np.corrcoef(q,counter)[0,1]) if np.std(q)>1e-6 and np.std(counter)>1e-6 else None
- if corr is None or corr<.9:raise ValueError('counter sign/timing check')
- temps=np.array([d[k][ix] for k in THERM if k in d]);meta={'name':name,'sha256':d['source_sha256'],'rows':len(t),'terminal_padding_removed':d['terminal_padding_removed'],'activation_time_s':float(t[a]),'duration_s':float(t[ix[-1]]-t[a]),'initial_SOC_from_pre_voltage':z,'initial_mean_surface_T_C':initialT,'initial_mean_cell_V':initialV,'surface_T_range_C':[float(np.nanmin(temps)),float(np.nanmax(temps))],'counter_integral_correlation':corr,'counter_integral_RMSE_Ah':float(np.sqrt(np.mean((q-counter)**2))),'current_module_range_A':[float(np.min(I[ix])),float(np.max(I[ix]))]}
+ qp=np.r_[0,np.cumsum((np.maximum(I[1:],0)+np.maximum(I[:-1],0))*.5*np.diff(t)/3600)];qn=np.r_[0,np.cumsum((np.minimum(I[1:],0)+np.minimum(I[:-1],0))*.5*np.diff(t)/3600)]
+ ch=d['AhAccu_Charge']-d['AhAccu_Charge'][0];dc=d['AhAccu_Discharge']-d['AhAccu_Discharge'][0]
+ cp=float(np.corrcoef(qp,ch)[0,1]);cn=float(np.corrcoef(qn,dc)[0,1])
+ if not(np.isfinite(cp) and np.isfinite(cn) and cp>=.9 and cn>=.9 and ch[-1]>=0 and dc[-1]<=0):raise ValueError('separate counter sign/timing check')
+ temps=np.array([d[k][ix] for k in THERM if k in d]);meta={'name':name,'sha256':d['source_sha256'],'rows':len(t),'terminal_padding_removed':d['terminal_padding_removed'],'activation_time_s':float(t[a]),'duration_s':float(t[ix[-1]]-t[a]),'initial_SOC_from_pre_voltage':z,'initial_mean_surface_T_C':initialT,'initial_mean_cell_V':initialV,'surface_T_range_C':[float(np.nanmin(temps)),float(np.nanmax(temps))],'counter_integral_correlation':corr,'separate_charge_correlation':cp,'separate_discharge_correlation':cn,'counter_integral_RMSE_Ah':float(np.sqrt(np.mean((q-counter)**2))),'current_module_range_A':[float(np.min(I[ix])),float(np.max(I[ix]))]}
  return t[ix]-t[a],-I[ix]/2,d['AVL_Voltage'][ix]/6,meta
 
 def simulate(name,kind):
@@ -63,7 +66,7 @@ def simulate(name,kind):
  grid=np.linspace(0,t[-1],301);g,pred,_,coverage,term=c.run_model(p,grid,kind,40);e=pred-np.interp(g,t,v);rmse=float(np.sqrt(np.mean(e*e)));mx=float(np.max(abs(e)))
  return {'status':'COMPLETED','name':name,'model':kind,'metadata':meta,'RMSE_mean_cell_V':rmse,'max_error_mean_cell_V':mx,'coverage':coverage,'termination':term,'gate':'PASS' if rmse<=.05 and mx<=.15 and coverage>=.95 else 'FAIL','model_times_s':g.tolist(),'model_mean_cell_V':pred.tolist()}
 
-def signature():return {'script_sha256':c.sha(__file__),'amendment_sha256':c.sha(OUT/'TERMINAL_PADDING_AMENDMENT.json'),'protocol_sha256':c.sha(OUT/'PROTOCOL.json'),'cell_freeze_sha256':c.sha(o.OUT/'GENERATOR_B_FREEZE.json'),'development_allowlist':sorted(DEV),'reserved_numeric_access':0}
+def signature():return {'script_sha256':c.sha(__file__),'amendment_sha256':c.sha(OUT/'TERMINAL_PADDING_AMENDMENT.json'),'input_domain_amendment_sha256':c.sha(OUT/'INPUT_DOMAIN_AMENDMENT.json'),'protocol_sha256':c.sha(OUT/'PROTOCOL.json'),'cell_freeze_sha256':c.sha(o.OUT/'GENERATOR_B_FREEZE.json'),'development_allowlist':sorted(DEV),'reserved_numeric_access':0}
 def run():
  f=signature();path=OUT/'TRANSFER_FREEZE.json'
  if path.exists() and json.loads(path.read_text())!=f:raise ValueError('transfer drift')

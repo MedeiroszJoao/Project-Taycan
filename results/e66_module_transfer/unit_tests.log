@@ -1,8 +1,4 @@
-test_only_fully_empty_terminal_row_removed (test_e66_module_transfer_access.ModuleAccessTests.test_only_fully_empty_terminal_row_removed) ... ok
-test_partial_or_interior_missing_rows_not_deleted (test_e66_module_transfer_access.ModuleAccessTests.test_partial_or_interior_missing_rows_not_deleted) ... ok
-test_reserved_rejected_before_decoder (test_e66_module_transfer_access.ModuleAccessTests.test_reserved_rejected_before_decoder) ... ok
-test_unknown_path_rejected (test_e66_module_transfer_access.ModuleAccessTests.test_unknown_path_rejected) ... ok
-
+....
 ----------------------------------------------------------------------
 Ran 4 tests in 0.001s
 
