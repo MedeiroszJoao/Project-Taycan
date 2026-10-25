@@ -1,0 +1,60 @@
+{
+  "scope": "virtual model numerical conservation, not measured E66 lithium inventory or thermal balance",
+  "freeze_sha256": "58b60dbe8af929281445983cd94fed5729650b57d093ef15569ee42ad7bc5274",
+  "results": [
+    {
+      "status": "COMPLETED",
+      "soc": 0.2,
+      "relative_lithium_drift": 1.5348679853000959e-15,
+      "discharge_capacity_error_Ah": -2.0667064755744424e-08,
+      "stoichiometry_bounds": {
+        "Negative": [
+          0.1936442985310345,
+          0.2032002415463159
+        ],
+        "Positive": [
+          0.7359487846227589,
+          0.7487538533807772
+        ]
+      },
+      "finite_voltage": true,
+      "gate": "PASS"
+    },
+    {
+      "status": "COMPLETED",
+      "soc": 0.6,
+      "relative_lithium_drift": 7.674339926500482e-16,
+      "discharge_capacity_error_Ah": -2.128069623644202e-08,
+      "stoichiometry_bounds": {
+        "Negative": [
+          0.5473532037328432,
+          0.5569091440993805
+        ],
+        "Positive": [
+          0.4998970046070325,
+          0.5127020733839827
+        ]
+      },
+      "finite_voltage": true,
+      "gate": "PASS"
+    },
+    {
+      "status": "COMPLETED",
+      "soc": 0.8,
+      "relative_lithium_drift": 2.1104434797876325e-15,
+      "discharge_capacity_error_Ah": -3.536588141263286e-08,
+      "stoichiometry_bounds": {
+        "Negative": [
+          0.7242076577017591,
+          0.733763595375913
+        ],
+        "Positive": [
+          0.38187111459916934,
+          0.39467617794217547
+        ]
+      },
+      "finite_voltage": true,
+      "gate": "PASS"
+    }
+  ]
+}

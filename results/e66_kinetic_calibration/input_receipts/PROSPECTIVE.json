@@ -1,0 +1,56 @@
+{
+  "created_utc": "2026-10-24T18:36:00.898220+00:00",
+  "source_archive_SHA256": "236abc3314ed68f741274525f9e53871690e93e01f2cc8389b21d648ef6a4494",
+  "fit": [
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat"
+  ],
+  "evaluation": [
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat"
+  ],
+  "numeric_exposure": "25C records may have been inspected in earlier development; evaluation is prospective no-fit transfer, NOT virgin blind",
+  "protected": "all other celltemperatures, modulevalidation2 and blind4 not parsed",
+  "quarantined": "25C/Part2 C20 actually40C exposed historically; excluded",
+  "model": "SPMe Chen2020 effective current-capacity normalization, not E66 electrode-parametrization",
+  "method": "fit effectivecapacity fromC20integral; fixed equivalentparallel factor Qfit/5 scales current; fit positiveOCP additiveconstant and linearstoich term pluscontactresistance using ONLY C20/C3; no classifier",
+  "free_parameters": {
+    "positive_ocp_offset_V": [
+      -0.3,
+      0.3
+    ],
+    "positive_ocp_stoich_slope_V": [
+      -1,
+      1
+    ],
+    "effective_M50_contact_R_ohm": [
+      0,
+      0.1
+    ]
+  },
+  "initial_state": "first contiguous discharge segment initializedSOC1 after fullcharge; known assumption no SOCfit",
+  "thermal": "no thermalparameterfit because geometry/cooling unknown; isothermal measuredsegment initialT; temperatureprediction NOTVALIDATED",
+  "numerics": {
+    "solver": "IDAKLU",
+    "rtol": 1e-06,
+    "atol": 1e-07,
+    "mesh": 20,
+    "fit_points_each": 150,
+    "max_nfev": 25
+  },
+  "evaluation_criteria": {
+    "voltage_RMSE_V": 0.05,
+    "voltage_max_abs_error_V": 0.15,
+    "coverage_fraction_min": 0.95,
+    "numerical_refinement_V_max": 0.005
+  },
+  "uncertainty": "onecell, not independentcellCI; conditional parameterJacobian/SVD and profilefailure retained",
+  "freeze_before_evaluation": true,
+  "no_historical_test_access": true,
+  "fit_domain": "first90percentofselecteddischarge duration,150uniformtimepoints perfitcurve; fixed before solveroutcomes",
+  "cutoffs_V": [
+    2.5,
+    4.5
+  ],
+  "initial_stoichiometries": "Chen2020 fullycharged stoichiometries fixed before empiricalOCPcorrection; not recomputed to force4.2V"
+}

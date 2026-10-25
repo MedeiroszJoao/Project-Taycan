@@ -1,0 +1,433 @@
+{
+  "freeze_sha256": "58b60dbe8af929281445983cd94fed5729650b57d093ef15569ee42ad7bc5274",
+  "fit_k": 4.336661544752818,
+  "metric_recomputation": "independent from saved model predictions and authorized measured data; all completed outputs checked",
+  "results": [
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.009840343117789174,
+      "max_error_V": 0.018884332448469543,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.01456872781663756,
+        "bias_0.005V_RMSE": 0.005605075838592426,
+        "delay_-0.1s_RMSE": 0.00987680404160283,
+        "delay_0.1s_RMSE": 0.009724046170182354,
+        "missing20percent_RMSE": 0.009926451853755222,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.010527242388152865,
+      "max_error_V": 0.018724038483624916,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.015322655612049586,
+        "bias_0.005V_RMSE": 0.006071399310897798,
+        "delay_-0.1s_RMSE": 0.01056599560538182,
+        "delay_0.1s_RMSE": 0.01042798396317668,
+        "missing20percent_RMSE": 0.010618157303106578,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.01829786363498342,
+      "max_error_V": 0.030965866984386636,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.013936615258221926,
+        "bias_0.005V_RMSE": 0.022921482987651412,
+        "delay_-0.1s_RMSE": 0.018380404105693735,
+        "delay_0.1s_RMSE": 0.01832316616745564,
+        "missing20percent_RMSE": 0.018756209796700674,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 1,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.017012546172937792,
+      "max_error_V": 0.030099220605296573,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.012783469374232788,
+        "bias_0.005V_RMSE": 0.02157397425906347,
+        "delay_-0.1s_RMSE": 0.017087640140462417,
+        "delay_0.1s_RMSE": 0.017025377462550905,
+        "missing20percent_RMSE": 0.017475898612364198,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 2,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.024508601251515938,
+      "max_error_V": 0.03491737327351707,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.01985001463132621,
+        "bias_0.005V_RMSE": 0.029280027147319254,
+        "delay_-0.1s_RMSE": 0.02462066446588647,
+        "delay_0.1s_RMSE": 0.024405032236043532,
+        "missing20percent_RMSE": 0.024925908512658333,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 2,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.023933796940847324,
+      "max_error_V": 0.03577409315947122,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.019349933329823484,
+        "bias_0.005V_RMSE": 0.02865716929745176,
+        "delay_-0.1s_RMSE": 0.02404217744151978,
+        "delay_0.1s_RMSE": 0.02380637009941074,
+        "missing20percent_RMSE": 0.02439354943244077,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 3,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.006841705524491337,
+      "max_error_V": 0.01508233836966344,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.004412975332962972,
+        "bias_0.005V_RMSE": 0.011141970996119624,
+        "delay_-0.1s_RMSE": 0.006867156294454977,
+        "delay_0.1s_RMSE": 0.006808068799905545,
+        "missing20percent_RMSE": 0.007166354226992854,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 3,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.007104599586790175,
+      "max_error_V": 0.015857735732282663,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.005004772106953784,
+        "bias_0.005V_RMSE": 0.01122064734026944,
+        "delay_-0.1s_RMSE": 0.007129052008255982,
+        "delay_0.1s_RMSE": 0.007066072821465862,
+        "missing20percent_RMSE": 0.0074452659103640935,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 4,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.013909431032763054,
+      "max_error_V": 0.023586274494904913,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.009771569525842105,
+        "bias_0.005V_RMSE": 0.018478662622387416,
+        "delay_-0.1s_RMSE": 0.013971184259533125,
+        "delay_0.1s_RMSE": 0.01383858641766932,
+        "missing20percent_RMSE": 0.014345160551963828,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 4,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.013569248881594257,
+      "max_error_V": 0.02353363120447538,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.009537140048435085,
+        "bias_0.005V_RMSE": 0.01809121306374533,
+        "delay_-0.1s_RMSE": 0.013628371065593193,
+        "delay_0.1s_RMSE": 0.01348600656025495,
+        "missing20percent_RMSE": 0.014004133948766819,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 5,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.008564958601164763,
+      "max_error_V": 0.019972674199478943,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.012384407776268197,
+        "bias_0.005V_RMSE": 0.006583576209814875,
+        "delay_-0.1s_RMSE": 0.008612432460136673,
+        "delay_0.1s_RMSE": 0.00849669550683249,
+        "missing20percent_RMSE": 0.009026599075241254,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 5,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.008402088186989095,
+      "max_error_V": 0.019304788390495473,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.012406244903206113,
+        "bias_0.005V_RMSE": 0.006105346771933248,
+        "delay_-0.1s_RMSE": 0.008447102655773784,
+        "delay_0.1s_RMSE": 0.008338838375906267,
+        "missing20percent_RMSE": 0.008846075573774209,
+        "missing_retained": 84
+      }
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.031931178576194576,
+      "max_error_V": 0.11959532010353469,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.03400214796429241,
+        "bias_0.005V_RMSE": 0.03054593695312063,
+        "delay_-0.1s_RMSE": 0.03193062328151642,
+        "delay_0.1s_RMSE": 0.031523759202130124,
+        "missing20percent_RMSE": 0.03171389626138497,
+        "missing_retained": 401
+      }
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 0,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.030601595470175685,
+      "max_error_V": 0.11923456267352917,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.03252108847578937,
+        "bias_0.005V_RMSE": 0.029415881679637514,
+        "delay_-0.1s_RMSE": 0.03060025112167788,
+        "delay_0.1s_RMSE": 0.03017563138906224,
+        "missing20percent_RMSE": 0.03035210455638199,
+        "missing_retained": 401
+      }
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.024712568174825148,
+      "max_error_V": 0.08229323113023979,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.02244362903838632,
+        "bias_0.005V_RMSE": 0.027707500197204072,
+        "delay_-0.1s_RMSE": 0.02472969221665639,
+        "delay_0.1s_RMSE": 0.024640659935124848,
+        "missing20percent_RMSE": 0.024439537732806493,
+        "missing_retained": 401
+      }
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 1,
+      "model": "DFN",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.025533522788807668,
+      "max_error_V": 0.07858294385681708,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.022494656288450737,
+        "bias_0.005V_RMSE": 0.029118928731627212,
+        "delay_-0.1s_RMSE": 0.025560696910494094,
+        "delay_0.1s_RMSE": 0.02547195601225409,
+        "missing20percent_RMSE": 0.025508676669820134,
+        "missing_retained": 401
+      }
+    },
+    {
+      "dataset": "HPPC",
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "status": "VERIFIED",
+      "RMSE_V": 0.003343254647823878,
+      "max_error_V": 0.018660725306890225,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.005348744395828684,
+        "bias_0.005V_RMSE": 0.006614048432577673,
+        "delay_-0.1s_RMSE": 0.0060324190353601885,
+        "delay_0.1s_RMSE": 0.00444118136345079,
+        "missing20percent_RMSE": 0.0032197662045689497,
+        "missing_retained": 83
+      }
+    },
+    {
+      "dataset": "HPPC",
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 80,
+      "status": "VERIFIED",
+      "RMSE_V": 0.0037262057839354107,
+      "max_error_V": 0.01744330189809995,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.004126052662428025,
+        "bias_0.005V_RMSE": 0.00779390200832279,
+        "delay_-0.1s_RMSE": 0.0062430763326537485,
+        "delay_0.1s_RMSE": 0.0047901466382966225,
+        "missing20percent_RMSE": 0.0035985031318620593,
+        "missing_retained": 83
+      }
+    },
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 80,
+      "status": "VERIFIED",
+      "RMSE_V": 0.009824621702627566,
+      "max_error_V": 0.018913384548016943,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "stress": {
+        "bias_-0.005V_RMSE": 0.014551740624414026,
+        "bias_0.005V_RMSE": 0.005594035037364315,
+        "delay_-0.1s_RMSE": 0.00986120644887612,
+        "delay_0.1s_RMSE": 0.009707303675134725,
+        "missing20percent_RMSE": 0.009912772684839262,
+        "missing_retained": 84
+      }
+    }
+  ],
+  "mesh": [
+    {
+      "dataset": "HPPC",
+      "index": 1,
+      "max_gap_V": 0.001961351069102335,
+      "gate": "PASS"
+    },
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "max_gap_V": 0.0005859160421626264,
+      "gate": "PASS"
+    }
+  ],
+  "SPMe_DFN": [
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "SPMe_DFN_RMS_V": 0.0009501461971800399,
+      "max_V": 0.0016076558034869848
+    },
+    {
+      "dataset": "GITT",
+      "index": 1,
+      "SPMe_DFN_RMS_V": 0.001503938887422044,
+      "max_V": 0.0016722624194294156
+    },
+    {
+      "dataset": "GITT",
+      "index": 2,
+      "SPMe_DFN_RMS_V": 0.0011482372401585726,
+      "max_V": 0.0016285154637714072
+    },
+    {
+      "dataset": "GITT",
+      "index": 3,
+      "SPMe_DFN_RMS_V": 0.000728781602033031,
+      "max_V": 0.001378948760740517
+    },
+    {
+      "dataset": "GITT",
+      "index": 4,
+      "SPMe_DFN_RMS_V": 0.000553596178781929,
+      "max_V": 0.0009801534132023448
+    },
+    {
+      "dataset": "GITT",
+      "index": 5,
+      "SPMe_DFN_RMS_V": 0.0006575862472960645,
+      "max_V": 0.0010485366409511698
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 0,
+      "SPMe_DFN_RMS_V": 0.004454519696010873,
+      "max_V": 0.011474287519797066
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 1,
+      "SPMe_DFN_RMS_V": 0.009437866614239704,
+      "max_V": 0.019675551327389407
+    }
+  ],
+  "limits": "sensor stress uses observation-grid interpolation and conditional scenarios, not calibrated uncertainty or independent samples"
+}

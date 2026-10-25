@@ -1,0 +1,279 @@
+{
+  "freeze_sha256": "6b1f2f9e501b605f4267920858cf15967789d97e23cbd2f40359c6625607935a",
+  "results": [
+    {
+      "dataset": "TRAIN",
+      "index": 0,
+      "model": "SPMe",
+      "RMSE_V": 0.033689852107944236,
+      "max_error_V": 0.07383446395718218,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 1.7763568394002505e-15,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.03452795004829108,
+          "max_error_V": 0.07883446395718219
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.03358322401993331,
+          "max_error_V": 0.07207267597336664
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.03366288444316012
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.03356201968426138
+        }
+      ],
+      "missing20percent_RMSE_V": 0.033623380021928516
+    },
+    {
+      "dataset": "TRAIN",
+      "index": 1,
+      "model": "SPMe",
+      "RMSE_V": 0.033330115868774976,
+      "max_error_V": 0.1377533661250392,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 1.3322676295501878e-15,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.03322233321643493,
+          "max_error_V": 0.1427533661250392
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.0341770364910139,
+          "max_error_V": 0.13275336612503918
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.03329019126927388
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.032791531981412284
+        }
+      ],
+      "missing20percent_RMSE_V": 0.0329152790324569
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 0,
+      "model": "SPMe",
+      "RMSE_V": 0.03216031884908597,
+      "max_error_V": 0.0966462048691521,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 1.7763568394002505e-15,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.030681278608491125,
+          "max_error_V": 0.1016462048691521
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.03431080529363736,
+          "max_error_V": 0.10078175861911742
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.032122408763884294
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.03189781627288387
+        }
+      ],
+      "missing20percent_RMSE_V": 0.03191687889983377
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 0,
+      "model": "DFN",
+      "RMSE_V": 0.03196475392311508,
+      "max_error_V": 0.09628532521140665,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 3.0110001869587677e-07,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.03022280216630122,
+          "max_error_V": 0.10128532521140665
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.03435219375741847,
+          "max_error_V": 0.09850666023088472
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.03192922657043628
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.031701770826663006
+        }
+      ],
+      "missing20percent_RMSE_V": 0.03174866181401722
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 1,
+      "model": "SPMe",
+      "RMSE_V": 0.04175170061131029,
+      "max_error_V": 0.10524234636462237,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 8.881784197001252e-16,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.037506250281919395,
+          "max_error_V": 0.10024234636462237
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.04614856658297197,
+          "max_error_V": 0.11024234636462238
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.04176899992231341
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.0417489040654945
+        }
+      ],
+      "missing20percent_RMSE_V": 0.04152657180045197
+    },
+    {
+      "dataset": "DISCHARGE",
+      "index": 1,
+      "model": "DFN",
+      "RMSE_V": 0.04430857896701437,
+      "max_error_V": 0.10153207733936886,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 4.618112528831375e-06,
+      "gauge_identity_gate": "FAIL",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.039847318801372836,
+          "max_error_V": 0.09653207733936886
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.04887424193267918,
+          "max_error_V": 0.10653207733936887
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.04433694787045092
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.044310842207288786
+        }
+      ],
+      "missing20percent_RMSE_V": 0.044321420983554446
+    },
+    {
+      "dataset": "HPPC",
+      "index": 1,
+      "model": "SPMe",
+      "RMSE_V": 0.003343254647823878,
+      "max_error_V": 0.018660725306890225,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 0.0,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.005348744395828684,
+          "max_error_V": 0.023660725306890226
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.006614048432577673,
+          "max_error_V": 0.02031906644552894
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.0060324190353601885
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.00444118136345079
+        }
+      ],
+      "missing20percent_RMSE_V": 0.0032197662045689497
+    },
+    {
+      "dataset": "GITT",
+      "index": 0,
+      "model": "SPMe",
+      "RMSE_V": 0.009840343117789172,
+      "max_error_V": 0.018884332448469543,
+      "coverage": 1.0,
+      "gate": "PASS",
+      "gauge_identity_max_error_V": 8.881784197001252e-16,
+      "gauge_identity_gate": "PASS",
+      "measurement_bias_stress": [
+        {
+          "bias_V": -0.005,
+          "RMSE_V": 0.014568727816637556,
+          "max_error_V": 0.023884332448469544
+        },
+        {
+          "bias_V": 0.005,
+          "RMSE_V": 0.005605075838592433,
+          "max_error_V": 0.013884332448469542
+        }
+      ],
+      "timing_stress": [
+        {
+          "delay_s": -0.1,
+          "RMSE_V": 0.00987680404160283
+        },
+        {
+          "delay_s": 0.1,
+          "RMSE_V": 0.009724046170182353
+        }
+      ],
+      "missing20percent_RMSE_V": 0.009926451853755222
+    }
+  ],
+  "all_voltage_and_gauge_gates_pass": false,
+  "scientific_scope": "exploratory terminal-voltage qualification, no new independent blind data"
+}

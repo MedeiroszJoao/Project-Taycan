@@ -1,0 +1,19 @@
+{
+  "stage4B_overall": "NOT_APPROVED_FULL_SCOPE",
+  "electrical_qualification_25C_nonblind": "PASS_LIMITED",
+  "original_kinetic_candidate": "FAIL_C3_MAX_ERROR",
+  "followup_status": "exploratory training-only OCP recalibration, externally frozen before followup predictions",
+  "thermal_validation": "NOT_DEMONSTRATED",
+  "vehicle_fault_diagnostic_validation": "INCONCLUSIVE",
+  "module_reserved_numeric_access": 0,
+  "historical_reserved_access": 0,
+  "new_blind_validation": false,
+  "unit_tests": {
+    "testsRun": 165,
+    "failures": 0,
+    "errors": 0,
+    "successful": true,
+    "seconds": 18.165820352000082
+  },
+  "formal_approval": "not issued by this automated audit"
+}

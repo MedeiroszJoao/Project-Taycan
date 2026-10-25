@@ -1,0 +1,8 @@
+{
+  "max_identity_gap_V": 9.387432640256543e-09,
+  "gate": "PASS",
+  "rtol": 1e-09,
+  "atol": 1e-10,
+  "original_loose_identity_gate": "FAIL",
+  "corrected_voltage_gate": "PASS"
+}

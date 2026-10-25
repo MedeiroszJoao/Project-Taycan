@@ -1,0 +1,164 @@
+{
+  "classification": "POSTHOC_RECONSTRUCTED_AFTER_1C_OUTCOMES_KNOWN",
+  "source_doi": "10.5683/SP3/7JP3NM",
+  "source_url": "https://borealisdata.ca/api/access/datafile/837532",
+  "inner_byte_count": 152124241,
+  "official_inner_md5": "734d8c3c262d7dcbd4eaf1b6b366e079",
+  "official_inner_sha256": "fc65efb69fe196952b430443b0e3c8df0ff789076f91ecebe3f8e10d86937e65",
+  "original_uploaded_outer_zip_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "original_uploaded_outer_zip_recovered": false,
+  "new_wrapper_sha256": "236abc3314ed68f741274525f9e53871690e93e01f2cc8389b21d648ef6a4494",
+  "old_repository_prereg_sha256": "acfd40a444cfb36b9cae9cfbb4f861be27ca6f7a2450b45bfca56db917f3b866",
+  "rewritten_ephemeral_prereg_sha256": "465007e10daf02d9d6dd9ecc928d50ace8d90bc88256803a56c254f965f3e986",
+  "identical_original_source_python_sha256": "415f2ec033c41069f646600046a7d3588a010c93101aba83c974e544dd97bb30",
+  "externally_prior_1c_failure_reported": true,
+  "chronological_original_pre_result_freeze_verified": false,
+  "retrofit_is_new_exploratory_reconstruction": true,
+  "only_four_prior_fit_eval_cell_mat_files_crc_tested": [
+    {
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat",
+      "compressed_bytes": 44113,
+      "size_bytes": 50571,
+      "crc32": "bf61826f"
+    },
+    {
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat",
+      "compressed_bytes": 408174,
+      "size_bytes": 472075,
+      "crc32": "83fb8c0c"
+    },
+    {
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "compressed_bytes": 145338,
+      "size_bytes": 164003,
+      "crc32": "b83ce039"
+    },
+    {
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "compressed_bytes": 75689,
+      "size_bytes": 83722,
+      "crc32": "fcd3c56c"
+    }
+  ],
+  "other_dataset_files_numerically_read": false,
+  "target_stage4_sealed_test_rows_read": 0,
+  "raw_files_never_archived": true,
+  "environment_python": "3.11.17",
+  "state": "POSTHOC_RECONSTRUCTION_COMPLETED_NOT_ORIGINAL_FREEZE",
+  "reconstruction_receipt_sha256": {
+    "FIT_RESULT.json": "9ff5c54c5c991c30479fc076fb0fc5a12e7cf16f64f6b87be128cc77cbf1762b",
+    "GENERATOR_B_FREEZE.json": "f42369ee4818f6278a369bf7d52c6f86ab445d325fabb4085671f4afba2bb99d",
+    "EVALUATION.json": "56f18292dd8a5499de49aa63284d5a1d01fbc4b7c457db8ec385dec267eb974e"
+  },
+  "fit_parameter_vector": [
+    -0.040210127715620665,
+    -0.03985910981028412,
+    2.6387202740172146e-16
+  ],
+  "fit_RMSE_V": 0.03775799165776874,
+  "optimization_success": true,
+  "evaluation_summary": [
+    {
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "model": "SPMe",
+      "experimental": {
+        "source_sha256": "181f1966002a769cc69298c62b975b8bee1c8526760df0bfa8baa9e453c754cb",
+        "rows": 6638,
+        "capacity_Ah": 59.90282466075216,
+        "duration_s": 6636.317997425795,
+        "current_median_A": 32.4963,
+        "initial_temperature_C": 24.8351,
+        "temperature_range_C": [
+          24.7299,
+          25.8874
+        ],
+        "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat"
+      },
+      "voltage_RMSE_V": 0.04625208677551993,
+      "voltage_bias_V": -0.03387369175980622,
+      "voltage_max_error_V": 0.12494522759385873,
+      "coverage_fraction": 1.0,
+      "termination": "final time",
+      "gate": "PASS",
+      "numerical_refinement_max_V": 0.003931426933963422,
+      "numerical_gate": "PASS"
+    },
+    {
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+      "model": "DFN",
+      "experimental": {
+        "source_sha256": "181f1966002a769cc69298c62b975b8bee1c8526760df0bfa8baa9e453c754cb",
+        "rows": 6638,
+        "capacity_Ah": 59.90282466075216,
+        "duration_s": 6636.317997425795,
+        "current_median_A": 32.4963,
+        "initial_temperature_C": 24.8351,
+        "temperature_range_C": [
+          24.7299,
+          25.8874
+        ],
+        "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat"
+      },
+      "voltage_RMSE_V": 0.046338656460486335,
+      "voltage_bias_V": -0.03418808338511181,
+      "voltage_max_error_V": 0.1237434746288999,
+      "coverage_fraction": 1.0,
+      "termination": "final time",
+      "gate": "PASS",
+      "numerical_refinement_max_V": 0.004051038289031972,
+      "numerical_gate": "PASS"
+    },
+    {
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "model": "SPMe",
+      "experimental": {
+        "source_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+        "rows": 3281,
+        "capacity_Ah": 59.21435114169592,
+        "duration_s": 3279.698998108506,
+        "current_median_A": 64.9978,
+        "initial_temperature_C": 24.7299,
+        "temperature_range_C": [
+          24.7299,
+          28.3078
+        ],
+        "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat"
+      },
+      "voltage_RMSE_V": 0.0848291077070773,
+      "voltage_bias_V": -0.08167736635934295,
+      "voltage_max_error_V": 0.15505346239626716,
+      "coverage_fraction": 1.0,
+      "termination": "final time",
+      "gate": "FAIL",
+      "numerical_refinement_max_V": 0.0083517456885418,
+      "numerical_gate": "FAIL"
+    },
+    {
+      "file": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat",
+      "model": "DFN",
+      "experimental": {
+        "source_sha256": "036016f503a37008f5019fefdb29adab44d2e185f66ca5f90025d8c41b650335",
+        "rows": 3281,
+        "capacity_Ah": 59.21435114169592,
+        "duration_s": 3279.698998108506,
+        "current_median_A": 64.9978,
+        "initial_temperature_C": 24.7299,
+        "temperature_range_C": [
+          24.7299,
+          28.3078
+        ],
+        "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat"
+      },
+      "voltage_RMSE_V": 0.08653551013947026,
+      "voltage_bias_V": -0.0836747124362983,
+      "voltage_max_error_V": 0.15189992343509084,
+      "coverage_fraction": 1.0,
+      "termination": "final time",
+      "gate": "FAIL",
+      "numerical_refinement_max_V": 0.008588290370996177,
+      "numerical_gate": "FAIL"
+    }
+  ],
+  "posthoc_generated_freeze_before_its_own_evaluation": true,
+  "original_Work_freeze_recovered": false
+}

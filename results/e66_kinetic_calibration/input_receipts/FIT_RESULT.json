@@ -1,0 +1,52 @@
+{
+  "parameters": [
+    -0.040210127715620665,
+    -0.03985910981028412,
+    2.6387202740172146e-16
+  ],
+  "effective_capacity_Ah": 61.259778569358865,
+  "virtual_parallel_scale": 12.251955713871773,
+  "conditional_jacobian_singular_values": [
+    17.330503107188893,
+    2.584282853977025,
+    0.0
+  ],
+  "jacobian_condition": null,
+  "jacobian_rank": 2,
+  "least_squares_success": true,
+  "termination": "`gtol` termination condition is satisfied.",
+  "nfev": 9,
+  "actual_solver_attempts": 72,
+  "fit_RMSE_V": 0.03775799165776874,
+  "elapsed_s": 51.63804134700001,
+  "fit_sources": [
+    {
+      "source_sha256": "c2f94cbdecd24fc71f461e4ff5f895ec7f4ba1e816b662c3e6e786046a28adff",
+      "rows": 1135,
+      "capacity_Ah": 61.259778569358865,
+      "duration_s": 68011.45999990404,
+      "current_median_A": 3.2425,
+      "initial_temperature_C": 25.0456,
+      "temperature_range_C": [
+        24.3089,
+        25.4665
+      ],
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat"
+    },
+    {
+      "source_sha256": "1d40bb5c842f2e5946ce04834779c691fcaecbdfc31c7ca4a853d14944ca345a",
+      "rows": 10020,
+      "capacity_Ah": 60.21347376185771,
+      "duration_s": 10017.287005484104,
+      "current_median_A": 21.6405,
+      "initial_temperature_C": 24.9403,
+      "temperature_range_C": [
+        24.9403,
+        25.8874
+      ],
+      "name": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat"
+    }
+  ],
+  "interpretation": "effective terminal-curve calibration of Chen-derived current-normalized surrogate, not unique E66 electrode physics",
+  "covariance_CI": "not reported: residual time autocorrelation and singlecell invalidate iid covariance"
+}

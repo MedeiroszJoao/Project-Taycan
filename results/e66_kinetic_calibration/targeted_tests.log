@@ -1,0 +1,11 @@
+test_a_current_interrupt_removes_ohmic_drop (test_e66_kinetic_calibration.ConditionalPhysicsTests.test_a_current_interrupt_removes_ohmic_drop) ... ok
+test_a_long_rest_retains_soc_ocv_shift (test_e66_kinetic_calibration.ConditionalPhysicsTests.test_a_long_rest_retains_soc_ocv_shift) ... ok
+test_a_zero_current_no_voltage_change (test_e66_kinetic_calibration.ConditionalPhysicsTests.test_a_zero_current_no_voltage_change) ... ok
+test_joint_kinetic_scaling_preserves_ocp (test_e66_kinetic_calibration.ConditionalPhysicsTests.test_joint_kinetic_scaling_preserves_ocp) ... /workspace/scratch/00a46563aa6f/taycan/scripts/calibrate_e66_kinetics.py:17: DeprecationWarning: pybamm.parameter_values.set_initial_stoichiometries is deprecated, please use set_initial_state.
+  f=json.loads((REC/'FIT_RESULT.json').read_text());p=pybamm.ParameterValues('Chen2020');p.set_initial_stoichiometries(soc,inplace=True)
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.208s
+
+OK
