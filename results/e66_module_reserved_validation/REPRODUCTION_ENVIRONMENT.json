@@ -1,0 +1,17 @@
+{
+  "python": "3.12.14",
+  "packages": {
+    "pybamm": "26.4.2",
+    "pybammsolvers": "0.6.0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "casadi": "3.7.2",
+    "mat-io": "1.0.1",
+    "pandas": "2.2.3",
+    "h5py": "3.16.0"
+  },
+  "outer_archive_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "restored_from_commit": "fbf19bffb0622710a9e6817a6d9c059bebb0a5f8",
+  "reproduction_date": "2026-10-25",
+  "TUM_attachment_available_this_resumption": false
+}

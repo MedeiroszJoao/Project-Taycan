@@ -1,0 +1,83 @@
+{
+  "decision": "PASS_LIMITED",
+  "scope": "two held-out sessions, same module, selected 300-second electrical windows",
+  "audit_type": "independent metric recomputation, same implementation/runtime; not an independent laboratory",
+  "preregistration_commit": "fbf19bffb0622710a9e6817a6d9c059bebb0a5f8",
+  "evaluation_sha256": "15a898852cec8e13edecdbd7c655002f5afd07fad0630520b0dbdbc3cfa42f74",
+  "checks": [
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 40,
+      "RMSE_mV_per_mean_cell": 14.62415803054359,
+      "maximum_mV_per_mean_cell": 45.04506359444586,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 17.58175256119935
+    },
+    {
+      "index": 0,
+      "model": "DFN",
+      "mesh": 40,
+      "RMSE_mV_per_mean_cell": 13.627437561898157,
+      "maximum_mV_per_mean_cell": 43.96042724952546,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 16.7053540863422
+    },
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 80,
+      "RMSE_mV_per_mean_cell": 15.900959702387796,
+      "maximum_mV_per_mean_cell": 47.72058685068892,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 18.645591931931605
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "RMSE_mV_per_mean_cell": 29.051861296194573,
+      "maximum_mV_per_mean_cell": 55.11991431505988,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 33.79656618597596
+    },
+    {
+      "index": 1,
+      "model": "DFN",
+      "mesh": 40,
+      "RMSE_mV_per_mean_cell": 43.73771560685676,
+      "maximum_mV_per_mean_cell": 76.89972271853485,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 48.49282821186887
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 80,
+      "RMSE_mV_per_mean_cell": 28.74040123166454,
+      "maximum_mV_per_mean_cell": 54.83096618625124,
+      "gate": "PASS",
+      "secondary_sensor_bias_plus_minus_5mV_worst_RMSE_mV": 33.47390844625678
+    }
+  ],
+  "refinement": [
+    {
+      "index": 0,
+      "maximum_gap_V_per_mean_cell": 0.004199769653808379,
+      "gate": "PASS"
+    },
+    {
+      "index": 1,
+      "maximum_gap_V_per_mean_cell": 0.002872506908863315,
+      "gate": "PASS"
+    }
+  ],
+  "validation_files_numeric_access": 2,
+  "final_blind_files_numeric_access": 0,
+  "historical_reserved_access": 0,
+  "no_parameter_retuning": true,
+  "thermal_prediction_validated": false,
+  "vehicle_diagnostics_validated": false,
+  "formal_stage_approval": "not issued",
+  "whole_stage4B": "NOT_VALIDATED_FULL_SCOPE"
+}
