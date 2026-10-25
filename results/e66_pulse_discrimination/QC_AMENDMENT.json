@@ -1,0 +1,9 @@
+{
+  "created_utc": "2026-10-25T05:59:47.127195+00:00",
+  "reason": "initialHPPCrejected362nonincreasingtimestamps; inspectedduplicates identical in4numeric channels",
+  "rule": "remove repeatedtime only ifI,V,T all exactlysame as precedingrecord; rejectconflicts/negativetime/nonfinite",
+  "before_any_successful_model_run": true,
+  "GITT_payload_not_yet_inspected": true,
+  "candidateparameters_unchanged": true,
+  "originalfailedfreeze": "FAILED_PRE_QC_FREEZE.json"
+}

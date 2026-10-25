@@ -1,0 +1,12 @@
+{
+  "protocol_sha256": "a32e6b213adccc22620033baeb095fe0d48c7baa4f7f20d78915e9084f7e9c79",
+  "script_sha256": "b2065c387972d2f542786cc4f4f3e8d49d8159bb3c045d1f96cd60eee7c08ae0",
+  "fit_sha256": "9ff5c54c5c991c30479fc076fb0fc5a12e7cf16f64f6b87be128cc77cbf1762b",
+  "candidates": [
+    "baseline_posthoc",
+    "kinetics_both_x2",
+    "diffusivity_both_x2"
+  ],
+  "no_parameter_fit": true,
+  "GITT_scope": "empiricalrelaxationaudit only; notpredictionvalidation unlessactuallysimulated"
+}

@@ -1,0 +1,8 @@
+test_conflict_rejected (tests.unit.test_e66_pulse_discrimination.QC.test_conflict_rejected) ... ok
+test_identical_zero_duration_rows (tests.unit.test_e66_pulse_discrimination.QC.test_identical_zero_duration_rows) ... ok
+test_time_reversal_rejected (tests.unit.test_e66_pulse_discrimination.QC.test_time_reversal_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

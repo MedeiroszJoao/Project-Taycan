@@ -1,0 +1,2 @@
+/workspace/scratch/00a46563aa6f/taycan/scripts/e66_pulse_discrimination.py:61: DeprecationWarning: pybamm.parameter_values.set_initial_stoichiometries is deprecated, please use set_initial_state.
+  f,grid,actual=pulse;fit=json.loads((REC/'FIT_RESULT.json').read_text());p=pybamm.ParameterValues('Chen2020');p.set_initial_stoichiometries(f['soc_proxy'],inplace=True)

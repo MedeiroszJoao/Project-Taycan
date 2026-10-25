@@ -1,0 +1,73 @@
+{
+  "scope": "mechanism discrimination, not fitted E66 generator or external diagnostic validation",
+  "candidate_statistics": {
+    "baseline_posthoc": {
+      "RMSE_deltaV_V": 0.06045325515863513,
+      "RMSE_loaded_V": 0.0627968236636267,
+      "RMSE_rest_V": 0.003573650239454726,
+      "median_loaded_improvement_fraction": 0.0
+    },
+    "diffusivity_both_x2": {
+      "RMSE_deltaV_V": 0.0590556457732918,
+      "RMSE_loaded_V": 0.061333645379757246,
+      "RMSE_rest_V": 0.0032813954096757732,
+      "median_loaded_improvement_fraction": 0.023300195750457275
+    },
+    "kinetics_both_x2": {
+      "RMSE_deltaV_V": 0.024979071323950885,
+      "RMSE_loaded_V": 0.02584373500650209,
+      "RMSE_rest_V": 0.003573650239454726,
+      "median_loaded_improvement_fraction": 0.5884547418363877
+    }
+  },
+  "kinetics_loaded_wins": 3,
+  "eligible_HPPC_pulses": 3,
+  "independent_cells": 1,
+  "mesh20_to40_max_gap_V": {
+    "baseline_posthoc": 0.0039773624046350875,
+    "kinetics_both_x2": 0.003977397736205646,
+    "diffusivity_both_x2": 0.001939704983416668
+  },
+  "mesh_gate_5mV_pass": true,
+  "conditional_preference": "kinetics_both_x2",
+  "GITT": [
+    {
+      "index": 0,
+      "rebound_1_to_300s_V": 0.018598600724101577,
+      "recovery_fraction_60s_valid": false
+    },
+    {
+      "index": 1,
+      "rebound_1_to_300s_V": 0.022601992197680748,
+      "recovery_fraction_60s_valid": false
+    },
+    {
+      "index": 2,
+      "rebound_1_to_300s_V": 0.02750089960348113,
+      "recovery_fraction_60s_valid": false
+    },
+    {
+      "index": 3,
+      "rebound_1_to_300s_V": 0.022903981854382305,
+      "recovery_fraction_60s_valid": false
+    },
+    {
+      "index": 4,
+      "rebound_1_to_300s_V": 0.02299550506591684,
+      "recovery_fraction_60s_valid": false
+    },
+    {
+      "index": 5,
+      "rebound_1_to_300s_V": 0.031899106860693124,
+      "recovery_fraction_60s_valid": false
+    }
+  ],
+  "GITT_metric_quarantine": "Ignore recovery_fraction_60s in GITT_EMPIRICAL.json: denominator is 10s drop, not end-of-long-pulse drop; it is not a physical recovery fraction. Retained original output for audit. Rebound uses two post-pulse voltages and is descriptive only.",
+  "inference_limits": [
+    "three SOC windows from one cell/session are correlated",
+    "relative-voltage anchoring removes OCV offset",
+    "both electrode kinetics scaled jointly, not individually identified",
+    "GITT has no simulated prediction in this audit",
+    "prior 1C validation failure remains; no generator promotion"
+  ]
+}

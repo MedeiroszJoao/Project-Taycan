@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "source": "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-28-23_02.06 31974_HPPC.mat",
+    "sha256": "e4b8b271c6a80d294510299a49bd0bcf37f7f1ae0bc973d52c244f6f452d73db",
+    "samples": 403152,
+    "duplicate_rows_collapsed": 362,
+    "conflicting_timestamps": 42,
+    "SOC_first_last_sensitivity_max_fraction": 2.1362656604159818e-07,
+    "duration_s": 151915.46599455178,
+    "eligible_after_filter": 3,
+    "current_duration_soc_candidates_encountered": 6,
+    "pulses_excluded_conflicting_clock": 3,
+    "selection": "first8eligiblechronological",
+    "independent_cells": 1
+  },
+  "pulses": [
+    {
+      "index": 0,
+      "start_time_s": 43476.012996956706,
+      "duration_s": 10.006000846624374,
+      "current_A": 64.9977,
+      "soc_proxy": 0.705647567605409,
+      "initial_T_C": 24.9403,
+      "pre_rest_s": 3600.011996179819,
+      "post_rest_s": 299.9030001461506,
+      "available_post_s": 299.9030001461506,
+      "apparent_R_1s_ohm": 0.001046116147471658,
+      "apparent_R_10s_ohm": 0.0014090814038308043,
+      "relaxation_deltaV_after_s": {
+        "1": -0.028203001229352473,
+        "30": -0.01330000000000009,
+        "60": -0.010099999999999998
+      },
+      "recovery_fraction_60s": 0.889722401146183,
+      "pre_rest_last60s_voltage_range_V": 0.0,
+      "max_selected_dt_s": 0.10700002312660217
+    },
+    {
+      "index": 1,
+      "start_time_s": 53799.24199618399,
+      "duration_s": 10.005005076527596,
+      "current_A": 64.9978,
+      "soc_proxy": 0.6111818847248514,
+      "initial_T_C": 24.5194,
+      "pre_rest_s": 3600.008003041148,
+      "post_rest_s": 299.90399591624737,
+      "available_post_s": 299.90399591624737,
+      "apparent_R_1s_ohm": 0.001026267976505174,
+      "apparent_R_10s_ohm": 0.0012838852845774443,
+      "relaxation_deltaV_after_s": {
+        "1": -0.020305929511226395,
+        "30": -0.00890000000000013,
+        "60": -0.006600000000000161
+      },
+      "recovery_fraction_60s": 0.9209104586204547,
+      "pre_rest_last60s_voltage_range_V": 0.0,
+      "max_selected_dt_s": 0.10700002312660217
+    },
+    {
+      "index": 2,
+      "start_time_s": 84769.95499916375,
+      "duration_s": 10.00499501824379,
+      "current_A": 65.0003,
+      "soc_proxy": 0.32790863917759994,
+      "initial_T_C": 24.7299,
+      "pre_rest_s": 3600.008003041148,
+      "post_rest_s": 299.9009985476732,
+      "available_post_s": 299.9009985476732,
+      "apparent_R_1s_ohm": 0.0010295961550697164,
+      "apparent_R_10s_ohm": 0.0012698200462064684,
+      "relaxation_deltaV_after_s": {
+        "1": -0.019105958795281937,
+        "30": -0.009700000000000042,
+        "60": -0.00749999999999984
+      },
+      "recovery_fraction_60s": 0.9091335160541866,
+      "pre_rest_last60s_voltage_range_V": 0.0,
+      "max_selected_dt_s": 0.10700002312660217
+    }
+  ]
+}

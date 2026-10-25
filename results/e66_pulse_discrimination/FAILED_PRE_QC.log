@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_pulse_discrimination.py", line 97, in <module>
+    else:run(a.mode)
+         ^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_pulse_discrimination.py", line 74, in run
+    pulses,meta=extract(which);dump(OUT/f'{which}_EMPIRICAL.json',{'metadata':meta,'pulses':[x[0] for x in pulses]})
+                ^^^^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_pulse_discrimination.py", line 20, in extract
+    t,i,v,T,meta=read(which);active=np.abs(i)>5;starts=np.flatnonzero(np.diff(active.astype(int),prepend=0)==1);ends=np.flatnonzero(np.diff(active.astype(int),append=0)==-1)
+                 ^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_pulse_discrimination.py", line 17, in read
+    if not all(np.all(np.isfinite(x)) for x in [t,i,v,T]) or np.any(np.diff(t)<=0):raise ValueError('invalidtime/nonfinite')
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalidtime/nonfinite

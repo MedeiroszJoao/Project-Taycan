@@ -1,0 +1,10 @@
+test_conflict_rejected (test_e66_pulse_discrimination.QC.test_conflict_rejected) ... ok
+test_identical_zero_duration_rows (test_e66_pulse_discrimination.QC.test_identical_zero_duration_rows) ... ok
+test_time_reversal_rejected (test_e66_pulse_discrimination.QC.test_time_reversal_rejected) ... ok
+test_conflict_in_window_excludes_pulse (test_e66_pulse_discrimination.WindowQC.test_conflict_in_window_excludes_pulse) ... ok
+test_outside_conflict_does_not_exclude_pulse (test_e66_pulse_discrimination.WindowQC.test_outside_conflict_does_not_exclude_pulse) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.032s
+
+OK

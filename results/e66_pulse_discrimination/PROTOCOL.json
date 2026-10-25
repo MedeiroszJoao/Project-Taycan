@@ -1,0 +1,68 @@
+{
+  "classification": "PROSPECTIVE_NEW_SESSION_DISCRIMINATION_AFTER_1C_DIAGNOSIS",
+  "date_utc": "2026-10-25T05:57:05.926507+00:00",
+  "authorization": "user podeprosseguir afterrequestforHPPCGITT",
+  "files": [
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-28-23_02.06 31974_HPPC.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-30-23_06.21 31974_GITT.mat"
+  ],
+  "outer_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "protected": "allothernewcells, module2validation4blind,1152historicaltestsremainclosed",
+  "partition": {
+    "HPPC": "developmentmechanismdiagnostics; no fitting physicalcoefficients",
+    "GITT": "separate-session evaluation; open onlyafterHPPCalgorithm/candidatefreeze; samecellnotnewcell"
+  },
+  "candidates": [
+    "baseline_posthoc",
+    "kinetics_both_x2",
+    "diffusivity_both_x2"
+  ],
+  "coefficients": "exactearlierPOSTHOCfit, unchanged. x2hypotheses previouslymotivated by1C notblindprediction",
+  "pulse_detection": {
+    "active_current_abs_A": 5,
+    "idle_current_abs_A_max": 1,
+    "HPPC_duration_s": [
+      8,
+      12
+    ],
+    "HPPC_discharge_current_A": [
+      55,
+      75
+    ],
+    "min_pre_rest_s": 300,
+    "minimum_post_rest_s": 60,
+    "max_post_rest_s": 300,
+    "SOC_proxy_range": [
+      0.2,
+      0.8
+    ],
+    "SOC_proxy": "1 - cumulative signeddischargeAh / fixed61.259778569358865; initialfull assumption",
+    "max_selected_HPPC": 8,
+    "selection": "chronologicalfirst8eligible; no voltagebasedselection"
+  },
+  "GITT_selection": "chronologicalfirst8 dischargeconstantsegments with precedingrest>=300s, SOCproxy.2to.8; duration>=60s; evaluate longrelaxation empirically; no extrapolatedstatefromHPPC",
+  "metrics": [
+    "apparentresistance1s10s",
+    "voltagerecovery1s30s60s300s",
+    "baselineanchoredpulseandrestvoltageRMSE",
+    "normalizedrecoveryfraction",
+    "samplecount",
+    "samplinggaps",
+    "QCcoverage"
+  ],
+  "model": "SPMe26.4.2 mesh20; fixedinitialSOCproxy, isothermalinitialmeasuredT; idealconstantpulseatmedianI, measuredpulselength; initialOCVbaseline subtractionremovesconstantoffsetonly",
+  "criteria": {
+    "modeldiagnostic_deltaV_RMSE_mV": 20,
+    "candidate_preference": "notphysicalidentification; comparepulsevsrelaxationerrors separately; consistentwinneracross>=75percenteligiblepulses and>=20percentmedianerrorreduction onlysupportsconditionalpreference",
+    "no_iid_CI": true,
+    "no_independent_cell_claim": true,
+    "numericalmeshcheck": "onefixedmedianselectedHPPCpulse40vs20;5mVmaxgate"
+  },
+  "cost": "max8HPPC*3candidates+one3candidate refinement; eachsolver<=60s; GITT aggregateempiricalonly if modelphysicsincompatible",
+  "stop": "inadequatesampling/preconditioning ->markunestimable, donotrelaxselectionafteroutcomes",
+  "sources": [
+    "https://doi.org/10.5683/SP3/7JP3NM",
+    "Cell Data/HPPC Explanation.docx",
+    "0-Readme - Cell.txt"
+  ]
+}
