@@ -9,6 +9,11 @@ from scripts import calibrate_e66_kinetics as c
 from scripts import recalibrate_e66_ocp_offset as o
 from scripts.audit_stage4b_e66_dev_only import DEV
 OUT=ROOT/'results/e66_module_transfer';FIELDS=['RecordingTime','AVL_Current','AVL_Voltage','AhAccu_Charge','AhAccu_Discharge'];THERM=['A1','A2','A3','B1','C1','D1','E1','E2','E3']
+def trim_terminal_padding(d):
+ if len(d['RecordingTime'])>1 and all(not np.isfinite(d[k][-1]) for k in FIELDS):
+  return {k:v[:-1] for k,v in d.items()},1
+ return d,0
+
 def read(name):
  if name not in DEV:raise ValueError('not development allowlist')
  import matio,pandas as pd
@@ -20,9 +25,9 @@ def read(name):
   f.write(blob);f.flush();a=matio.load_from_mat(f.name,raw_data=False)['meas']
  tables={k:a[k].flat[0] for k in FIELDS+THERM if k in a.dtype.names};base=tables['RecordingTime']
  if any(not isinstance(v,pd.DataFrame) or len(v)!=len(base) or not v.index.equals(base.index) or v.shape[1]!=1 for v in tables.values()):raise ValueError('unaligned tables')
- d={k:pd.to_numeric(v.iloc[:,0],errors='coerce').to_numpy(dtype=float) for k,v in tables.items()};t=d['RecordingTime']
+ d={k:pd.to_numeric(v.iloc[:,0],errors='coerce').to_numpy(dtype=float) for k,v in tables.items()};d,removed=trim_terminal_padding(d);t=d['RecordingTime']
  if not all(np.all(np.isfinite(d[k])) for k in FIELDS) or np.any(np.diff(t)<=0):raise ValueError('nonfinite/clock')
- d['source_sha256']=hashlib.sha256(blob).hexdigest();return d
+ d['source_sha256']=hashlib.sha256(blob).hexdigest();d['terminal_padding_removed']=removed;return d
 
 def parameters(soc,T):
  f=json.loads((o.OUT/'GENERATOR_B_FREEZE.json').read_text());p=c.params(f['parent_k'],soc,T);fn=p['Positive electrode OCP [V]']
@@ -49,7 +54,7 @@ def window(name):
  q=np.r_[0,np.cumsum((I[1:]+I[:-1])*.5*np.diff(t)/3600)];counter=d['AhAccu_Charge']+d['AhAccu_Discharge'];counter=counter-counter[0]
  corr=float(np.corrcoef(q,counter)[0,1]) if np.std(q)>1e-6 and np.std(counter)>1e-6 else None
  if corr is None or corr<.9:raise ValueError('counter sign/timing check')
- temps=np.array([d[k][ix] for k in THERM if k in d]);meta={'name':name,'sha256':d['source_sha256'],'rows':len(t),'activation_time_s':float(t[a]),'duration_s':float(t[ix[-1]]-t[a]),'initial_SOC_from_pre_voltage':z,'initial_mean_surface_T_C':initialT,'initial_mean_cell_V':initialV,'surface_T_range_C':[float(np.nanmin(temps)),float(np.nanmax(temps))],'counter_integral_correlation':corr,'counter_integral_RMSE_Ah':float(np.sqrt(np.mean((q-counter)**2))),'current_module_range_A':[float(np.min(I[ix])),float(np.max(I[ix]))]}
+ temps=np.array([d[k][ix] for k in THERM if k in d]);meta={'name':name,'sha256':d['source_sha256'],'rows':len(t),'terminal_padding_removed':d['terminal_padding_removed'],'activation_time_s':float(t[a]),'duration_s':float(t[ix[-1]]-t[a]),'initial_SOC_from_pre_voltage':z,'initial_mean_surface_T_C':initialT,'initial_mean_cell_V':initialV,'surface_T_range_C':[float(np.nanmin(temps)),float(np.nanmax(temps))],'counter_integral_correlation':corr,'counter_integral_RMSE_Ah':float(np.sqrt(np.mean((q-counter)**2))),'current_module_range_A':[float(np.min(I[ix])),float(np.max(I[ix]))]}
  return t[ix]-t[a],-I[ix]/2,d['AVL_Voltage'][ix]/6,meta
 
 def simulate(name,kind):
@@ -58,7 +63,7 @@ def simulate(name,kind):
  grid=np.linspace(0,t[-1],301);g,pred,_,coverage,term=c.run_model(p,grid,kind,40);e=pred-np.interp(g,t,v);rmse=float(np.sqrt(np.mean(e*e)));mx=float(np.max(abs(e)))
  return {'status':'COMPLETED','name':name,'model':kind,'metadata':meta,'RMSE_mean_cell_V':rmse,'max_error_mean_cell_V':mx,'coverage':coverage,'termination':term,'gate':'PASS' if rmse<=.05 and mx<=.15 and coverage>=.95 else 'FAIL','model_times_s':g.tolist(),'model_mean_cell_V':pred.tolist()}
 
-def signature():return {'script_sha256':c.sha(__file__),'protocol_sha256':c.sha(OUT/'PROTOCOL.json'),'cell_freeze_sha256':c.sha(o.OUT/'GENERATOR_B_FREEZE.json'),'development_allowlist':sorted(DEV),'reserved_numeric_access':0}
+def signature():return {'script_sha256':c.sha(__file__),'amendment_sha256':c.sha(OUT/'TERMINAL_PADDING_AMENDMENT.json'),'protocol_sha256':c.sha(OUT/'PROTOCOL.json'),'cell_freeze_sha256':c.sha(o.OUT/'GENERATOR_B_FREEZE.json'),'development_allowlist':sorted(DEV),'reserved_numeric_access':0}
 def run():
  f=signature();path=OUT/'TRANSFER_FREEZE.json'
  if path.exists() and json.loads(path.read_text())!=f:raise ValueError('transfer drift')

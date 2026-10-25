@@ -1,0 +1,7 @@
+{
+  "finding": "Each of six development files has one terminal row with all five required numeric fields missing; earlier rows finite with strict1s clock. Reproduced strict rejection after environment restoration. No solver predictions were produced.",
+  "rule": "Remove exactly one final row only when RecordingTime,AVL_Current,AVL_Voltage,AhAccu_Charge,AhAccu_Discharge are all nonfinite there; never delete interior or partially missing observations; keep original hashes and removed-row count.",
+  "physics_parameters_changed": false,
+  "selection_and_gates_changed": false,
+  "registered_before_new_predictions": true
+}
