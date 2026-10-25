@@ -1,0 +1,13 @@
+{
+ "scope":"exploratory follow-up after frozen kinetic candidate failed C3 endpoint gate; preserve failed predecessor",
+ "training":"full first contiguous C20 and C3 discharge segments already development; equal curve weighting,500 equally spaced time points each",
+ "parameter":"single additive positive-electrode OCP offset relative to kinetic candidate; k and all remaining parameters fixed",
+ "estimator":"closed-form least-squares offset = negative mean of the two development voltage biases; bounds[-0.1,0.1]V; abort if beyond bounds",
+ "physics":"uniform positive OCP shift should shift absolute cell voltage by same amount; verify with actual SPMe/DFN solves and max discrepancy <=1e-6V",
+ "evaluation":"0.5C and 1C full curves, SPMe and DFN mesh40, same50mV RMSE,150mV max,95percent coverage; no tuning against these evaluation results",
+ "relative_pulse_transfer":"HPPC and GITT voltages relative to model initial OCV are expected invariant; verify median HPPC and firstGITT SPMe mesh40 with max prediction gap <=1e-6V",
+ "numerics":"same solver and tolerances as predecessor; inherited mesh results only conditional on verified gauge identity, explicitly label them inherited",
+ "provenance":"freeze before follow-up predictions; previous evaluation exposure remains, NOT confirmatory or blind validation",
+ "protected":"zero module validation/blind numerical access, zero historical reserved episodes",
+ "approval":"no automatic overall 4B approval; no thermal or diagnostic claims"
+}
