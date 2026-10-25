@@ -1,0 +1,15 @@
+{
+  "script_sha256": "6cd273d239605466ed17ef37a5472c72fd1f97f8c2dbd9e86a856d78ff0b25ae",
+  "pulse_script_sha256": "b2065c387972d2f542786cc4f4f3e8d49d8159bb3c045d1f96cd60eee7c08ae0",
+  "protocol_sha256": "d5c6c99eb46efe3250e9f5781bd50d850bd3a8ef24ca7f54b9bcff38ed38dbf7",
+  "base_fit_sha256": "9ff5c54c5c991c30479fc076fb0fc5a12e7cf16f64f6b87be128cc77cbf1762b",
+  "archive_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "versions": {
+    "pybamm": "26.4.2",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pybammsolvers": "0.6.0",
+    "casadi": "3.7.2"
+  },
+  "python": "3.12.14"
+}

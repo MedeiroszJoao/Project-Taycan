@@ -1,0 +1,19 @@
+{
+ "scope":"effective joint kinetic calibration, not identification of individual E66 electrode parameters",
+ "development":"three quality-filtered 25C HPPC pulses already exposed; previous C20/C3 OCP fit fixed",
+ "evaluation":"six GITT segments and 0.5C/1C curves previously exposed; separate-session transfer, explicitly nonblind",
+ "protected":"no module validation/blind numeric payload, no historical reserved episodes",
+ "parameters":{"joint_exchange_current_multiplier":[0.5,8]},
+ "fixed":"previous OCP corrections, contact R, Q=61.259778569358865 Ah, Chen2020 diffusivity and geometry",
+ "fit":"minimize equal-pulse mean squared loaded relative-voltage residual; bounded scalar search in log multiplier; mesh40; max20 iterations xatol0.01; deterministic",
+ "profiles":"fixed multipliers 0.5,1,1.5,2,3,4,6,8; report per-pulse optima from profile and leave-one-pulse-out grid optima; not confidence intervals",
+ "freeze":"write code/protocol/fit/source hashes and versions before any new predictive evaluation; reject drift",
+ "evaluation_models":["SPMe","DFN"],
+ "numerics":"mesh40, rtol1e-7 atol1e-8; mesh80 SPMe for median HPPC and first GITT; each solve at most90s",
+ "gates":{"absolute_discharge_RMSE_V":0.05,"absolute_discharge_max_error_V":0.15,"coverage_min":0.95,"refinement_max_V":0.005,"GITT_relative_RMSE_V":0.05,"GITT_relative_max_error_V":0.15},
+ "GITT":"constant median measured discharge followed by 300s rest, initial SOC coulomb proxy and isothermal initial measured T; relative baseline anchored; no diffusion coefficient fit",
+ "uncertainty":"no iid confidence intervals or inference to independent cells; scalar profile conditional on fixed nuisance parameters",
+ "failure_policy":"record errors/timeouts and failed gates without retuning; nonconvergence not numerical PASS",
+ "thermal":"temperature prediction not implemented; no thermal validation claim",
+ "approval":"results may FAIL or remain INCONCLUSIVE; no stage5 authorization"
+}
