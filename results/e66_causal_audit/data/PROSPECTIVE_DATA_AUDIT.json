@@ -1,0 +1,70 @@
+{
+  "classification": "PROSPECTIVE_DIAGNOSTIC_ON_ALREADY_EXPOSED_DATA_NOT_NEW_VALIDATION",
+  "created_utc": "2026-10-25T05:41:45.521254+00:00",
+  "baseline_commit": "809b5c57d96f8ad4d81d7a612d8bdbd464548b02",
+  "hypotheses": [
+    "H4 capacity-current normalization",
+    "H7 parser and alignment",
+    "H1/H5 measured initial-state and temperature evidence only"
+  ],
+  "authorized_numeric_members": [
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-26-23_19.37 31974_C20Dis.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/07-27-23_19.28 31974_Cap_C_3.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat"
+  ],
+  "source_outer_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "source_inner_sha256": "fc65efb69fe196952b430443b0e3c8df0ff789076f91ecebe3f8e10d86937e65",
+  "held_fixed": [
+    "historical segment implementation",
+    "no model fitting",
+    "no physical model changes",
+    "no source mutations"
+  ],
+  "variations": {
+    "current_threshold_A": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "voltage_lower_threshold_V": [
+      2.0,
+      2.5,
+      2.8
+    ],
+    "integration": [
+      "trapezoid",
+      "left",
+      "right",
+      "coarse_every_2",
+      "coarse_every_10"
+    ],
+    "trim_samples_each_endpoint": [
+      1,
+      5
+    ],
+    "gap_warning_multiple_of_median": 5
+  },
+  "metrics": [
+    "raw selected counts and omitted discharge",
+    "counter difference vs current integral",
+    "sample interval distribution and large-gap fraction",
+    "loaded and preceding-rest evidence",
+    "current/Power polarity",
+    "integrated capacities and normalized Crates",
+    "temperature ranges"
+  ],
+  "refutation_criteria": [
+    "H4 dimensional/sign error weakened if measured discharge sign and integration agree with counter and power",
+    "H7 truncation/loss as dominant cause weakened if selected evaluation covers all finite rows and no internal large gaps",
+    "normalization physical validity remains unidentifiable from dimensional checks alone"
+  ],
+  "limitations": [
+    "one previously exposed cell",
+    "counter and current may share instrument hence not independent metrology",
+    "no historical original freeze recovered",
+    "no raw measurements published"
+  ],
+  "budget": "four allowed MAT files only; 2min CPU expected; stop on hash mismatch or unknown field",
+  "original_source_sha256": "415f2ec033c41069f646600046a7d3588a010c93101aba83c974e544dd97bb30"
+}

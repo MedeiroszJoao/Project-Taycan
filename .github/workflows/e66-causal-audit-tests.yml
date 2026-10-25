@@ -1,0 +1,22 @@
+name: E66 causal audit regression tests (manual only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pybamm==26.4.2
+      - name: Regression and independent receipt tests, no raw datasets
+        env:
+          PYTHONPATH: src/simulator:src:.
+          PYBAMM_DISABLE_TELEMETRY: 'true'
+        run: |
+          python -m unittest discover -s tests/unit -p 'test_*.py' -v
+          python scripts/audit_e66_causal_receipts.py

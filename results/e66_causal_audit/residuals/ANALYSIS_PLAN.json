@@ -1,0 +1,26 @@
+{
+  "classification": "POSTHOC_CAUSAL_DIAGNOSTIC_AFTER_1C_REVEALED",
+  "source_sha256": "992175420913832a289e218fb78b4cbb6a8db2531e737ac7e78fa19fbba3782b",
+  "evaluation_sha256": "56f18292dd8a5499de49aa63284d5a1d01fbc4b7c457db8ec385dec267eb974e",
+  "authorized_files": [
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_12.33 31974_Dis_0p5C.mat",
+    "Cell Data/Characterization/25degC/Part 1 (Full Char - C_20Dis at 25degC)/08-03-23_17.47 31974_Dis_1C.mat"
+  ],
+  "fixed": "existing500point predictions only; no fit/re-simulation",
+  "hypotheses": [
+    "H2 inherited parameter mismatch",
+    "H3 constant/current/progress-dependent residual",
+    "H5 temperature association not causality"
+  ],
+  "falsifiers": [
+    "Nearzero centered error would support pure-offset description; material centered residual refutes exact constant explanation",
+    "If residual/current curve differs by rate, a single pureohmic correction is insufficient",
+    "High correlations among progress and temperature prevent causal attribution"
+  ],
+  "metrics": "biasfractionMSE, centeredRMSE, thirds, firstlast10%, correlations, descriptive standardized regression,10bins",
+  "independent_n": "one cell,2sessions,2models of same measurements",
+  "no_iid_CI": true,
+  "cost": "no solver, <1minute expected",
+  "protected_data_access": 0,
+  "raw_export": false
+}

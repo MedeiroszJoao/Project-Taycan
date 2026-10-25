@@ -1,0 +1,54 @@
+{
+  "classification": "RETROSPECTIVE_CAUSAL_SENSITIVITY_NOT_VALIDATION",
+  "created_utc": "2026-10-25T05:43:23.698773+00:00",
+  "audited_branch_SHA": "809b5c57d96f8ad4d81d7a612d8bdbd464548b02",
+  "audited_main_SHA": "30f11e9070cebae5e0a9c851a7b0bdcf0777f5d2",
+  "posthoc_artifact": {
+    "id": 12573407008,
+    "run": 40126047070,
+    "sha256": "bed7c9cfedc5cad3da59a380f42d8b2fe733834d008d7ce2139d2cdd6eede1c0"
+  },
+  "coefficients_source": "results/tmp/e66_causal/receipts/e66_calibration/FIT_RESULT.json",
+  "allowed_files": "onlyoriginal4cellfiles; no protectedmoduledata",
+  "cases": [
+    "baseline",
+    "initial_soc_0p99",
+    "reinitialize_corrected_ocp",
+    "temperature_plus5",
+    "temperature_measured_oracle",
+    "diffusivity_both_x2",
+    "kinetics_both_x2",
+    "contact_plus0p001",
+    "capacity_nominal65"
+  ],
+  "SPMe_rates": [
+    0.5,
+    1
+  ],
+  "DFN_1C_cases": [
+    "temperature_measured_oracle",
+    "kinetics_both_x2"
+  ],
+  "fixed": "allposthocfitcoefficients except explicit singleintervention,Chenremainingparams,mesh20,tol1e-6/1e-7",
+  "no_refit": true,
+  "time_budget": "120sjob,2workers,20solvesmax;timeoutretained",
+  "outputs": [
+    "fullhorizoncoverage",
+    "RMSE",
+    "bias",
+    "centeredRMSE",
+    "baselinegap",
+    "initialOCV",
+    "initialterminalV"
+  ],
+  "refutations": {
+    "H1": "smallerSOC worsening rejects simpleoverestimatedSOC remedy; correctedOCPinitialization changesstate conditional not actualSOCestimate",
+    "H2": "factor2transportkinetic sensitivity cancorroborate possible mechanism but notuniqueparameters",
+    "H3": "positiveR mustlowerVdischarge",
+    "H4": "nominal65Ah sensitivity separate unitcorrectnessfromeffectivecapacity",
+    "H5": "measuredsurfaceT oracle canbound explanatory contribution only, not thermalprediction",
+    "baseline": "maxdeviationfromarchivedmodelcurve <=0.0001V; differentenvironmentnotbitwiseclaim"
+  },
+  "statistical_unit": "onecell; nosampleiidCI",
+  "improvement_threshold": "descriptive only no tune/select finalparameters; original50mVgate preserved"
+}

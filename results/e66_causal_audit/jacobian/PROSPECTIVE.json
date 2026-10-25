@@ -1,0 +1,44 @@
+{
+  "classification": "POSTHOC_CAUSAL_NUMERICAL_AUDIT_NOT_REFIT",
+  "hypothesis": "rank2 caused by vanishing relative R perturbation at zero boundary",
+  "falsification": "absolute R derivative null or rank deficiency persists under stable steps",
+  "source_sha256": "a077443fb130ecda10b5ea5c033ae058b7ac8fdb1b2f7ac248e921ed6354ff53",
+  "fitter_sha256": "415f2ec033c41069f646600046a7d3588a010c93101aba83c974e544dd97bb30",
+  "fit_receipt_sha256": "9ff5c54c5c991c30479fc076fb0fc5a12e7cf16f64f6b87be128cc77cbf1762b",
+  "archive_sha256": "d569bb98ec52ed6b0e151e3269154063dcc4b8a13ab05b30ac7bb3fa94cfd20b",
+  "fit_member_sha256": [
+    "c2f94cbdecd24fc71f461e4ff5f895ec7f4ba1e816b662c3e6e786046a28adff",
+    "1d40bb5c842f2e5946ce04834779c691fcaecbdfc31c7ca4a853d14944ca345a"
+  ],
+  "fixed_parameters": [
+    -0.040210127715620665,
+    -0.03985910981028412,
+    2.6387202740172146e-16
+  ],
+  "q_Ah": 61.259778569358865,
+  "absolute_steps": [
+    0.001,
+    0.0001
+  ],
+  "scheme": "forward absolute differences, physical units V,V,ohm; R one-sided feasible at lowerbound",
+  "mesh": 40,
+  "rtol": 1e-08,
+  "atol": 1e-09,
+  "points_per_curve": 150,
+  "fit_duration_fraction": 0.9,
+  "rank_thresholds_relative": [
+    0.001,
+    1e-06
+  ],
+  "stability_max_relative_frobenius": 0.01,
+  "contact_derivative_analytic": "dV/dR=-I_model for imposed current and isothermal contact loss",
+  "analytic_contact_max_error_V_per_ohm": 0.01,
+  "timeout_seconds_per_solve": 120,
+  "planned_jobs": 14,
+  "sequential_jobs": true,
+  "no_refit": true,
+  "evaluation_1C_used": false,
+  "no_structural_identifiability_claim": true,
+  "python": "3.12.14",
+  "pybamm": "26.4.2"
+}
