@@ -1,0 +1,7 @@
+{
+ "registered_before_kinetic_freeze_and_new_transfer_predictions":true,
+ "conditional_physics":"first eligible GITT segment, SPMe mesh40, fixed calibrated k, initial SOC shifts -0.02,+0.02 and initial temperature shifts -5,+5 K independently; no refit",
+ "sensor_stress":"all evaluated records, additive measurement bias +/-0.005 V, time shift +/-0.1 s on shared domain, and deterministic 20% missing samples seed1729; recompute errors; not independent replications",
+ "limits":"stress perturbations are declared scenarios, not measured instrument confidence intervals; finite solver failures retained",
+ "historical_module_reserved_access":0
+}
