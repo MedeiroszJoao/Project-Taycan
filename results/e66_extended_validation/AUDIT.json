@@ -1,0 +1,71 @@
+{
+  "decision": "FAIL",
+  "preregistration_commit": "ae05470813fa0be1be71ab9f99df179cc4ef03e9",
+  "checks": [
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 40,
+      "RMSE_mV": 15.472299808492686,
+      "maximum_mV": 52.92398821843255,
+      "gate": "PASS"
+    },
+    {
+      "index": 0,
+      "model": "DFN",
+      "mesh": 40,
+      "RMSE_mV": 14.357470615962507,
+      "maximum_mV": 49.80754959442516,
+      "gate": "PASS"
+    },
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 80,
+      "RMSE_mV": 16.87898400384254,
+      "maximum_mV": 55.16618758047483,
+      "gate": "PASS"
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "RMSE_mV": 116.26165529975398,
+      "maximum_mV": 196.94296253147434,
+      "gate": "FAIL"
+    },
+    {
+      "index": 1,
+      "model": "DFN",
+      "mesh": 40,
+      "RMSE_mV": 113.94414508799248,
+      "maximum_mV": 193.66228827340137,
+      "gate": "FAIL"
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 80,
+      "RMSE_mV": 116.25319482802283,
+      "maximum_mV": 196.9930076631042,
+      "gate": "FAIL"
+    }
+  ],
+  "refinement": [
+    {
+      "index": 0,
+      "maximum_gap_mV": 4.199769653808379,
+      "gate": "PASS",
+      "common_interval_only": false
+    },
+    {
+      "index": 1,
+      "maximum_gap_mV": 3.571178419450168,
+      "gate": "PASS",
+      "common_interval_only": false
+    }
+  ],
+  "scope": "nonblind extension, one module, initial temperature fixed",
+  "final_blind_numeric_access": 0,
+  "historical_reserved_access": 0
+}

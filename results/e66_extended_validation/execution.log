@@ -1,0 +1,10 @@
+0 SPMe 40 COMPLETED 0.015472299808492686 PASS
+0 DFN 40 COMPLETED 0.014357470615962507 PASS
+1 SPMe 40 COMPLETED 0.11626165529975398 FAIL
+1 DFN 40 COMPLETED 0.11394414508799248 FAIL
+0 SPMe 80 COMPLETED 0.01687898400384254 PASS
+1 SPMe 80 COMPLETED 0.11625319482802282 FAIL
+/root/.local/lib/python3.12/site-packages/matio/utils/matconvert.py:81: MatConvertWarning: mat_to_datetime: Ignoring 'fmt' property. Numpy datetime64 does not support custom formats.
+  return convert_func(
+/root/.local/lib/python3.12/site-packages/matio/utils/matconvert.py:81: MatConvertWarning: mat_to_datetime: Ignoring 'fmt' property. Numpy datetime64 does not support custom formats.
+  return convert_func(

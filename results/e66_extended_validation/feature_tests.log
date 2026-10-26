@@ -1,0 +1,8 @@
+test_charge_sign_is_negative_power (test_e66_scoped_features.ScopedModuleFeatureTests.test_charge_sign_is_negative_power) ... ok
+test_constant_power_energy_and_masks (test_e66_scoped_features.ScopedModuleFeatureTests.test_constant_power_energy_and_masks) ... ok
+test_counters_never_synthesized (test_e66_scoped_features.ScopedModuleFeatureTests.test_counters_never_synthesized) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

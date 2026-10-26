@@ -1,0 +1,53 @@
+{
+  "scope": "homogeneous isothermal A constitutive law only; same measured current and observation adapter as B",
+  "results": [
+    {
+      "index": 0,
+      "age": 0,
+      "RMSE_V": 0.030989150087253586,
+      "max_error_V": 0.07263200301457455,
+      "SOC_proxy_range": [
+        0.6966060960378978,
+        0.7036793518518519
+      ],
+      "initialization": "invert A own linear OCV using same prebaseline BMS voltage; zero polarization",
+      "integration": "left-held measured current for exact RC step; no clamping; not full A backend"
+    },
+    {
+      "index": 0,
+      "age": 0.15,
+      "RMSE_V": 0.02906238011223593,
+      "max_error_V": 0.07031894956696642,
+      "SOC_proxy_range": [
+        0.6964764436910003,
+        0.7036793518518519
+      ],
+      "initialization": "invert A own linear OCV using same prebaseline BMS voltage; zero polarization",
+      "integration": "left-held measured current for exact RC step; no clamping; not full A backend"
+    },
+    {
+      "index": 1,
+      "age": 0,
+      "RMSE_V": 0.2677928462973213,
+      "max_error_V": 0.36172221038544566,
+      "SOC_proxy_range": [
+        0.010975580318690833,
+        0.7553997620585695
+      ],
+      "initialization": "invert A own linear OCV using same prebaseline BMS voltage; zero polarization",
+      "integration": "left-held measured current for exact RC step; no clamping; not full A backend"
+    },
+    {
+      "index": 1,
+      "age": 0.15,
+      "RMSE_V": 0.25851271613564564,
+      "max_error_V": 0.35751290497512755,
+      "SOC_proxy_range": [
+        0.010975579923989306,
+        0.7690450114309935
+      ],
+      "initialization": "invert A own linear OCV using same prebaseline BMS voltage; zero polarization",
+      "integration": "left-held measured current for exact RC step; no clamping; not full A backend"
+    }
+  ]
+}

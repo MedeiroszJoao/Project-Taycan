@@ -1,0 +1,67 @@
+{
+  "posthoc": true,
+  "no_refitting": true,
+  "results": [
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 40,
+      "AVL_error_bias_V": -0.00838765355792924,
+      "BMS_RMSE_V": 0.01687041200687,
+      "paired_port_residual_RMSE_V": 0.017616455091327,
+      "paired_port_residual_bias_V": 0.0076844113129364055,
+      "algebraic_identity_max_gap_V": 5.204170427930421e-16
+    },
+    {
+      "index": 0,
+      "model": "DFN",
+      "mesh": 40,
+      "AVL_error_bias_V": -0.008316876548752508,
+      "BMS_RMSE_V": 0.015435341691909535,
+      "paired_port_residual_RMSE_V": 0.017616455091327,
+      "paired_port_residual_bias_V": 0.0076844113129364055,
+      "algebraic_identity_max_gap_V": 5.204170427930421e-16
+    },
+    {
+      "index": 0,
+      "model": "SPMe",
+      "mesh": 80,
+      "AVL_error_bias_V": -0.008372102278684857,
+      "BMS_RMSE_V": 0.018477452369863326,
+      "paired_port_residual_RMSE_V": 0.017616455091327,
+      "paired_port_residual_bias_V": 0.0076844113129364055,
+      "algebraic_identity_max_gap_V": 5.204170427930421e-16
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 40,
+      "AVL_error_bias_V": 0.09121409224453454,
+      "BMS_RMSE_V": 0.13793560596392856,
+      "paired_port_residual_RMSE_V": 0.03046212478465363,
+      "paired_port_residual_bias_V": 0.028527450345801484,
+      "algebraic_identity_max_gap_V": 5.273559366969494e-16
+    },
+    {
+      "index": 1,
+      "model": "DFN",
+      "mesh": 40,
+      "AVL_error_bias_V": 0.08366582447965867,
+      "BMS_RMSE_V": 0.13440295418791257,
+      "paired_port_residual_RMSE_V": 0.03046212478465363,
+      "paired_port_residual_bias_V": 0.028527450345801484,
+      "algebraic_identity_max_gap_V": 5.273559366969494e-16
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "mesh": 80,
+      "AVL_error_bias_V": 0.09127855106241095,
+      "BMS_RMSE_V": 0.137944708731328,
+      "paired_port_residual_RMSE_V": 0.03046212478465363,
+      "paired_port_residual_bias_V": 0.028527450345801484,
+      "algebraic_identity_max_gap_V": 5.412337245047638e-16
+    }
+  ],
+  "warning": "BMS secondary target is not substituted for primary AVL; voltage-port relation is empirical, not a proved contact resistance"
+}

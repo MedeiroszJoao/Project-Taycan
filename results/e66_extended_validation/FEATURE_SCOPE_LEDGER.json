@@ -1,0 +1,198 @@
+[
+  {
+    "feature": "F01",
+    "name": "mean_R33_W",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F02",
+    "name": "sd_R33_W",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F03",
+    "name": "beta_tau2_W_per_Nm2",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F04",
+    "name": "beta_omega_W_per_rad_s",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F05",
+    "name": "sd_regressed_R33_W",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F06",
+    "name": "mean_current_diff_A",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Second independently modeled current acquisition not supplied to this scoped adapter"
+  },
+  {
+    "feature": "F07",
+    "name": "sd_current_diff_A",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Second independently modeled current acquisition not supplied to this scoped adapter"
+  },
+  {
+    "feature": "F08",
+    "name": "mean_module_pair_voltage_spread_V",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Full168group/28module vehicle voltage topology not observed"
+  },
+  {
+    "feature": "F09",
+    "name": "p95_module_pair_voltage_spread_V",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Full168group/28module vehicle voltage topology not observed"
+  },
+  {
+    "feature": "F10",
+    "name": "mean_pack_group_voltage_consistency_V",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Full168group/28module vehicle voltage topology not observed"
+  },
+  {
+    "feature": "F11",
+    "name": "sd_pack_group_voltage_consistency_V",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Full168group/28module vehicle voltage topology not observed"
+  },
+  {
+    "feature": "F12",
+    "name": "mean_BMS_SOC_pct",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No independently validated BMS SOC channel supplied; latent model SOC prohibited"
+  },
+  {
+    "feature": "F13",
+    "name": "SOC_slope_pct_per_hour",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No independently validated BMS SOC channel supplied; latent model SOC prohibited"
+  },
+  {
+    "feature": "F14",
+    "name": "net_Ah_counter_minus_BMS_integral_Ah",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No independently qualified counter timing and acquisition supplied"
+  },
+  {
+    "feature": "F15",
+    "name": "mean_thermal_spread_C",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Nine positions on cell4 do not represent28vehicle modules"
+  },
+  {
+    "feature": "F16",
+    "name": "p95_thermal_spread_C",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Nine positions on cell4 do not represent28vehicle modules"
+  },
+  {
+    "feature": "F17",
+    "name": "max_internal_module_T_spread_C",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "Nine positions on cell4 do not represent28vehicle modules"
+  },
+  {
+    "feature": "F18",
+    "name": "mean_DIFF_MOTOR_T_C",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No motor/differential temperatures"
+  },
+  {
+    "feature": "F19",
+    "name": "slope_DIFF_MOTOR_T_C_per_hour",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No motor/differential temperatures"
+  },
+  {
+    "feature": "F20",
+    "name": "integrated_observed_HV_kWh",
+    "mask": 0,
+    "status": "MODULE_ANALOGUE_ONLY",
+    "reason": "Module V and imposed measured I; not pack validation"
+  },
+  {
+    "feature": "F21",
+    "name": "negative_DC_power_fraction",
+    "mask": 0,
+    "status": "MODULE_ANALOGUE_ONLY",
+    "reason": "Module V and imposed measured I; not pack validation"
+  },
+  {
+    "feature": "F22",
+    "name": "mean_min_isolation_kohm",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No corresponding isolation measurement"
+  },
+  {
+    "feature": "F23",
+    "name": "min_isolation_kohm",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No corresponding isolation measurement"
+  },
+  {
+    "feature": "F24",
+    "name": "time_mean_sum_torque_squared",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F25",
+    "name": "time_mean_sum_abs_angular_speed",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F26",
+    "name": "beta_tau_W_per_Nm",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F27",
+    "name": "beta_tauomega_dimensionless",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No measured motor torque/RPM in this module experiment"
+  },
+  {
+    "feature": "F28",
+    "name": "net_kWh_counter_minus_BMS_DC_integral_kWh",
+    "mask": 1,
+    "status": "NOT_VALIDATED",
+    "reason": "No independently qualified counter timing and acquisition supplied"
+  }
+]

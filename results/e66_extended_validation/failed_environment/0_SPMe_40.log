@@ -1,0 +1,21 @@
+/root/.local/lib/python3.12/site-packages/matio/utils/matconvert.py:81: MatConvertWarning: mat_to_datetime: Ignoring 'fmt' property. Numpy datetime64 does not support custom formats.
+  return convert_func(
+/root/.local/lib/python3.12/site-packages/matio/subsystem/subsys.py:1039: MatConvertWarning: Failed to convert MCOS object of class table to native Python type. Loading as MatlabOpaque instead: pyarrow>=10.0.1 is required for PyArrow backed StringArray.
+  return self.load_mcos_object(metadata, type_system)
+Traceback (most recent call last):
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_extended_validation.py", line 87, in <module>
+    elif sys.argv[1]=='worker':print(json.dumps(solve(int(sys.argv[2]),sys.argv[3],int(sys.argv[4]))))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_extended_validation.py", line 41, in solve
+    t,I,va,vb,meta,d,ix=window(index); f=json.loads((v.a.OUT/'ADAPTER_FREEZE.json').read_text())
+                        ^^^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/e66_extended_validation.py", line 15, in window
+    _, _, _, _, meta = v.window(index)
+                       ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/validate_e66_reserved_module_sessions.py", line 28, in window
+    d=read(FILES[index]);t=d['RecordingTime'];I=d['AVL_Current'];start=a.select_start(I,1.5) if index==0 else select_charge(I);ix=np.flatnonzero((t>=t[start])&(t<=t[start]+300))
+      ^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/00a46563aa6f/taycan/scripts/validate_e66_reserved_module_sessions.py", line 22, in read
+    if any(not isinstance(v,pd.DataFrame) or len(v)!=len(base) or not v.index.equals(base.index) or v.shape[1]!=1 for v in tables.values()):raise ValueError('unaligned tables')
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unaligned tables

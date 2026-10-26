@@ -1,0 +1,42 @@
+{
+  "posthoc": true,
+  "results": [
+    {
+      "index": 0,
+      "model": "SPMe",
+      "RMSE_V": 0.013983030693507053,
+      "maximum_V": 0.04405432728065506,
+      "coverage": 1.0,
+      "voltage_threshold_status": "PASS",
+      "not_thermal_validation": true
+    },
+    {
+      "index": 0,
+      "model": "DFN",
+      "RMSE_V": 0.014235913034235092,
+      "maximum_V": 0.04760632704180168,
+      "coverage": 1.0,
+      "voltage_threshold_status": "PASS",
+      "not_thermal_validation": true
+    },
+    {
+      "index": 1,
+      "model": "SPMe",
+      "RMSE_V": 0.1019712948078595,
+      "maximum_V": 0.17780658034283844,
+      "coverage": 1.0,
+      "voltage_threshold_status": "FAIL",
+      "not_thermal_validation": true
+    },
+    {
+      "index": 1,
+      "model": "DFN",
+      "RMSE_V": 0.09973075991101414,
+      "maximum_V": 0.17374612033208633,
+      "coverage": 1.0,
+      "voltage_threshold_status": "FAIL",
+      "not_thermal_validation": true
+    }
+  ],
+  "thermal_prediction_validated": false
+}
