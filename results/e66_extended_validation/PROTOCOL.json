@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-26",
+  "scope": "nonblind fixed extension of the two previously released validation sessions; four final blind files excluded",
+  "selection": "same start and initial conditions as published 300s protocol; require complete next1800s; no residual-based shortening",
+  "models": "unchanged B cell and observation freezes; SPMe and DFN mesh40, SPMe mesh80; isothermal initial measured temperature",
+  "thresholds": {"RMSE_V_per_mean_cell":0.05,"maximum_V_per_mean_cell":0.15,"coverage_min":0.95,"SOC_min":0,"SOC_max":1,"mesh_max_gap_V_per_mean_cell":0.005},
+  "solver": "existing frozen run_model rtol1e-7 atol1e-8, 240-second wall limit per solve; missing/timeout INCONCLUSIVE, completed failed criteria FAIL",
+  "fit": "none; no parameter or initialization retuning",
+  "secondary": "errors over0-300,300-900,900-1800 seconds; measured cell4 temperature range; no thermal prediction claim",
+  "A_comparison": "unmodified parameter values, homogeneous isothermal 1RC law; ages0 and0.15; initialize by own OCV inversion of prebaseline BMS voltage; left-held current; no SOC clamp, out-of-domain marked; same fixed observation adapter; NOT full vehicle backend replay",
+  "decision": "PASS_LIMITED only if four primary cases and both mesh comparisons pass, otherwise FAIL for valid completed failing cases or INCONCLUSIVE for missing cases; never supersedes narrower300s verdict",
+  "independence": "sessions already exposed, extension is not new blind validation; one module, no population confidence intervals",
+  "no_historical_reserved_access": true
+}

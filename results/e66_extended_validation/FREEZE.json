@@ -1,0 +1,6 @@
+{
+  "scripts/e66_extended_validation.py": "97173bdc2f4f164e8776b1c4fb7aea49bcd7f8e5acab92fc382a0a547beb0a35",
+  "results/e66_extended_validation/PROTOCOL.json": "49fcd9e3849bd7ea0e5d1f43e5be23dc4450eb5a8bacdb00b86420257eb4d062",
+  "results/e66_module_reserved_validation/VALIDATION_FREEZE.json": "e9c84559d616e37ecf95591a13dad521a86667282050ab960a6b586483061061",
+  "src/simulator/taycan_sim/model.py": "af4e576cf824d30ee6aa9b2fd1f2c18d576fd269027df67c43c5e7647266ff4e"
+}
