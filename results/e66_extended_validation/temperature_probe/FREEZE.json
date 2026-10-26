@@ -1,0 +1,5 @@
+{
+  "script_sha256": "c7151a107c8b50d97d44aaedcd2f7a566f5d9233da35f1b19eee4aca6d2e238d",
+  "extended_freeze_sha256": "30b982fb91b548e9b1cb8b67377ab2be3609ceb06c9a8f7183f261c6a2715411",
+  "design": "post-hoc after1800s MCCC failure; all2sessions x2models mesh40, measured mean of9cell4thermocouples imposed as temperature; no fit; no thermal validation claim"
+}
