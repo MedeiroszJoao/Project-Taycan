@@ -1,0 +1,207 @@
+{
+  "posthoc": true,
+  "source_sha256": "144fdfb1cf64d18fbf5f8de182b1a9032ff061ea041e83c6d10fadee1403147a",
+  "final_blind_files_opened": 0,
+  "results": [
+    {
+      "session": 0,
+      "model": "SPMe",
+      "bins": [
+        {
+          "start_s": 0,
+          "end_exclusive_s": 300,
+          "n": 300,
+          "RMSE_mV": 14.644945471288947,
+          "bias_mV": -7.029960002249824
+        },
+        {
+          "start_s": 300,
+          "end_exclusive_s": 600,
+          "n": 300,
+          "RMSE_mV": 14.350167490651872,
+          "bias_mV": -7.7157041245288065
+        },
+        {
+          "start_s": 600,
+          "end_exclusive_s": 900,
+          "n": 300,
+          "RMSE_mV": 15.738843974778684,
+          "bias_mV": -8.998557291459813
+        },
+        {
+          "start_s": 900,
+          "end_exclusive_s": 1200,
+          "n": 300,
+          "RMSE_mV": 16.04189638037922,
+          "bias_mV": -9.14521891483107
+        },
+        {
+          "start_s": 1200,
+          "end_exclusive_s": 1500,
+          "n": 300,
+          "RMSE_mV": 15.152587233998307,
+          "bias_mV": -7.047082610696849
+        },
+        {
+          "start_s": 1500,
+          "end_exclusive_s": 1800,
+          "n": 300,
+          "RMSE_mV": 16.79344435765295,
+          "bias_mV": -10.43309302942162
+        }
+      ],
+      "oracle_constant_offset_minimum_RMSE_mV": 13.001512571852544,
+      "warning": "Oracle bound uses evaluation residuals; not an admissible calibration or validation."
+    },
+    {
+      "session": 0,
+      "model": "DFN",
+      "bins": [
+        {
+          "start_s": 0,
+          "end_exclusive_s": 300,
+          "n": 300,
+          "RMSE_mV": 13.641439711448042,
+          "bias_mV": -6.8308484993409
+        },
+        {
+          "start_s": 300,
+          "end_exclusive_s": 600,
+          "n": 300,
+          "RMSE_mV": 13.310574768190957,
+          "bias_mV": -7.642632877729814
+        },
+        {
+          "start_s": 600,
+          "end_exclusive_s": 900,
+          "n": 300,
+          "RMSE_mV": 14.63082788150057,
+          "bias_mV": -8.929204550899733
+        },
+        {
+          "start_s": 900,
+          "end_exclusive_s": 1200,
+          "n": 300,
+          "RMSE_mV": 14.849051369132628,
+          "bias_mV": -9.1074484373453
+        },
+        {
+          "start_s": 1200,
+          "end_exclusive_s": 1500,
+          "n": 300,
+          "RMSE_mV": 13.958670010273078,
+          "bias_mV": -7.0382211020105245
+        },
+        {
+          "start_s": 1500,
+          "end_exclusive_s": 1800,
+          "n": 300,
+          "RMSE_mV": 15.641637880889538,
+          "bias_mV": -10.405651066067787
+        }
+      ],
+      "oracle_constant_offset_minimum_RMSE_mV": 11.703269926009458,
+      "warning": "Oracle bound uses evaluation residuals; not an admissible calibration or validation."
+    },
+    {
+      "session": 1,
+      "model": "SPMe",
+      "bins": [
+        {
+          "start_s": 0,
+          "end_exclusive_s": 300,
+          "n": 300,
+          "RMSE_mV": 29.075542467195085,
+          "bias_mV": -27.341583801090195
+        },
+        {
+          "start_s": 300,
+          "end_exclusive_s": 600,
+          "n": 300,
+          "RMSE_mV": 42.401883232557374,
+          "bias_mV": 27.823119642324887
+        },
+        {
+          "start_s": 600,
+          "end_exclusive_s": 900,
+          "n": 300,
+          "RMSE_mV": 119.31911873858675,
+          "bias_mV": 118.15651242640087
+        },
+        {
+          "start_s": 900,
+          "end_exclusive_s": 1200,
+          "n": 300,
+          "RMSE_mV": 157.89286372996676,
+          "bias_mV": 157.4000305185921
+        },
+        {
+          "start_s": 1200,
+          "end_exclusive_s": 1500,
+          "n": 300,
+          "RMSE_mV": 161.6461760322577,
+          "bias_mV": 160.20522297918615
+        },
+        {
+          "start_s": 1500,
+          "end_exclusive_s": 1800,
+          "n": 300,
+          "RMSE_mV": 114.87141569958847,
+          "bias_mV": 111.16048245162015
+        }
+      ],
+      "oracle_constant_offset_minimum_RMSE_mV": 72.08856961435946,
+      "warning": "Oracle bound uses evaluation residuals; not an admissible calibration or validation."
+    },
+    {
+      "session": 1,
+      "model": "DFN",
+      "bins": [
+        {
+          "start_s": 0,
+          "end_exclusive_s": 300,
+          "n": 300,
+          "RMSE_mV": 43.78080767525862,
+          "bias_mV": -41.401360162234404
+        },
+        {
+          "start_s": 300,
+          "end_exclusive_s": 600,
+          "n": 300,
+          "RMSE_mV": 27.1286173157622,
+          "bias_mV": 11.20023704129873
+        },
+        {
+          "start_s": 600,
+          "end_exclusive_s": 900,
+          "n": 300,
+          "RMSE_mV": 101.75867122331691,
+          "bias_mV": 99.21051227853393
+        },
+        {
+          "start_s": 900,
+          "end_exclusive_s": 1200,
+          "n": 300,
+          "RMSE_mV": 158.8742499317638,
+          "bias_mV": 158.11387595951885
+        },
+        {
+          "start_s": 1200,
+          "end_exclusive_s": 1500,
+          "n": 300,
+          "RMSE_mV": 151.46955281512405,
+          "bias_mV": 150.0576901113937
+        },
+        {
+          "start_s": 1500,
+          "end_exclusive_s": 1800,
+          "n": 300,
+          "RMSE_mV": 129.36728049356537,
+          "bias_mV": 124.86636350283501
+        }
+      ],
+      "oracle_constant_offset_minimum_RMSE_mV": 77.35178093600966,
+      "warning": "Oracle bound uses evaluation residuals; not an admissible calibration or validation."
+    }
+  ]
+}

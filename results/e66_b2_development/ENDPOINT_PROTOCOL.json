@@ -1,0 +1,1 @@
+{"purpose":"exploratory development endpoint correction","offset":"first 1C MCCC rest tail BMS voltage minus frozen OCV(1,T)","initialization":"invert corrected OCV against same precharge BMS voltage","capacities_Ah":[61.259778569358865,66],"model":"SPMe mesh40","window_s":1800,"frozen_parent_unchanged":true,"evaluation_sessions_accessed":false,"not_validation":true}

@@ -1,0 +1,11 @@
+{
+  "q": 61.259778569358865,
+  "delta_V": 0.02541299049135226,
+  "initial_SOC": 0.07242757929496793,
+  "RMSE_V": 0.0715426987237875,
+  "max_error_V": 0.12593520051385335,
+  "coverage": 1.0,
+  "termination": "final time",
+  "development_only": true,
+  "not_validated": true
+}

@@ -1,0 +1,11 @@
+{
+  "runner": "direct function execution; pytest unavailable",
+  "passed": [
+    "test_short_rest_rejected",
+    "test_full_rest_and_boundary",
+    "test_clock_gap_rejected",
+    "test_current_interrupt_and_nan_split_rest",
+    "test_current_threshold"
+  ],
+  "count": 5
+}

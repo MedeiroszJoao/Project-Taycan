@@ -1,0 +1,131 @@
+{
+  "development_only": true,
+  "min_rest_s": 600,
+  "tail_s": 60,
+  "not_equilibrium_proof": true,
+  "results": [
+    {
+      "name": "20240209_0.7C_CP_Loss.mat",
+      "source_sha256": "8a1dabef7588361170924a6e1bb514e0c81c1a913ebe8b32c14803cb119e13ac",
+      "anchors": []
+    },
+    {
+      "name": "20240209_1C_CP_Loss.mat",
+      "source_sha256": "0fb0c8a5f4b3d2f55754504a5d2c45a7f1462d9140bde80b04dabc861eecf23a",
+      "anchors": [
+        {
+          "start_s": 7225.0,
+          "end_s": 8677.0,
+          "duration_s": 1452.0,
+          "cell_net_Ah": 1.206604166666664,
+          "BMS_tail_V": 3.8849999999999985,
+          "AVL_tail_V": 3.8590710382513667,
+          "BMS_tail_drift_mV_per_min": 6.414100932601043e-13,
+          "temperature_C": 31.883296903460838,
+          "tail_span_mV": 0.0
+        }
+      ]
+    },
+    {
+      "name": "20240314_1C_Test (MCCC).mat",
+      "source_sha256": "1b4484914764b7f819cab2e43639a770c2ee890488aa3e7142034f7bf3c2ad37",
+      "anchors": [
+        {
+          "start_s": 379.0,
+          "end_s": 3981.0,
+          "duration_s": 3602.0,
+          "cell_net_Ah": 0.34746388888888347,
+          "BMS_tail_V": 4.171666666666668,
+          "AVL_tail_V": 4.157622950819674,
+          "BMS_tail_drift_mV_per_min": 8.424998801943703e-13,
+          "temperature_C": 30.38652094717669,
+          "tail_span_mV": 0.0
+        },
+        {
+          "start_s": 16182.0,
+          "end_s": 21738.0,
+          "duration_s": 5556.0,
+          "cell_net_Ah": -55.5732180555569,
+          "BMS_tail_V": 3.1516666666666673,
+          "AVL_tail_V": 3.1396721311475417,
+          "BMS_tail_drift_mV_per_min": 1.3681719096290056e-12,
+          "temperature_C": 30.592987249544624,
+          "tail_span_mV": 0.0
+        },
+        {
+          "start_s": 26468.0,
+          "end_s": 27589.0,
+          "duration_s": 1121.0,
+          "cell_net_Ah": 0.1101083333321576,
+          "BMS_tail_V": 4.16811475409836,
+          "AVL_tail_V": 4.153360655737706,
+          "BMS_tail_drift_mV_per_min": -0.9254362771037493,
+          "temperature_C": 31.046247723132968,
+          "tail_span_mV": 1.6666666666669272
+        }
+      ]
+    },
+    {
+      "name": "20240315_0.5C_Test (MCCC) Part1.mat",
+      "source_sha256": "61b71a3ce146ed9bee7e618ceb0770d1c900de3ad30589c1d79d66158f2ee334",
+      "anchors": [
+        {
+          "start_s": 431.0,
+          "end_s": 2233.0,
+          "duration_s": 1802.0,
+          "cell_net_Ah": 0.41564583333333577,
+          "BMS_tail_V": 4.171666666666668,
+          "AVL_tail_V": 4.154453551912568,
+          "BMS_tail_drift_mV_per_min": 8.424998801943703e-13,
+          "temperature_C": 30.436010928961746,
+          "tail_span_mV": 0.0
+        }
+      ]
+    },
+    {
+      "name": "20240315_0.5C_Test (MCCC) Part2.mat",
+      "source_sha256": "d7a4d9dcb5519699f4873de6283130c1c791613368b08b7e854555705d0ec3b1",
+      "anchors": [
+        {
+          "start_s": 11081.0,
+          "end_s": 17519.0,
+          "duration_s": 6438.0,
+          "cell_net_Ah": -50.764777777778086,
+          "BMS_tail_V": 3.1516666666666673,
+          "AVL_tail_V": 3.137868852459016,
+          "BMS_tail_drift_mV_per_min": 1.3681719096290056e-12,
+          "temperature_C": 30.60446265938069,
+          "tail_span_mV": 0.0
+        }
+      ]
+    },
+    {
+      "name": "20240323_1.2C_CP_Loss.mat",
+      "source_sha256": "c65b1da21f265fa8a4de6078dc6b49cdf207fc7de6cdfab866b767e7e661aa1a",
+      "anchors": [
+        {
+          "start_s": 4741.0,
+          "end_s": 8342.0,
+          "duration_s": 3601.0,
+          "cell_net_Ah": -21.6535590277772,
+          "BMS_tail_V": 3.788333333333333,
+          "AVL_tail_V": 3.76811475409836,
+          "BMS_tail_drift_mV_per_min": 1.1493227384404643e-12,
+          "temperature_C": 30.142495446265936,
+          "tail_span_mV": 0.0
+        },
+        {
+          "start_s": 15555.0,
+          "end_s": 20957.0,
+          "duration_s": 5402.0,
+          "cell_net_Ah": -20.90545486111138,
+          "BMS_tail_V": 3.788333333333333,
+          "AVL_tail_V": 3.7695355191256827,
+          "BMS_tail_drift_mV_per_min": 1.1493227384404643e-12,
+          "temperature_C": 30.168433515482697,
+          "tail_span_mV": 0.0
+        }
+      ]
+    }
+  ]
+}
