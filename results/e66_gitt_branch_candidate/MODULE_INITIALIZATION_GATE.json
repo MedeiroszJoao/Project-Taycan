@@ -1,0 +1,8 @@
+{
+  "source_sha256": "1b4484914764b7f819cab2e43639a770c2ee890488aa3e7142034f7bf3c2ad37",
+  "start_s": 21734.0,
+  "initial_rest_voltage": 3.1516666666666677,
+  "charge_branch_min_V": 3.2444100000000002,
+  "gate": "FAIL_NO_SUPPORTED_CHARGE_BRANCH_INITIALIZATION",
+  "not_dynamic_validation": true
+}
